@@ -14,7 +14,7 @@ Static personal portfolio for **GitHub Pages** (`https://KumaTrekCode.github.io/
 
 ## English
 
-- **Bilingual copy:** Pages use paired EN/JA blocks; edit both when you change messaging.
+- **Language:** Page copy is **Japanese only** (static HTML).
 - **Local preview:** `npx serve .` from this directory (recommended). Opening `index.html` via `file://` still works for most pages, but **`404.html` expects a site root** (`/assets/…`).
 - **GitHub Pages:** Enable **Settings → Pages** on branch `main`, folder `/ (root)` when you want the site live.
 - **Editor defaults:** `.editorconfig` keeps UTF-8, LF, 2-space indentation consistent across editors.
@@ -23,7 +23,7 @@ Static personal portfolio for **GitHub Pages** (`https://KumaTrekCode.github.io/
 
 ## 日本語
 
-- **和英併記:** 各ページの説明は EN/JA の並記です。文言を変えるときは両方そろえて更新してください。
+- **言語:** サイト本文は **日本語のみ** の静的 HTML です。
 - **ローカル確認:** このディレクトリで `npx serve .` を推奨します。`file://` で `index.html` を開くこともできますが、**`404.html` はサイトルート前提**（`/assets/…`）です。
 - **GitHub Pages:** 公開するときに **Settings → Pages** で `main` と `/ (root)` を選びます。
 - **エディタ設定:** `.editorconfig` で UTF-8・改行 LF・2スペースインデントを揃えます。
