@@ -3,9 +3,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "sync": "node scripts/sync-site.mjs",
-    "optimize-images": "node scripts/optimize-images.mjs",
-    "validate": "html-validate index.html 404.html blog/index.html blog/2026-05-hello.html projects/open-cafe/index.html projects/open-cafe/site/index.html",
+    "sync": "node tools/sync-site.mjs",
+    "optimize-images": "node tools/optimize-images.mjs",
+    "validate": "html-validate index.html 404.html projects/open-cafe/index.html projects/open-cafe/site/index.html",
     "check": "npm run sync && npm run validate"
   },
   "devDependencies": {

@@ -306,3 +306,23 @@ footer {
 .hero-intro__body .lead {
   line-height: 1.65;
 }
+
+.x-embed-card .x-embed-lead {
+  margin: 0 0 1rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.x-embed {
+  min-height: 200px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.x-embed .twitter-timeline {
+  display: block;
+}
+
+.x-embed-card .note {
+  margin-bottom: 0;
+}

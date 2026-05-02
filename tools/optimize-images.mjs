@@ -2,6 +2,7 @@ import sharp from "sharp";
 import { existsSync } from "node:fs";
 import { resolve } from "node:path";
 
+/** Repository root; optimized files are written to `img/` at site root. */
 const root = resolve(import.meta.dirname, "..");
 
 async function emit(name, maxWidth, qualityJpg = 82, qualityWebp = 82) {

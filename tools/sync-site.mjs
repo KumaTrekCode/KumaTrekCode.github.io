@@ -1,16 +1,17 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 
+/** Repository root (GitHub Pages document root). */
 const root = resolve(import.meta.dirname, "..");
-const cfg = JSON.parse(readFileSync(resolve(root, "site.config.json"), "utf8"));
+const cfg = JSON.parse(
+  readFileSync(resolve(root, "tools", "site.config.json"), "utf8"),
+);
 const xUrl = String(cfg.socialX);
 
 /** Depth from repo root (site root): how many `../` to reach root. */
 const REL_PREFIX = {
   "index.html": "",
   "404.html": null,
-  "blog/index.html": "../",
-  "blog/2026-05-hello.html": "../",
   "projects/open-cafe/index.html": "../../",
   "projects/open-cafe/site/index.html": "../../../",
 };
@@ -21,7 +22,7 @@ const navBlock = /<!-- site:nav:start -->[\s\S]*?<!-- site:nav:end -->/;
 
 function renderNav(relPrefix) {
   const name = relPrefix === null ? "site-nav-root.html" : "site-nav.html";
-  let partial = readFileSync(resolve(root, "partials", name), "utf8");
+  let partial = readFileSync(resolve(root, "tools", "partials", name), "utf8");
   partial = partial.replaceAll("{{X_URL}}", xUrl);
   if (relPrefix !== null) {
     partial = partial.replaceAll("{{REL}}", relPrefix);
@@ -30,7 +31,7 @@ function renderNav(relPrefix) {
 }
 
 /**
- * Root-relative paths (/assets/, /img/, /blog/…) break when the site is opened
+ * Root-relative paths (/assets/, /img/, /projects/…) break when the site is opened
  * under a subpath (e.g. Live Server: /KumaTrekCode.github.io/index.html).
  * Rewrite to path-relative using the page's depth prefix.
  */
@@ -40,7 +41,6 @@ function rootPathsToRelative(html, prefix) {
   return html
     .replaceAll('href="/assets/', `href="${p}assets/`)
     .replaceAll('href="/index.html', `href="${p}index.html`)
-    .replaceAll('href="/blog/', `href="${p}blog/`)
     .replaceAll('href="/projects/', `href="${p}projects/`)
     .replaceAll('src="/img/', `src="${p}img/`)
     .replaceAll('srcset="/img/', `srcset="${p}img/`);
