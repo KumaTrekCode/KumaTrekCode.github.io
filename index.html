@@ -8,7 +8,7 @@
       name="description"
       content="KumaTrekCodeのポートフォリオ。会社員としてプログラミングを学び、制作メモ・ブログ・自己紹介を掲載。GitHub Pagesで公開中。"
     />
-    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="KumaTrekCode | ポートフォリオ" />
     <meta
@@ -16,39 +16,46 @@
       content="KumaTrekCodeのポートフォリオ。会社員としてプログラミングを学び、制作メモ・ブログ・自己紹介を掲載。"
     />
     <meta property="og:url" content="https://kumatrekcode.github.io/" />
-    <meta property="og:image" content="https://kumatrekcode.github.io/img/hero-profile.png" />
+    <meta property="og:image" content="https://kumatrekcode.github.io/img/hero-profile.jpg" />
     <meta name="twitter:card" content="summary_large_image" />
-    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
   </head>
   <body>
     <header>
-      <nav class="nav">
-        <a class="brand" href="index.html">KumaTrekCode</a>
-        <div class="nav-links">
-          <a href="index.html#about">自己紹介</a>
-          <a href="blog/index.html">ブログ</a>
-          <a href="projects/open-cafe/index.html">カフェサイト</a>
-          <a href="https://x.com/30Kuma22550" rel="noopener noreferrer" target="_blank">X</a>
-        </div>
-      </nav>
+      <!-- site:nav:start -->
+<nav class="nav">
+  <a class="brand" href="/index.html">KumaTrekCode</a>
+  <div class="nav-links">
+    <a href="/index.html#about">自己紹介</a>
+    <a href="/blog/index.html">ブログ</a>
+    <a href="/projects/open-cafe/index.html">カフェサイト</a>
+    <a href="https://x.com/30Kuma22550" rel="noopener noreferrer" target="_blank">X</a>
+  </div>
+</nav>
+
+<!-- site:nav:end -->
     </header>
     <main>
       <div class="hero hero-intro">
         <figure class="hero-intro__media">
-          <img
-            class="hero-avatar"
-            src="img/hero-profile.png"
-            width="1195"
-            height="896"
-            alt="KumaTrekCodeのプロフィール画像"
-            decoding="async"
-            fetchpriority="high"
-          />
+          <picture>
+            <source srcset="/img/hero-profile.webp" type="image/webp" />
+            <img
+              class="hero-avatar"
+              src="/img/hero-profile.jpg"
+              width="720"
+              height="540"
+              alt="KumaTrekCodeのプロフィール画像"
+              decoding="async"
+              fetchpriority="high"
+            />
+          </picture>
         </figure>
         <div class="hero-intro__body">
           <h1>はじめまして</h1>
           <p class="lead">
-            <strong>KumaTrekCode</strong>🐻のポートフォリオです。会社員としてプログラミングを学びながら、制作メモや試行錯誤をこのサイトに置いています。
+            <strong>KumaTrekCode</strong
+            >🐻のポートフォリオです。会社員としてプログラミングを学びながら、制作メモや試行錯誤をこのサイトに置いています。
           </p>
         </div>
       </div>
@@ -56,22 +63,25 @@
         <h2>自己紹介</h2>
         <div class="card card-text">
           <figure class="about-figure">
-            <img
-              src="img/about-illustration.png"
-              width="1195"
-              height="896"
-              alt="KumaTrekCodeの自己紹介用イラスト"
-              loading="lazy"
-              decoding="async"
-            />
+            <picture>
+              <source srcset="/img/about-illustration.webp" type="image/webp" />
+              <img
+                src="/img/about-illustration.jpg"
+                width="960"
+                height="720"
+                alt="KumaTrekCodeの自己紹介用イラスト"
+                loading="lazy"
+                decoding="async"
+              />
+            </picture>
           </figure>
           <p>こんにちは。<strong>KumaTrekCode</strong>🐻と申します。</p>
           <p>アラフォーの会社員として、現在、プログラミングを学習中です。</p>
           <p>
-            動機は二つあります。ひとつは社内でのキャリアアップ。もうひとつは、場所を選ばない働き方の可能性を広げたいという思いです。その両方に向けて、日々プログラミングに取り組んでいます。
+            動機は2つあり、1つは社内でのキャリアアップ。もう1つは、場所を選ばない働き方の可能性を広げたいという思いです。その両方に向けて、日々プログラミングに取り組んでいます。
           </p>
           <p>
-            学びの途中はブログやXでも共有しています。いつか旅先でも力を発揮できる開発者になりたいと考えています。ご連絡はナビの X から DM でお気軽に。よろしくお願いします！
+            学びの経過はブログやXでも共有しています。いつか旅先でも力を発揮できる開発者になりたいと考えています。ご連絡はXからお問い合わせください！
           </p>
         </div>
       </section>
@@ -82,7 +92,7 @@
           <p>
             カフェ向けの静的サイトをポートフォリオ用にまとめたページです。概要とプレビューは次のリンクから開けます。
           </p>
-          <a class="btn" href="projects/open-cafe/index.html">詳しく見る</a>
+          <a class="btn" href="/projects/open-cafe/index.html">詳しく見る</a>
         </div>
       </section>
     </main>

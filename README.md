@@ -1,40 +1,86 @@
 # KumaTrekCode.github.io / ユーザーサイト用リポジトリ
 
-Static personal portfolio for **GitHub Pages** (`https://KumaTrekCode.github.io/`). Clone this repo into a folder named **`KumaTrekCode.github.io`** so local paths match GitHub and documentation.
+Static personal portfolio for **GitHub Pages** (`https://kumatrekcode.github.io/`). Clone into a folder named **`KumaTrekCode.github.io`** if you like paths to match the remote.
+
+**Important:** Internal links and assets use **root-relative URLs** (`/assets/…`, `/blog/…`). Preview with a static server (see below); opening HTML as `file://` will not load `/…` paths correctly.
+
+---
 
 ## Repository layout / ディレクトリ構成
 
 | Path | Purpose |
 |------|---------|
+| `site.config.json` | **Canonical site URL** (reference / future use) and **`socialX`** for the nav link; `npm run sync` injects nav + X only. |
+| `partials/site-nav.html` | **Shared navigation** markup; `{{X_URL}}` is replaced from `site.config.json` on sync. |
+| `scripts/sync-site.mjs` | Injects nav between `<!-- site:nav:start -->` / `<!-- site:nav:end -->` (from `partials/site-nav.html` + `socialX`). |
+| `scripts/optimize-images.mjs` | Builds `img/*.jpg` + `img/*.webp` from **`img/hero-profile.png`** and **`img/about-illustration.png`** when present (Sharp). |
 | `index.html` | Home |
-| `img/hero-profile.png` | Hero / OG profile image |
-| `img/about-illustration.png` | About section image |
+| `img/hero-profile.{jpg,webp}` | Hero + `og:image` (optimized) |
+| `img/about-illustration.{jpg,webp}` | About section |
 | `assets/css/style.css` | Shared styles |
-| `assets/favicon.svg` | Tab icon (simple bear motif) |
-| `blog/` | Blog index + one HTML file per post |
-| `projects/open-cafe/` | Sample work page + optional `site/` build output |
-| `404.html` | GitHub Pages custom 404 (uses root-relative `/assets/…`; use `npx serve` locally to preview) |
+| `assets/favicon.svg` | Tab icon |
+| `blog/` | Blog |
+| `projects/open-cafe/` | Sample work + optional `site/` |
+| `404.html` | GitHub Pages 404 |
+| `.github/workflows/ci.yml` | Runs `npm run sync` + `html-validate` on push / PR |
+
+---
+
+## Maintenance / 運用メモ（1〜5の対応）
+
+### 1. 画像を差し替える
+
+1. 必要なら **`img/hero-profile.png`** / **`img/about-illustration.png`** を置く（高解像度のマスター用）。リポジトリには含めなくてもよい（容量削減）。含める場合は再コミット。
+2. `npm install`（初回または `package.json` 変更後）
+3. `npm run optimize-images` → `hero-profile` / `about-illustration` の **JPG・WebP** を再生成。
+4. `index.html` の `<picture>` 内 **`width` / `height`** が実寸とずれたら、生成後のピクセルに合わせて更新。
+
+### 2. ナビを変える
+
+- **`partials/site-nav.html`** を編集（ルート相対パス `/index.html` などを維持）。
+- 続けて **`npm run sync`**。各 HTML の `<!-- site:nav:start -->`〜`<!-- site:nav:end -->` 内が上書きされます。
+- **手でナビだけ直さない**（次回 `sync` で消えるため）。必ずパーシャル経由にする。
+
+### 3. サイト URL（カスタムドメインなど）
+
+- **`site.config.json`** の `canonicalSite` を手元のメモとして更新（現状 `sync` は参照しません）。
+- **`index.html`** の `og:url` と `og:image` の **絶対 URL** を、新しいドメインに合わせて直接書き換えてください（GitHub Pages の「ブランチ直公開」ではビルド工程がないため）。
+- ナビのパスは **`/` 始まりのルート相対**のままなので、**同一サイト内のパス構成が変わらない限り**はそのままで大丈夫です。
+
+### 4. ローカル確認
+
+```bash
+npm install
+npm run sync
+npx serve .
+```
+
+ブラウザで表示された URL（通常 `http://localhost:3000`）からトップを開くと `/assets/…` が解決されます。
+
+### 5. CI（HTML チェック）
+
+`main` への push / PR で **GitHub Actions** が `npm ci` → `npm run sync` → `npm run validate` を実行します。ローカルでも **`npm run check`**（`sync` + `validate`）を推奨します。
+
+---
 
 ## English
 
-- **Language:** Page copy is **Japanese only** (static HTML).
-- **SEO / sharing:** Each main HTML page has a `<meta name="description">`. The home page also has basic Open Graph tags (`og:title`, `og:description`, `og:url`, `og:image` pointing at `img/hero-profile.png`).
-- **Local preview:** `npx serve .` from this directory (recommended). Opening `index.html` via `file://` still works for most pages, but **`404.html` expects a site root** (`/assets/…`).
-- **GitHub Pages:** Enable **Settings → Pages** on branch `main`, folder `/ (root)` when you want the site live.
-- **Editor defaults:** `.editorconfig` keeps UTF-8, LF, 2-space indentation consistent across editors.
+- **Language:** Japanese-only page copy (static HTML).
+- **SEO:** Per-page `meta name="description"`; home includes Open Graph + `twitter:card`. `og:image` uses the optimized hero JPEG.
+- **GitHub Pages:** Publish from branch **`main`**, folder **`/ (root)`** (or adjust to match your settings).
+- **Editor:** `.editorconfig` for UTF-8 / LF / 2-space indentation.
 
 ---
 
 ## 日本語
 
-- **言語:** サイト本文は **日本語のみ** の静的 HTML です。
-- **検索・シェア:** 主要ページに `<meta name="description">` を入れています。トップには OGP（`og:*`）と X 用 `twitter:card` もあり、`og:image` は `img/hero-profile.png` を参照します。
-- **ローカル確認:** このディレクトリで `npx serve .` を推奨します。`file://` で `index.html` を開くこともできますが、**`404.html` はサイトルート前提**（`/assets/…`）です。
-- **GitHub Pages:** 公開するときに **Settings → Pages** で `main` と `/ (root)` を選びます。
-- **エディタ設定:** `.editorconfig` で UTF-8・改行 LF・2スペースインデントを揃えます。
+- **言語:** サイト本文は日本語のみの静的 HTML です。
+- **SEO:** 各ページに `description`。トップは OGP と `twitter:card`。`og:image` は軽量な `hero-profile.jpg` を参照します。
+- **GitHub Pages:** ブランチ `main` のルートから公開する想定です。
+- **エディタ:** `.editorconfig` で整形の基準を揃えています。
 
 ## Further ideas (optional) / さらにやるなら（任意）
 
-- Add **`robots.txt`** / **`meta name="description"`** when you care about search snippets.
-- **`og:image`** when you want prettier social cards.
-- If navigation grows, introduce a **small static site generator** (e.g. Eleventy) only as a build step, still deploying plain HTML to Pages.
+- **`robots.txt`** / Search Console 連携
+- **`apple-touch-icon.png`**
+- 記事が増えたら **目次ページ**や **タグ**の設計

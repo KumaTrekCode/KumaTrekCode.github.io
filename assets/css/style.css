@@ -97,6 +97,10 @@ main {
   padding: 0;
 }
 
+.hero-intro__media picture {
+  display: block;
+}
+
 .hero-avatar {
   display: block;
   width: 100%;
@@ -218,6 +222,18 @@ article.prose p {
   margin: 0 0 1rem;
 }
 
+.layout-prose {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 4rem;
+}
+
+.layout-404 {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 3rem 1.25rem;
+}
+
 footer {
   border-top: 1px solid var(--border);
   padding: 1.5rem 1.25rem;
@@ -270,6 +286,10 @@ footer {
 
 .about-figure {
   margin: 0 0 1.25rem;
+}
+
+.about-figure picture {
+  display: block;
 }
 
 .about-figure img {
