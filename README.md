@@ -7,6 +7,8 @@ Static personal portfolio for **GitHub Pages** (`https://KumaTrekCode.github.io/
 | Path | Purpose |
 |------|---------|
 | `index.html` | Home |
+| `img/hero-profile.png` | Hero / OG profile image |
+| `img/about-illustration.png` | About section image |
 | `assets/css/style.css` | Shared styles |
 | `assets/favicon.svg` | Tab icon (simple bear motif) |
 | `blog/` | Blog index + one HTML file per post |
@@ -16,7 +18,7 @@ Static personal portfolio for **GitHub Pages** (`https://KumaTrekCode.github.io/
 ## English
 
 - **Language:** Page copy is **Japanese only** (static HTML).
-- **SEO / sharing:** Each main HTML page has a `<meta name="description">`. The home page also has basic Open Graph tags (`og:title`, `og:description`, `og:url`, `og:image` pointing at `img/profile.jpeg`).
+- **SEO / sharing:** Each main HTML page has a `<meta name="description">`. The home page also has basic Open Graph tags (`og:title`, `og:description`, `og:url`, `og:image` pointing at `img/hero-profile.png`).
 - **Local preview:** `npx serve .` from this directory (recommended). Opening `index.html` via `file://` still works for most pages, but **`404.html` expects a site root** (`/assets/…`).
 - **GitHub Pages:** Enable **Settings → Pages** on branch `main`, folder `/ (root)` when you want the site live.
 - **Editor defaults:** `.editorconfig` keeps UTF-8, LF, 2-space indentation consistent across editors.
@@ -26,7 +28,7 @@ Static personal portfolio for **GitHub Pages** (`https://KumaTrekCode.github.io/
 ## 日本語
 
 - **言語:** サイト本文は **日本語のみ** の静的 HTML です。
-- **検索・シェア:** 主要ページに `<meta name="description">` を入れています。トップには OGP（`og:*`）と X 用 `twitter:card` もあり、`og:image` は `img/profile.jpeg` を参照します。
+- **検索・シェア:** 主要ページに `<meta name="description">` を入れています。トップには OGP（`og:*`）と X 用 `twitter:card` もあり、`og:image` は `img/hero-profile.png` を参照します。
 - **ローカル確認:** このディレクトリで `npx serve .` を推奨します。`file://` で `index.html` を開くこともできますが、**`404.html` はサイトルート前提**（`/assets/…`）です。
 - **GitHub Pages:** 公開するときに **Settings → Pages** で `main` と `/ (root)` を選びます。
 - **エディタ設定:** `.editorconfig` で UTF-8・改行 LF・2スペースインデントを揃えます。
