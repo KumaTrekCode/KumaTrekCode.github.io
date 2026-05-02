@@ -2,7 +2,7 @@
 
 Static personal portfolio for **GitHub Pages** (`https://kumatrekcode.github.io/`). Clone into a folder named **`KumaTrekCode.github.io`** if you like paths to match the remote.
 
-**Important:** Internal links and assets use **root-relative URLs** (`/assets/…`, `/blog/…`). Preview with a static server (see below); opening HTML as `file://` will not load `/…` paths correctly.
+**Important:** After `npm run sync`, **CSS / images / in-page links use paths relative to each HTML file** (e.g. top page uses `assets/…`, `blog/` uses `../assets/…`). This works on **GitHub Pages** and when you open the site under a **subfolder** (e.g. VS Code Live Server: `http://127.0.0.1:5500/KumaTrekCode.github.io/index.html`). **`404.html` keeps `/…` URLs** for nav and CSS so unknown-path requests still load styles on production; nested Live Server may still show MIME errors for 404—use `npx serve` from this folder to preview 404 if needed.
 
 ---
 
@@ -11,8 +11,9 @@ Static personal portfolio for **GitHub Pages** (`https://kumatrekcode.github.io/
 | Path | Purpose |
 |------|---------|
 | `site.config.json` | **Canonical site URL** (reference / future use) and **`socialX`** for the nav link; `npm run sync` injects nav + X only. |
-| `partials/site-nav.html` | **Shared navigation** markup; `{{X_URL}}` is replaced from `site.config.json` on sync. |
-| `scripts/sync-site.mjs` | Injects nav between `<!-- site:nav:start -->` / `<!-- site:nav:end -->` (from `partials/site-nav.html` + `socialX`). |
+| `partials/site-nav.html` | **Shared navigation** (path-relative); `{{REL}}` + `{{X_URL}}` filled by `npm run sync`. |
+| `partials/site-nav-root.html` | **404 only:** nav links stay `/…` for GitHub Pages odd URLs. |
+| `scripts/sync-site.mjs` | Injects nav + rewrites `/assets/`, `/img/`, `/blog/`, `/projects/` to **path-relative** URLs per page (404 keeps `/` for nav + CSS). |
 | `scripts/optimize-images.mjs` | Builds `img/*.jpg` + `img/*.webp` from **`img/hero-profile.png`** and **`img/about-illustration.png`** when present (Sharp). |
 | `index.html` | Home |
 | `img/hero-profile.{jpg,webp}` | Hero + `og:image` (optimized) |
