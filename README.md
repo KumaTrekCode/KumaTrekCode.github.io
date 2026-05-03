@@ -27,27 +27,32 @@ Static personal portfolio for **GitHub Pages** (`https://kumatrekcode.github.io/
 
 | Path | Purpose |
 |------|---------|
-| `tools/site.config.json` | **`canonicalSite`**（正規 URL）、**`ogImage`**（OG 画像のパスまたは絶対 URL）、**`socialX`** など。`sync` が **`og:url` / `og:image`** の生成に利用。 |
+| `tools/site.config.json` | **`canonicalSite`**（正規 URL）、**`ogImage`**、**`socialX`**。`sync` が OG に利用。**任意で `linkinatorSkip`**（1 本の正規表現）を書くと `lint:links` の `--skip` にそのまま使う。未指定時は `canonicalSite` のオリジンと X/Twitter を自動スキップ。 |
 | `tools/partials/site-nav.html` | 共通ナビのひな形（`{{REL}}` を sync が階層用プレフィックスに置換） |
 | `tools/partials/site-nav-root.html` | **`404.html` 専用**ナビ（`/…` のまま） |
 | `tools/partials/site-footer.html` | 共通フッター（`<!-- site:footer:start -->` ブロックに注入） |
 | `tools/partials/home-x-feed.html` | トップの X 埋め込みブロック（`<!-- site:home-x-feed:start -->` に注入） |
-| `tools/sync-site.mjs` | ナビ・フッター・ホーム X ブロックの注入、**`site.config` に基づく OG メタの上書き**、`/assets/`・`/about.html` などを**相対パスに書き換え** |
+| `tools/sync-site.mjs` | **`sync-html-allowlist.json`** に列挙された HTML のみ処理。ナビ・フッター・X ブロック、**`site.config` に基づく OG**、ルート相対パスの**相対パス化**。 |
+| `tools/sync-html-allowlist.json` | **`npm run sync` が書き換える HTML のパス一覧**（新規ページはここに追加）。 |
+| `tools/IMAGES.md` | Gemini ファイル名と `icon-skill-*`・About カードの対応表。 |
+| `tools/lint-links.mjs` | `site.config.json` を読み **linkinator** を実行（`npm run lint:links`）。 |
+| `tools/lint-a11y.mjs` / `lint-a11y-one.mjs` | **axe-core + jsdom** で主要ページの a11y チェック（`npm run lint:a11y`）。 |
 | `tools/optimize-images.mjs` | トップの **`hero-profile`** は優先して **`img/source/hero-firstview.png`**（なければ `img/source/hero-profile.png` / `img/hero-profile.png`）から **`img/hero-profile.{jpg,webp}`** を生成。`about-illustration` は従来どおり `img/about-illustration.png` マスター。 |
-| `tools/build-skill-icons.mjs` | `img/` の Gemini 原本を **`img/source/icon-skill-*.png`** にリネーム後、**sm / md / lg** の PNG+WebP を `img/` に出力（`npm run build:icons`）。`npm run check` に含まれる。 |
+| `tools/build-skill-icons.mjs` | `img/` の Gemini 原本を **`img/source/icon-skill-*.png`** にリネーム後、**sm / md / lg** の PNG+WebP を `img/` に出力（保有スキル用の各アイコン、**ECU**、About「今後取得」の **Web** 用など）。**`icon-skill-future-python-*`** / **`icon-skill-future-linux-*`** は About「今後取得」用の Gemini 原本を ingest して tier 化（`npm run build:icons`）。`npm run check` に含まれる。 |
 
 ### その他
 
 | Path | Purpose |
 |------|---------|
-| `package.json` / `package-lock.json` | npm スクリプトと依存（html-validate, sharp, linkinator, simple-git-hooks） |
+| `package.json` / `package-lock.json` | npm スクリプトと依存（html-validate, sharp, linkinator, axe-core, jsdom, simple-git-hooks など） |
 | `.htmlvalidate.json` | `html-validate` の設定（リポジトリルートで実行） |
-| `.github/workflows/ci.yml` | `npm ci` → **`npm run check`**（`sync`・`build:icons`・`validate`・内部リンク・`npm audit --audit-level=high`） |
+| `.github/workflows/ci.yml` | `npm ci` → **`npm run check`**（`sync`・`build:icons`・`validate`・`lint:links`・`lint:a11y`・`audit`）。 |
+| `.github/workflows/a11y-monthly.yml` | 月次で **`npm run lint:a11y`** のみ実行（手動トリガー可）。 |
 | `.editorconfig` / `.gitignore` | エディタ・Git の共通設定 |
 
 ---
 
-## Maintenance / 運用メモ（1〜5の対応）
+## Maintenance / 運用メモ（詳細は [docs/WORKFLOW.md](docs/WORKFLOW.md)）
 
 ### 1. 画像を差し替える
 
@@ -71,7 +76,7 @@ Static personal portfolio for **GitHub Pages** (`https://kumatrekcode.github.io/
 
 - **`tools/site.config.json`** の **`canonicalSite`** と **`ogImage`**（サイト内パスなら先頭 `/` の相対、別 CDN なら `https://…`）を更新します。
 - **`npm run sync`** を実行すると、OG 用の **`og:url` / `og:image`** が各 HTML から一括で書き換わります。
-- カスタムドメインに変えたあと、**ローカルリンクチェック**（`lint:links`）で本番オリジンをスキップしている場合は、`package.json` の **`lint:links`** の `--skip` 正規表現を新しいドメインに合わせて更新してください。
+- カスタムドメインに変えたあと、**`canonicalSite`** を更新すれば `lint:links` の本番オリジン用スキップは追従します。別パターンが必要なときだけ **`tools/site.config.json` の `linkinatorSkip`** を設定してください。
 
 ### 4. ローカル確認
 
@@ -85,7 +90,7 @@ npx serve .
 
 ### 5. CI と Git フック
 
-`main` への push / PR で **GitHub Actions** が **`npm run check`** を実行します（`sync`・`build:icons`・`validate`・linkinator・`npm audit --audit-level=high`）。
+`main` への push / PR で **GitHub Actions** が **`npm run check`** を実行します（`sync`・`build:icons`・`validate`・`lint:links`・`lint:a11y`・`npm audit --audit-level=high`）。**`npm run deps:report`**（`npm outdated`）で依存の棚卸し目安にできます。
 
 `npm install` 後は **`simple-git-hooks`** が有効になり、**`pre-push`** で同じ `npm run check` が走ります（初回のみ `.git` がある環境で `prepare` がフックを書き込みます）。
 

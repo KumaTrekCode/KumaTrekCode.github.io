@@ -2,6 +2,9 @@
   "extends": ["html-validate:recommended"],
   "rules": {
     "void-style": "off",
-    "no-trailing-whitespace": "off"
+    "no-trailing-whitespace": "off",
+    "empty-heading": "warn",
+    "no-dup-id": "error",
+    "unique-landmark": "warn"
   }
 }

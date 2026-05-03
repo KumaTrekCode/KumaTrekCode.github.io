@@ -5,11 +5,16 @@
  * 原本（Gemini ファイル名）を img/ に置いてから:
  *   npm run build:icons
  *
+ * Web 学習用: `Gemini_Generated_Image_gwa5zxgwa5zxgwa5.png` → `icon-skill-webdev.png`（About「今後取得」カード）。
+ * ECU 計測用: `Gemini_Generated_Image_lvfa8lvfa8lvfa8l.png` → `icon-skill-ecu.png`（About「保有スキル」）。
+ * Linux 学習用: `Gemini_Generated_Image_l0mtfkl0mtfkl0mt.png` → `icon-skill-future-linux.png`（About「今後取得」）。
+ * データ処理・自動化用: `Gemini_Generated_Image_9km4nj9km4nj9km4.png` → `icon-skill-future-python.png`（About「今後取得」）。
+ * **CI（`CI=true`）**では、`GEMINI_TO_KEY` の各キーについて **`img/source/icon-skill-{key}.png` が必須**で、欠けると `process.exit(1)`。tier 生成に失敗しても同様です。
  * check からも実行されます。
  */
 import sharp from "sharp";
-import { copyFileSync, existsSync, mkdirSync, renameSync, unlinkSync } from "node:fs";
-import { resolve } from "node:path";
+import { existsSync, mkdirSync, renameSync, unlinkSync } from "node:fs";
+import { relative, resolve } from "node:path";
 
 const root = resolve(import.meta.dirname, "..");
 const sourceDir = resolve(root, "img/source");
@@ -21,6 +26,10 @@ const GEMINI_TO_KEY = [
   ["Gemini_Generated_Image_1r0j191r0j191r0j.png", "auto-mechanic"],
   ["Gemini_Generated_Image_4n4zgr4n4zgr4n4z.png", "electrician"],
   ["Gemini_Generated_Image_xwypu5xwypu5xwyp.png", "hazmat"],
+  ["Gemini_Generated_Image_gwa5zxgwa5zxgwa5.png", "webdev"],
+  ["Gemini_Generated_Image_lvfa8lvfa8lvfa8l.png", "ecu"],
+  ["Gemini_Generated_Image_l0mtfkl0mtfkl0mt.png", "future-linux"],
+  ["Gemini_Generated_Image_9km4nj9km4nj9km4.png", "future-python"],
 ];
 
 const TIERS = [
@@ -36,6 +45,9 @@ function cleanupLegacyFlatIcons() {
     "electrician",
     "hazmat",
     "webdev",
+    "ecu",
+    "future-linux",
+    "future-python",
   ];
   for (const key of keys) {
     for (const ext of [".png", ".webp"]) {
@@ -65,16 +77,6 @@ async function ingestGeminiMasters() {
     }
   }
 
-  const webGemini = resolve(imgDir, "Gemini_Generated_Image_4dygl44dygl44dyg.png");
-  const webTo = resolve(sourceDir, "icon-skill-webdev.png");
-  const bear = resolve(root, "assets/img/bear-webdev.png");
-  if (existsSync(webGemini)) {
-    renameSync(webGemini, webTo);
-    console.log(`ingest: Gemini …4dygl… → source/icon-skill-webdev.png`);
-  } else if (existsSync(bear) && !existsSync(webTo)) {
-    copyFileSync(bear, webTo);
-    console.log(`ingest: assets/img/bear-webdev.png → source/icon-skill-webdev.png`);
-  }
 }
 
 async function emitTieredFromMaster(key) {
@@ -109,45 +111,36 @@ async function emitTieredFromMaster(key) {
   return { width: lgMeta.width, height: lgMeta.height };
 }
 
-async function emitWebdevSquare() {
-  const master = resolve(sourceDir, "icon-skill-webdev.png");
-  if (!existsSync(master)) {
-    console.warn("skip webdev (no source/icon-skill-webdev.png)");
-    return { width: 512, height: 512 };
-  }
-
-  const tiers = [
-    { suffix: "sm", size: 360, webpQ: 82 },
-    { suffix: "md", size: 512, webpQ: 85 },
-    { suffix: "lg", size: 768, webpQ: 88 },
-  ];
-
-  for (const { suffix, size, webpQ } of tiers) {
-    const baseOut = resolve(imgDir, `icon-skill-webdev-${suffix}`);
-    await sharp(master)
-      .resize(size, size, {
-        fit: "contain",
-        kernel: sharp.kernel.lanczos3,
-        background: { r: 15, g: 18, b: 24, alpha: 1 },
-      })
-      .png({ compressionLevel: 9 })
-      .toFile(`${baseOut}.png`);
-    await sharp(`${baseOut}.png`).webp({ quality: webpQ, effort: 6 }).toFile(`${baseOut}.webp`);
-    console.log(`  icon-skill-webdev-${suffix}: ${size}x${size}`);
-  }
-
-  return { width: 768, height: 768 };
-}
-
 cleanupLegacyFlatIcons();
 await ingestGeminiMasters();
 
+if (process.env.CI === "true") {
+  for (const [, key] of GEMINI_TO_KEY) {
+    const master = resolve(sourceDir, `icon-skill-${key}.png`);
+    if (!existsSync(master)) {
+      console.error(
+        `build-skill-icons (CI): missing master ${relative(root, master)} — commit img/source or add Gemini to img/.`
+      );
+      process.exit(1);
+    }
+  }
+}
+
 const dims = {};
+const emitFailed = [];
 for (const [, key] of GEMINI_TO_KEY) {
   const d = await emitTieredFromMaster(key);
   if (d) dims[key] = d;
+  else emitFailed.push(key);
 }
-dims.webdev = await emitWebdevSquare();
+
+if (emitFailed.length) {
+  console.warn("build-skill-icons: tier emit failed for:", emitFailed.join(", "));
+  if (process.env.CI === "true") {
+    console.error("build-skill-icons (CI): all GEMINI_TO_KEY entries must emit successfully.");
+    process.exit(1);
+  }
+}
 
 console.log("build-skill-icons: lg dimensions for HTML (reference):", JSON.stringify(dims, null, 2));
 console.log("build-skill-icons: done");

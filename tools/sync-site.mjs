@@ -1,9 +1,26 @@
-import { readFileSync, writeFileSync, readdirSync, statSync } from "node:fs";
+import { readFileSync, writeFileSync, readdirSync, statSync, existsSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 
-/** Repository root (GitHub Pages document root). */
+/**
+ * Repository root (GitHub Pages document root).
+ * 処理する HTML は `tools/sync-html-allowlist.json` で限定（新規ページは JSON にパスを追加）。
+ */
 const root = resolve(import.meta.dirname, "..");
 const cfg = JSON.parse(readFileSync(resolve(root, "tools", "site.config.json"), "utf8"));
+
+/** 同期対象 HTML（`tools/sync-html-allowlist.json`）。空配列は「全件」と同じ扱い。 */
+const allowlistPath = resolve(root, "tools", "sync-html-allowlist.json");
+let syncHtmlAllowSet = null;
+if (existsSync(allowlistPath)) {
+  try {
+    const list = JSON.parse(readFileSync(allowlistPath, "utf8"));
+    if (Array.isArray(list) && list.length > 0) {
+      syncHtmlAllowSet = new Set(list.map((p) => String(p).split("\\").join("/")));
+    }
+  } catch (e) {
+    console.warn("sync-site: invalid sync-html-allowlist.json, syncing all HTML:", e.message);
+  }
+}
 
 const navBlock = /<!-- site:nav:start -->[\s\S]*?<!-- site:nav:end -->/;
 const footerBlock = /<!-- site:footer:start -->[\s\S]*?<!-- site:footer:end -->/;
@@ -90,6 +107,8 @@ function shouldProcess(html) {
 const htmlAbsList = walkHtmlFiles(root);
 for (const abs of htmlAbsList) {
   const rel = relPosix(abs);
+  if (syncHtmlAllowSet && !syncHtmlAllowSet.has(rel)) continue;
+
   let html = readFileSync(abs, "utf8");
   if (!shouldProcess(html)) continue;
 
