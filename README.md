@@ -2,6 +2,8 @@
 
 Static personal portfolio for **GitHub Pages** (`https://kumatrekcode.github.io/`). Clone into a folder named **`KumaTrekCode.github.io`** if you like paths to match the remote.
 
+**運用の流れ:** 変更から push までの手順は **[docs/WORKFLOW.md](docs/WORKFLOW.md)** にまとめています。
+
 **レイヤー分け:** ルート直下は **GitHub Pages の公開ドキュメントルート**（HTML / CSS / 画像 / 制作物）。**`tools/`** はナビの注入・画像最適化・サイト用 JSON など **npm からだけ触る保守用**です（URL では配信されません）。
 
 **Important:** After `npm run sync`, **CSS / images / in-page links use paths relative to each HTML file** (e.g. top page uses `assets/…`, nested pages use `../assets/…` or deeper prefixes). This works on **GitHub Pages** and when you open the site under a **subfolder** (e.g. VS Code Live Server: `http://127.0.0.1:5500/KumaTrekCode.github.io/index.html`). **`404.html` keeps `/…` URLs** for nav and CSS so unknown-path requests still load styles on production; nested Live Server may still show MIME errors for 404—use `npx serve` from this folder to preview 404 if needed.
@@ -14,29 +16,33 @@ Static personal portfolio for **GitHub Pages** (`https://kumatrekcode.github.io/
 
 | Path | Purpose |
 |------|---------|
-| `index.html` | Home（更新・短文は **X** の埋め込み `#x-feed` とナビの外部リンクで代用） |
+| `index.html` | Home（**X** 埋め込み `#x-feed` は `tools/partials/home-x-feed.html` から注入、制作物は `#works`） |
+| `about.html` | 自己紹介の詳細ページ（ナビ「自己紹介」はここへ） |
 | `404.html` | GitHub Pages 404 |
-| `assets/` | 共有 CSS・ファビコンなど |
-| `img/` | 画像（最適化済み JPG/WebP と、任意のソース PNG） |
+| `assets/` | 共有 CSS（`style.css` / `about.css` は `@import` で **`tokens.css`** を参照）・ファビコンなど |
+| `img/` | **配信用の**最適化済み JPG/WebP。大きいマスターは **`img/source/`** に置き、`npm run optimize-images` / `build:icons` でルートの `img/` に生成する運用（リポジトリにマスターを含めない選択も可） |
 | `projects/` | 制作物ページ（例: `open-cafe/` とその `site/`） |
 
 ### 保守用 `tools/`（同期・設定・パーシャル）
 
 | Path | Purpose |
 |------|---------|
-| `tools/site.config.json` | **`socialX`**（ナビの X URL）と **`canonicalSite`**（メモ用）。`npm run sync` が読み込み。 |
-| `tools/partials/site-nav.html` | 共通ナビのひな形（`{{REL}}` + `{{X_URL}}` を sync が埋める） |
+| `tools/site.config.json` | **`canonicalSite`**（正規 URL）、**`ogImage`**（OG 画像のパスまたは絶対 URL）、**`socialX`** など。`sync` が **`og:url` / `og:image`** の生成に利用。 |
+| `tools/partials/site-nav.html` | 共通ナビのひな形（`{{REL}}` を sync が階層用プレフィックスに置換） |
 | `tools/partials/site-nav-root.html` | **`404.html` 専用**ナビ（`/…` のまま） |
-| `tools/sync-site.mjs` | 各 HTML の `<!-- site:nav:start -->`〜`end` にナビを差し込み、`/assets/` などを**相対パスに書き換え** |
-| `tools/optimize-images.mjs` | `img/*.png` マスターから **`img/*.jpg` / `*.webp`** を生成（Sharp） |
+| `tools/partials/site-footer.html` | 共通フッター（`<!-- site:footer:start -->` ブロックに注入） |
+| `tools/partials/home-x-feed.html` | トップの X 埋め込みブロック（`<!-- site:home-x-feed:start -->` に注入） |
+| `tools/sync-site.mjs` | ナビ・フッター・ホーム X ブロックの注入、**`site.config` に基づく OG メタの上書き**、`/assets/`・`/about.html` などを**相対パスに書き換え** |
+| `tools/optimize-images.mjs` | トップの **`hero-profile`** は優先して **`img/source/hero-firstview.png`**（なければ `img/source/hero-profile.png` / `img/hero-profile.png`）から **`img/hero-profile.{jpg,webp}`** を生成。`about-illustration` は従来どおり `img/about-illustration.png` マスター。 |
+| `tools/build-skill-icons.mjs` | `img/` の Gemini 原本を **`img/source/icon-skill-*.png`** にリネーム後、**sm / md / lg** の PNG+WebP を `img/` に出力（`npm run build:icons`）。`npm run check` に含まれる。 |
 
 ### その他
 
 | Path | Purpose |
 |------|---------|
-| `package.json` / `package-lock.json` | npm スクリプトと依存（html-validate, sharp） |
+| `package.json` / `package-lock.json` | npm スクリプトと依存（html-validate, sharp, linkinator, simple-git-hooks） |
 | `.htmlvalidate.json` | `html-validate` の設定（リポジトリルートで実行） |
-| `.github/workflows/ci.yml` | `npm ci` → `sync` → `validate` |
+| `.github/workflows/ci.yml` | `npm ci` → **`npm run check`**（`sync`・`build:icons`・`validate`・内部リンク・`npm audit --audit-level=high`） |
 | `.editorconfig` / `.gitignore` | エディタ・Git の共通設定 |
 
 ---
@@ -45,22 +51,27 @@ Static personal portfolio for **GitHub Pages** (`https://kumatrekcode.github.io/
 
 ### 1. 画像を差し替える
 
-1. 必要なら **`img/hero-profile.png`** / **`img/about-illustration.png`** を置く（高解像度のマスター用）。リポジトリには含めなくてもよい（容量削減）。含める場合は再コミット。
-2. `npm install`（初回または `package.json` 変更後）
-3. `npm run optimize-images` → `hero-profile` / `about-illustration` の **JPG・WebP** を再生成。
-4. `index.html` の `<picture>` 内 **`width` / `height`** が実寸とずれたら、生成後のピクセルに合わせて更新。
+1. **方針:** 編集用の大きい PNG やカメラ原本は **`img/source/`**（必要なら Git LFS）に置き、**公開用の軽量ファイル**（`img/*.jpg` / `*.webp` など）はスクリプトで生成してコミットする、という分離を推奨します。
+2. トップ画像のマスターは **`img/source/hero-firstview.png`**（または `img/source/hero-profile.png` / `img/hero-profile.png`）。About 用イラストは **`img/about-illustration.png`**。リポジトリに含めるかは任意。
+3. `npm install`（初回または `package.json` 変更後）
+4. `npm run optimize-images` → `hero-profile` / `about-illustration` の **JPG・WebP** を再生成。
+5. `index.html` の `<picture>` 内 **`width` / `height`** が実寸とずれたら、生成後のピクセルに合わせて更新。
 
-### 2. ナビを変える
+**数十 MB 級のデータ**を履歴に載せる場合は **[Git LFS](https://git-lfs.com/)**（`.gitattributes` でパス指定）を検討してください。
 
-- **`tools/partials/site-nav.html`**（および必要なら **`tools/partials/site-nav-root.html`**）を編集。
-- 続けて **`npm run sync`**。各 HTML の `<!-- site:nav:start -->`〜`<!-- site:nav:end -->` 内が上書きされます。
-- **手でナビだけ直さない**（次回 `sync` で消えるため）。必ずパーシャル経由にする。
+### 2. ナビ・フッター・トップの X ブロックを変える
 
-### 3. サイト URL（カスタムドメインなど）
+- **ナビ:** `tools/partials/site-nav.html`（および必要なら `site-nav-root.html`）
+- **フッター:** `tools/partials/site-footer.html`
+- **X 埋め込み:** `tools/partials/home-x-feed.html`
+- 編集後に **`npm run sync`**。対応する `<!-- site:*:start -->`〜`end` 内が上書きされます。
+- **該当ブロックを手だけ直さない**（次回 `sync` で消えるため）。必ずパーシャル経由にする。
 
-- **`tools/site.config.json`** の `canonicalSite` を手元のメモとして更新（現状 `sync` は参照しません）。
-- **`index.html`** の `og:url` と `og:image` の **絶対 URL** を、新しいドメインに合わせて直接書き換えてください（GitHub Pages の「ブランチ直公開」ではビルド工程がないため）。
-- ナビのパスは **`/` 始まりのルート相対**のままなので、**同一サイト内のパス構成が変わらない限り**はそのままで大丈夫です。
+### 3. サイト URL・OG 画像（カスタムドメインなど）
+
+- **`tools/site.config.json`** の **`canonicalSite`** と **`ogImage`**（サイト内パスなら先頭 `/` の相対、別 CDN なら `https://…`）を更新します。
+- **`npm run sync`** を実行すると、OG 用の **`og:url` / `og:image`** が各 HTML から一括で書き換わります。
+- カスタムドメインに変えたあと、**ローカルリンクチェック**（`lint:links`）で本番オリジンをスキップしている場合は、`package.json` の **`lint:links`** の `--skip` 正規表現を新しいドメインに合わせて更新してください。
 
 ### 4. ローカル確認
 
@@ -72,16 +83,18 @@ npx serve .
 
 ブラウザで表示された URL（通常 `http://localhost:3000`）からトップを開くと `/assets/…` が解決されます。
 
-### 5. CI（HTML チェック）
+### 5. CI と Git フック
 
-`main` への push / PR で **GitHub Actions** が `npm ci` → `npm run sync` → `npm run validate` を実行します。ローカルでも **`npm run check`**（`sync` + `validate`）を推奨します。
+`main` への push / PR で **GitHub Actions** が **`npm run check`** を実行します（`sync`・`build:icons`・`validate`・linkinator・`npm audit --audit-level=high`）。
+
+`npm install` 後は **`simple-git-hooks`** が有効になり、**`pre-push`** で同じ `npm run check` が走ります（初回のみ `.git` がある環境で `prepare` がフックを書き込みます）。
 
 ---
 
 ## English
 
 - **Language:** Japanese-only page copy (static HTML).
-- **SEO:** Per-page `meta name="description"`; home includes Open Graph + `twitter:card`. `og:image` uses the optimized hero JPEG.
+- **SEO:** Per-page `meta name="description"`; key pages include Open Graph + `twitter:card`. `og:url` / `og:image` are filled from **`tools/site.config.json`** when you run **`npm run sync`**.
 - **GitHub Pages:** Publish from branch **`main`**, folder **`/ (root)`** (or adjust to match your settings).
 - **Editor:** `.editorconfig` for UTF-8 / LF / 2-space indentation.
 
@@ -90,7 +103,7 @@ npx serve .
 ## 日本語
 
 - **言語:** サイト本文は日本語のみの静的 HTML です。
-- **SEO:** 各ページに `description`。トップは OGP と `twitter:card`。`og:image` は軽量な `hero-profile.jpg` を参照します。
+- **SEO:** 各ページに `description`。主要ページは OGP と `twitter:card`。`og:url` / `og:image` は `tools/site.config.json` と `npm run sync` で揃えます。
 - **GitHub Pages:** ブランチ `main` のルートから公開する想定です。
 - **エディタ:** `.editorconfig` で整形の基準を揃えています。
 

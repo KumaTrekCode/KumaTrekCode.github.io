@@ -6,14 +6,14 @@
     <title>KumaTrekCode | ポートフォリオ</title>
     <meta
       name="description"
-      content="KumaTrekCodeのポートフォリオ。会社員としてプログラミングを学び、制作メモ・ブログ・自己紹介を掲載。GitHub Pagesで公開中。"
+      content="KumaTrekCodeのポートフォリオ。会社員としてプログラミングを学び、制作物と自己紹介を掲載。GitHub Pagesで公開中。"
     />
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="KumaTrekCode | ポートフォリオ" />
     <meta
       property="og:description"
-      content="KumaTrekCodeのポートフォリオ。会社員としてプログラミングを学び、制作メモ・ブログ・自己紹介を掲載。"
+      content="KumaTrekCodeのポートフォリオ。会社員としてプログラミングを学び、制作物と自己紹介を掲載。"
     />
     <meta property="og:url" content="https://kumatrekcode.github.io/" />
     <meta property="og:image" content="https://kumatrekcode.github.io/img/hero-profile.jpg" />
@@ -26,10 +26,9 @@
 <nav class="nav">
   <a class="brand" href="index.html">KumaTrekCode</a>
   <div class="nav-links">
-    <a href="index.html#about">自己紹介</a>
-    <a href="index.html#x-feed">投稿</a>
-    <a href="projects/open-cafe/index.html">カフェサイト</a>
-    <a href="https://x.com/30Kuma22550" rel="noopener noreferrer" target="_blank">X</a>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="index.html#works">Portfolio</a>
   </div>
 </nav>
 
@@ -62,51 +61,38 @@
       <section id="about">
         <h2>自己紹介</h2>
         <div class="card card-text">
-          <figure class="about-figure">
-            <picture>
-              <source srcset="img/about-illustration.webp" type="image/webp" />
-              <img
-                src="img/about-illustration.jpg"
-                width="960"
-                height="720"
-                alt="KumaTrekCodeの自己紹介用イラスト"
-                loading="lazy"
-                decoding="async"
-              />
-            </picture>
-          </figure>
-          <p>こんにちは。<strong>KumaTrekCode</strong>🐻と申します。</p>
-          <p>アラフォーの会社員として、現在、プログラミングを学習中です。</p>
           <p>
-            動機は2つあり、1つは社内でのキャリアアップ。もう1つは、場所を選ばない働き方の可能性を広げたいという思いです。その両方に向けて、日々プログラミングに取り組んでいます。
+            こんにちは。<strong>KumaTrekCode</strong>🐻と申します。アラフォーの会社員としてプログラミングを学び、キャリアと働き方の両面から成長を目指しています。
           </p>
-          <p>
-            学びの経過はブログやXでも共有しています。いつか旅先でも力を発揮できる開発者になりたいと考えています。ご連絡はXからお問い合わせください！
-          </p>
+          <p>経緯や想いの詳細は、自己紹介ページにまとめています。</p>
+          <a class="btn" href="about.html">自己紹介を読む</a>
         </div>
       </section>
-      <section id="x-feed" aria-labelledby="x-feed-heading">
-        <h2 id="x-feed-heading">X</h2>
-        <div class="card x-embed-card">
-          <p class="x-embed-lead">
-            学習や日常のメモを X でも共有しています。埋め込みは数秒かかることがあります。表示されない場合は、広告ブロックの影響か、X 側の一時的なアクセス制限（レート制限）のことがあります。しばらく待って再読み込みするか、下のリンクから X を開いてください。
-          </p>
-          <div class="x-embed">
-            <a
-              class="twitter-timeline"
-              data-height="520"
-              data-theme="dark"
-              data-chrome="nofooter transparent"
-              href="https://twitter.com/30Kuma22550"
-              >@30Kuma22550 のポスト</a
-            >
-          </div>
-          <p class="note">
-            <a href="https://x.com/30Kuma22550" rel="noopener noreferrer" target="_blank">X でプロフィールを開く</a>
-          </p>
-        </div>
-      </section>
-      <section>
+      <!-- site:home-x-feed:start -->
+<section id="x-feed" aria-labelledby="x-feed-heading">
+  <h2 id="x-feed-heading">X</h2>
+  <div class="card x-embed-card">
+    <p class="x-embed-lead">
+      学習や日常のメモを X でも共有しています。埋め込みは数秒かかることがあります。表示されない場合は、広告ブロックの影響か、X 側の一時的なアクセス制限（レート制限）のことがあります。しばらく待って再読み込みするか、下のリンクから X を開いてください。
+    </p>
+    <div class="x-embed">
+      <a
+        class="twitter-timeline"
+        data-height="520"
+        data-theme="dark"
+        data-chrome="nofooter transparent"
+        href="https://twitter.com/30Kuma22550"
+        >@30Kuma22550 のポスト</a
+      >
+    </div>
+    <p class="note">
+      <a href="https://x.com/30Kuma22550" rel="noopener noreferrer" target="_blank">X でプロフィールを開く</a>
+    </p>
+  </div>
+</section>
+
+<!-- site:home-x-feed:end -->
+      <section id="works">
         <h2>制作物</h2>
         <div class="card">
           <h3>カフェサイト（Open cafe）</h3>
@@ -117,7 +103,10 @@
         </div>
       </section>
     </main>
-    <footer>© KumaTrekCode</footer>
+    <!-- site:footer:start -->
+<footer>© KumaTrekCode</footer>
+
+<!-- site:footer:end -->
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
   </body>
 </html>

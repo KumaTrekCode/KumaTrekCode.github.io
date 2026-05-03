@@ -1,0 +1,290 @@
+/**
+ * About page — same dark shell as the rest of the site (style.css),
+ * with sky blue as the primary accent for headings, links, and highlights.
+ * Load after assets/css/style.css.
+ */
+@import "./tokens.css";
+
+.about-page {
+  font-family: "Noto Sans JP", var(--font), system-ui, sans-serif;
+  line-height: 1.75;
+}
+
+/* Sky-blue accent (main color on this page) */
+.about-page {
+  --sky: #38bdf8;
+  --sky-bright: #7dd3fc;
+  --sky-soft: #bae6fd;
+  --sky-glow: rgba(56, 189, 248, 0.15);
+}
+
+.about-page a {
+  color: var(--sky-bright);
+}
+
+.about-page a:hover {
+  color: var(--sky-soft);
+}
+
+.about-page .nav-links a {
+  color: var(--muted);
+}
+
+.about-page .nav-links a:hover {
+  color: var(--sky-soft);
+  text-decoration: none;
+}
+
+.about-page .brand:hover {
+  color: var(--sky-bright);
+  text-decoration: none;
+}
+
+.about-page main {
+  max-width: 960px;
+  padding-top: 2.5rem;
+}
+
+.about-page .about-hero {
+  max-width: 720px;
+  margin: 0 auto 3rem;
+  text-align: center;
+}
+
+.about-page .about-hero__catch {
+  margin: 0;
+  font-size: clamp(1.05rem, 2.8vw, 1.35rem);
+  font-weight: 600;
+  line-height: 1.55;
+  color: var(--text);
+  letter-spacing: 0.04em;
+}
+
+.about-page .about-hero__catch::after {
+  content: "";
+  display: block;
+  width: 48px;
+  height: 3px;
+  margin: 1.25rem auto 0;
+  background: var(--sky);
+  border-radius: 2px;
+  box-shadow: 0 0 20px var(--sky-glow);
+}
+
+.about-page .about-section {
+  max-width: 720px;
+  margin: 0 auto 3rem;
+}
+
+.about-page .about-section h2 {
+  margin: 0 0 1rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sky);
+}
+
+.about-page .about-prose p {
+  margin: 0 0 1.25rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.about-page .about-prose p:last-child {
+  margin-bottom: 0;
+}
+
+.about-page p.about-prose--tight {
+  margin: 0 0 0.5rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.about-page .values-list {
+  margin: 1.5rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.about-page .values-list li {
+  position: relative;
+  margin: 0 0 1rem;
+  padding-left: 1rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.about-page .values-list strong {
+  color: var(--text);
+}
+
+.about-page .values-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--sky);
+  box-shadow: 0 0 8px var(--sky-glow);
+}
+
+.about-page .skills-section {
+  margin: 3rem auto 0;
+  max-width: 960px;
+}
+
+.about-page .skills-section h2 {
+  margin: 0 0 1.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sky);
+  text-align: center;
+}
+
+.about-page .skills-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: clamp(0.75rem, 2vw, 1.25rem);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+@media (max-width: 900px) {
+  .about-page .skills-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 520px) {
+  .about-page .skills-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* 狭いスマホは1列にしてイラストを大きく */
+@media (max-width: 420px) {
+  .about-page .skills-grid {
+    grid-template-columns: 1fr;
+    max-width: 22rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .about-page .skill-card__icon {
+    max-width: 100%;
+  }
+}
+
+.about-page .skill-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: clamp(1rem, 2.5vw, 1.5rem) clamp(0.5rem, 1.5vw, 0.85rem);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  min-height: 0;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.about-page .skill-card:hover {
+  border-color: rgba(56, 189, 248, 0.45);
+  box-shadow: 0 0 0 1px var(--sky-glow);
+}
+
+/*
+ * スキル画像: グリッドセル幅いっぱいに近づけて表示（画面が広いほど大きい）。
+ * 2列のスマホではセルが広くなり Gemini 画像が大きく見える。
+ */
+.about-page .skill-card picture {
+  display: block;
+  width: 100%;
+}
+
+.about-page .skill-card__icon {
+  display: block;
+  width: 100%;
+  max-width: 280px;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  margin: 0 auto clamp(0.65rem, 1.5vw, 1rem);
+  border-radius: 10px;
+  object-fit: contain;
+  background: var(--bg);
+  border: 1px solid var(--border);
+}
+
+@media (min-width: 521px) {
+  .about-page .skill-card__icon {
+    max-width: 320px;
+  }
+}
+
+@media (min-width: 901px) {
+  .about-page .skill-card__icon {
+    max-width: 100%;
+  }
+}
+
+.about-page .skill-card__title {
+  margin: 0;
+  font-size: clamp(0.78rem, 1.6vw, 0.9rem);
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--text);
+}
+
+.about-page .skill-card__note {
+  margin: 0.4rem 0 0;
+  font-size: clamp(0.72rem, 1.4vw, 0.82rem);
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.about-page .future-list {
+  margin: 1rem 0 0;
+  padding-left: 1.25rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.about-page .future-list li {
+  margin-bottom: 0.65rem;
+}
+
+.about-page .future-list li:last-child {
+  margin-bottom: 0;
+}
+
+.about-page footer {
+  color: var(--muted);
+  border-top-color: var(--border);
+}
+
+.about-page .about-back {
+  margin-top: 2.5rem;
+  text-align: center;
+}
+
+.about-page .about-back a {
+  display: inline-block;
+  padding: 0.5rem 1.25rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--sky-bright);
+  border: 1px solid var(--sky);
+  border-radius: 8px;
+}
+
+.about-page .about-back a:hover {
+  background: var(--sky-glow);
+  color: var(--sky-soft);
+  text-decoration: none;
+}

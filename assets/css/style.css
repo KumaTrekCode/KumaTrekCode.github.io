@@ -1,14 +1,4 @@
-:root {
-  --bg: #0f1218;
-  --surface: #171b24;
-  --text: #e8eaef;
-  --muted: #9aa3b2;
-  --accent: #5b8def;
-  --border: #2a3140;
-  --radius: 12px;
-  --font: "Segoe UI", system-ui, sans-serif;
-  --max: 720px;
-}
+@import "./tokens.css";
 
 *,
 *::before,

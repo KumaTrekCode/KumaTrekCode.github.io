@@ -16,5 +16,5 @@ jobs:
           node-version: "20"
           cache: npm
       - run: npm ci
-      - run: npm run sync
-      - run: npm run validate
+      - name: Sync, validate, link check, audit
+        run: npm run check

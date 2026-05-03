@@ -5,11 +5,20 @@
   "scripts": {
     "sync": "node tools/sync-site.mjs",
     "optimize-images": "node tools/optimize-images.mjs",
-    "validate": "html-validate index.html 404.html projects/open-cafe/index.html projects/open-cafe/site/index.html",
-    "check": "npm run sync && npm run validate"
+    "build:icons": "node tools/build-skill-icons.mjs",
+    "validate": "html-validate index.html about.html 404.html projects/open-cafe/index.html projects/open-cafe/site/index.html",
+    "lint:links": "linkinator index.html about.html 404.html projects/open-cafe/index.html projects/open-cafe/site/index.html --recurse --silent --skip \"^https://kumatrekcode\\.github\\.io/|^https://(twitter\\.com/|x\\.com/)\"",
+    "audit:ci": "npm audit --audit-level=high",
+    "check": "npm run sync && npm run build:icons && npm run validate && npm run lint:links && npm run audit:ci",
+    "prepare": "simple-git-hooks"
+  },
+  "simple-git-hooks": {
+    "pre-push": "npm run check"
   },
   "devDependencies": {
     "html-validate": "^9.0.0",
-    "sharp": "^0.33.5"
+    "linkinator": "^6.1.2",
+    "sharp": "^0.33.5",
+    "simple-git-hooks": "^2.11.1"
   }
 }
