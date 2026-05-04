@@ -4,6 +4,7 @@ import { dirname, join, relative, resolve } from "node:path";
 /**
  * Repository root (GitHub Pages document root).
  * 処理する HTML は `tools/sync-html-allowlist.json` で限定（新規ページは JSON にパスを追加）。
+ * 終了時、ルート / projects 配下で allowlist に無い .html があると警告（tools/ は除外）。
  */
 const root = resolve(import.meta.dirname, "..");
 const cfg = JSON.parse(readFileSync(resolve(root, "tools", "site.config.json"), "utf8"));
@@ -104,6 +105,19 @@ function shouldProcess(html) {
   return navBlock.test(html) || footerBlock.test(html) || xFeedBlock.test(html) || hasOgMeta(html);
 }
 
+/** allowlist に載っていない .html があれば警告（sync はしない） */
+function warnHtmlOutsideAllowlist() {
+  if (!syncHtmlAllowSet || syncHtmlAllowSet.size === 0) return;
+  const allRel = walkHtmlFiles(root)
+    .map(relPosix)
+    .filter((rel) => rel.endsWith(".html") && !rel.startsWith("tools/"));
+  for (const rel of allRel) {
+    if (!syncHtmlAllowSet.has(rel)) {
+      console.warn(`sync-site: warn  allowlist に無い HTML（sync 対象外）: ${rel}`);
+    }
+  }
+}
+
 const htmlAbsList = walkHtmlFiles(root);
 for (const abs of htmlAbsList) {
   const rel = relPosix(abs);
@@ -134,3 +148,5 @@ for (const abs of htmlAbsList) {
   writeFileSync(abs, html, "utf8");
   console.log("sync-site: ok", rel);
 }
+
+warnHtmlOutsideAllowlist();

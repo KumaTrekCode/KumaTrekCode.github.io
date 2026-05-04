@@ -6,14 +6,14 @@
     <title>KumaTrekCode | ポートフォリオ</title>
     <meta
       name="description"
-      content="KumaTrekCodeのポートフォリオ。会社員としてプログラミングを学び、制作物と自己紹介を掲載。GitHub Pagesで公開中。"
+      content="KumaTrekCodeのポートフォリオ。会社員としてプログラミングを学び、制作物と Profile を掲載。GitHub Pagesで公開中。"
     />
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="KumaTrekCode | ポートフォリオ" />
     <meta
       property="og:description"
-      content="KumaTrekCodeのポートフォリオ。会社員としてプログラミングを学び、制作物と自己紹介を掲載。"
+      content="KumaTrekCodeのポートフォリオ。会社員としてプログラミングを学び、制作物と Profile を掲載。"
     />
     <meta property="og:url" content="https://kumatrekcode.github.io/" />
     <meta property="og:image" content="https://kumatrekcode.github.io/img/hero-profile.jpg" />
@@ -27,7 +27,7 @@
   <a class="brand" href="index.html">KumaTrekCode</a>
   <div class="nav-links">
     <a href="index.html">Home</a>
-    <a href="about.html">About</a>
+    <a href="about.html">Profile</a>
     <a href="index.html#works">Portfolio</a>
   </div>
 </nav>
@@ -35,78 +35,75 @@
 <!-- site:nav:end -->
     </header>
     <main>
-      <div class="hero hero-intro">
-        <figure class="hero-intro__media">
-          <picture>
-            <source srcset="img/hero-profile.webp" type="image/webp" />
-            <img
-              class="hero-avatar"
-              src="img/hero-profile.jpg"
-              width="720"
-              height="540"
-              alt="KumaTrekCodeのプロフィール画像"
-              decoding="async"
-              fetchpriority="high"
-            />
-          </picture>
-        </figure>
+      <div class="hero hero-intro hero-intro--solo">
         <div class="hero-intro__body">
-          <h1>はじめまして</h1>
+          <h1>現場とコードを繋ぐ、<br>私の歩み。</h1>
           <p class="lead">
             <strong>KumaTrekCode</strong
-            >🐻のポートフォリオです。会社員としてプログラミングを学びながら、制作メモや試行錯誤をこのサイトに置いています。
+            >🐻のポートフォリオです。実機評価の現場で培った視点に、プログラミングという新たな手段を添えて。理想とする評価の形を追求するための、制作物や学習の軌跡をまとめています。
           </p>
         </div>
       </div>
-      <section id="about">
-        <h2>自己紹介</h2>
+      <section id="profile">
+        <h2>Profile</h2>
         <div class="card card-text">
-          <p>
-            こんにちは。<strong>KumaTrekCode</strong>🐻と申します。アラフォーの会社員としてプログラミングを学び、キャリアと働き方の両面から成長を目指しています。
-          </p>
-          <p>経緯や想いの詳細は、自己紹介ページにまとめています。</p>
-          <a class="btn" href="about.html">自己紹介を読む</a>
+          <div class="profile-card__row">
+            <figure class="profile-card__figure">
+              <picture>
+                <source srcset="img/hero-profile.webp" type="image/webp" />
+                <img
+                  class="hero-avatar"
+                  src="img/hero-profile.jpg"
+                  width="720"
+                  height="540"
+                  alt="KumaTrekCodeのプロフィール画像"
+                  decoding="async"
+                  fetchpriority="high"
+                  loading="eager"
+                />
+              </picture>
+            </figure>
+            <div class="profile-card__body">
+              <p>
+                こんにちは。<strong>KumaTrekCode</strong>🐻と申します。現場で培った知見を大切にしながら、プログラミングという新たな手段を添えて、理想とする評価の形を追求するための、制作物や学習の軌跡をまとめています。
+              </p>
+              <p>経歴・スキル・価値観などの詳細は、Profile ページにまとめています。</p>
+              <a class="btn" href="about.html#profile">詳細を見る</a>
+              <p class="home-x-note">
+                日々の進捗は
+                <a href="https://x.com/30Kuma22550" rel="noopener noreferrer" target="_blank">X（@30Kuma22550）</a>
+                でも書いています。
+              </p>
+            </div>
+          </div>
         </div>
       </section>
-      <!-- site:home-x-feed:start -->
-<section id="x-feed" aria-labelledby="x-feed-heading">
-  <h2 id="x-feed-heading">X</h2>
-  <div class="card x-embed-card">
-    <p class="x-embed-lead">
-      学習や日常のメモを X でも共有しています。埋め込みは数秒かかることがあります。表示されない場合は、広告ブロックの影響か、X 側の一時的なアクセス制限（レート制限）のことがあります。しばらく待って再読み込みするか、下のリンクから X を開いてください。
-    </p>
-    <div class="x-embed">
-      <a
-        class="twitter-timeline"
-        data-height="520"
-        data-theme="dark"
-        data-chrome="nofooter transparent"
-        href="https://twitter.com/30Kuma22550"
-        >@30Kuma22550 のポスト</a
-      >
-    </div>
-    <p class="note">
-      <a href="https://x.com/30Kuma22550" rel="noopener noreferrer" target="_blank">X でプロフィールを開く</a>
-    </p>
-  </div>
-</section>
-
-<!-- site:home-x-feed:end -->
       <section id="works">
-        <h2>制作物</h2>
+        <h2>Portfolio</h2>
+        <!-- site:works:start -->
         <div class="card">
-          <h3>カフェサイト（Open cafe）</h3>
-          <p>
-            カフェ向けの静的サイトをポートフォリオ用にまとめたページです。概要とプレビューは次のリンクから開けます。
+          <h3>Open cafe</h3>
+          <p>カフェ向けランディングページの静的コーディング（HTML / CSS）。</p>
+          <p class="note">
+            <a href="https://daily-trial.com/" rel="noopener noreferrer" target="_blank"
+              >デイトラ</a
+            >の卒業課題。
           </p>
-          <a class="btn" href="projects/open-cafe/index.html">詳しく見る</a>
+          <a class="btn" href="projects/open-cafe/index.html"
+            >詳細とプレビュー</a
+          >
         </div>
+        <!-- site:works:end -->
       </section>
     </main>
     <!-- site:footer:start -->
-<footer>© KumaTrekCode</footer>
+<footer>
+  <p class="footer-note">
+    ※ 本サイトで使用している一部のアイコン画像は、Gemini（生成AI）を用いて作成しています。
+  </p>
+  <p class="footer-copy">© KumaTrekCode</p>
+</footer>
 
 <!-- site:footer:end -->
-    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
   </body>
 </html>

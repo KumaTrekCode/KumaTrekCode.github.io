@@ -13,11 +13,31 @@ GitHub Pages 用の静的 HTML リポジトリ向けの、変更から公開ま�
 | 共有色・フォントなど | `assets/css/tokens.css`（各 CSS は `@import "./tokens.css"`） |
 | Gemini アイコンと About カードの対応 | **[tools/IMAGES.md](../tools/IMAGES.md)** |
 | **sync が触る HTML の一覧** | **`tools/sync-html-allowlist.json`**（パスを増やしたらここに追記） |
+| **トップ `#works` の制作物カード** | **`tools/projects.json`**（`npm run sync` の前に `render-works` が自動実行され、`index.html` の `<!-- site:works:start -->`〜`end` を再生成） |
+
+## 新規制作物（静的）を追加するとき
+
+別リポジトリで開発したサイトを、この Pages リポジトリに **静的成果物として** 載せる場合の典型手順です。
+
+1. **`projects/<slug>/`** に公開用ファイルを置く（例: `index.html`、説明用 `index.html`、成果本体を `site/` などに分離）。
+2. **`tools/sync-html-allowlist.json`** に、そのディレクトリ配下で `npm run sync` させたい **`.html` のパスを追加**。
+3. **`package.json` の `validate` スクリプト** に、同じ HTML パスを **html-validate 対象として追加**。
+4. **`tools/projects.json`** の `projects` 配列にオブジェクトを追加（`title` / `description` / `detailHref` / `ctaLabel`、任意で `note`）。
+5. **`npm run sync`**（内部で `render-works` → `sync-site`）を実行し、差分をコミット。
+6. **About の Portfolio 文**はトップカードと役割が重なるため、必要なら手で一言ずつ合わせる（自動連携はしていません）。
+
+`npm run sync` の終了時、allowlist に無い **ルート配下・`projects/` 配下の `.html`** があると **警告**が出ます（`tools/` 配下のパーシャルは対象外）。新規ページを追加したら allowlist へ追記してください。
+
+## 別リポジトリ（動的サイトなど）との関係
+
+- **このリポジトリ**は GitHub Pages の **ドキュメントルート**として、**ビルド済みの静的ファイル**を置く想定です。
+- **動的フレームワークのリポジトリ**は別のままにし、CI で `npm run build` などの成果物だけを **手でコピー**するか、**GitHub Actions で artifact をこの repo に push / PR** するか、方針を決めると保守しやすいです（Submodule 運用も可。チームや将来の自分が迷わないよう、方針を README に一言残すとよいです）。
+- 公開 URL を **同一オリジン**にまとめるなら「静的出力を `projects/<name>/` に置く」形がシンプルです。別サブドメインに置く場合は、`lint:links` のスキップや外部リンクの扱いだけ `site.config.json` を確認してください。
 
 ## 手順チェックリスト
 
 1. **パーシャルや `site.config.json` を編集したら**  
-   `npm run sync` — 各 HTML の `<!-- site:* -->` ブロックと、`og:url` / `og:image` を設定に合わせて書き換えます。  
+   `npm run sync` — 先に **`tools/render-works.mjs`** が `index.html` の **`#works`** を `tools/projects.json` から再生成し、その後に各 HTML の `<!-- site:* -->` ブロックと `og:url` / `og:image` を設定に合わせて書き換えます。  
    **同期対象**は `tools/sync-html-allowlist.json` に列挙されたファイルのみです（新しい `.html` を sync させたいときはパスを追加）。
 
 2. **トップや About の写真を差し替えたら**  
@@ -41,6 +61,9 @@ GitHub Pages 用の静的 HTML リポジトリ向けの、変更から公開ま�
 
 8. **依存パッケージの見直し（目安: 四半期に一度）**  
    `npm run deps:report`（`npm outdated` のラッパー。終了コードは常に 0）で古い依存を確認し、問題があれば `package.json` を更新してから `npm install` と `npm run check` を回してください。自動修正は **`npm audit fix`** を手元で検討（CI は `audit --audit-level=high` のみ）。
+
+9. **Dependabot**  
+   **`.github/dependabot.yml`** により、**npm 依存**に対して週次でバージョン更新の PR が作成されることがあります。CI の `npm run check` が通るか確認してからマージしてください。
 
 ## アクセシビリティ（a11y）
 

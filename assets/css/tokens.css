@@ -11,4 +11,9 @@
   --radius: 12px;
   --font: "Segoe UI", system-ui, sans-serif;
   --max: 720px;
+  /* Section headings + About accents（スカイブルー） */
+  --sky: #38bdf8;
+  --sky-bright: #7dd3fc;
+  --sky-soft: #bae6fd;
+  --sky-glow: rgba(56, 189, 248, 0.15);
 }

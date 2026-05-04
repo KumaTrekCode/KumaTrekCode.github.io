@@ -3,8 +3,11 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>カフェサイト | 制作物</title>
-    <meta name="description" content="カフェ向け静的サイトのポートフォリオ用ページ。概要とプレビュー。" />
+    <title>Open cafe | デイトラ卒業課題（静的）| KumaTrekCode</title>
+    <meta
+      name="description"
+      content="デイトラ（https://daily-trial.com/）卒業課題「Open cafe」の静的コーディング版。概要・使用技術・プレビュー。"
+    />
     <meta property="og:url" content="https://kumatrekcode.github.io/projects/open-cafe/index.html" />
     <meta property="og:image" content="https://kumatrekcode.github.io/img/hero-profile.jpg" />
     <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml" />
@@ -17,7 +20,7 @@
   <a class="brand" href="../../index.html">KumaTrekCode</a>
   <div class="nav-links">
     <a href="../../index.html">Home</a>
-    <a href="../../about.html">About</a>
+    <a href="../../about.html">Profile</a>
     <a href="../../index.html#works">Portfolio</a>
   </div>
 </nav>
@@ -26,37 +29,53 @@
     </header>
     <main>
       <div class="hero">
-        <h1>カフェサイト（Open cafe）</h1>
+        <h1>Open cafe（静的サイト）</h1>
         <p class="lead">
-          制作物の概要・使用技術・工夫した点をここに書きます。下に静的サイトを置くか、公開済みの URL へのリンクを置けます。
+          <a href="https://daily-trial.com/" rel="noopener noreferrer" target="_blank">デイトラ</a
+          >の<strong>卒業課題</strong>として制作した、カフェ「Open
+          cafe」向けランディングページの<strong>静的コーディング版</strong>です。デザインカンプをもとに HTML / CSS
+          で組み立て、GitHub Pages 上のこのリポジトリで公開しています。
         </p>
       </div>
       <section>
         <h2>概要</h2>
-        <div class="card">
-          <p>誰向けのサイトか、目的（予約導線、メニュー紹介など）を2〜3文で書きます。ここはプレースホルダです。</p>
+        <div class="card card-text">
+          <p>
+            課題の目的は、お店の魅力（コンセプト・メニュー・アクセスなど）を一枚のサイトで伝え、来店や問い合わせにつなげることです。画像・タイポグラフィ・余白のバランスをカンプに寄せながら、セマンティックなマークアップと保守しやすいクラス設計を意識しました。
+          </p>
+          <p>
+            本ページはポートフォリオ用の<strong>説明・入口</strong>です。実際のマークアップ一式は
+            <code>projects/open-cafe/site/</code> に配置し、同梱の <code>site/index.html</code> から閲覧できる形にしています。
+          </p>
+        </div>
+      </section>
+      <section>
+        <h2>使用技術・体制</h2>
+        <div class="card card-text">
+          <p>HTML5、CSS3（カンプ準拠のレイアウト・レスポンシブ）、Git / GitHub Pages。</p>
+          <p>仕上げの微調整やアセット差し替えは、学習の進行に合わせて更新していきます。</p>
         </div>
       </section>
       <section>
         <h2>プレビュー</h2>
-        <div class="card">
+        <div class="card card-text">
           <p>
-            静的ファイル一式をこのフォルダ内に置く場合、トップは <code>site/index.html</code> のような構成にするとパスが整理しやすいです。
-          </p>
-          <p>
-            <a href="../../projects/open-cafe/site/index.html">静的版をこのリポジトリ内で開く</a>
-            （ファイルが未配置のときは 404 になります。）
+            <a href="site/index.html">静的サイトを開く（site/index.html）</a>
           </p>
           <p class="note">
-            別リポジトリや Netlify などに既にデプロイしているなら、
-            <a href="#" rel="noopener noreferrer" target="_blank">本番 URL</a>
-            へのリンクだけに差し替えても大丈夫です。
+            成果物のファイルをまだコピーしていない場合は、プレースホルダ画面が表示されます。ビルド済みの
+            <code>index.html</code> と CSS・画像を <code>site/</code> に置き換えてください。
           </p>
         </div>
       </section>
     </main>
     <!-- site:footer:start -->
-<footer>© KumaTrekCode</footer>
+<footer>
+  <p class="footer-note">
+    ※ 本サイトで使用している一部のアイコン画像は、Gemini（生成AI）を用いて作成しています。
+  </p>
+  <p class="footer-copy">© KumaTrekCode</p>
+</footer>
 
 <!-- site:footer:end -->
   </body>

@@ -1,6 +1,7 @@
 {
   "extends": ["html-validate:recommended"],
   "rules": {
+    "aria-label-misuse": "off",
     "void-style": "off",
     "no-trailing-whitespace": "off",
     "empty-heading": "warn",

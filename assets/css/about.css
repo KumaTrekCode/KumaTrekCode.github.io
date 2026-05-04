@@ -8,14 +8,8 @@
 .about-page {
   font-family: "Noto Sans JP", var(--font), system-ui, sans-serif;
   line-height: 1.75;
-}
-
-/* Sky-blue accent (main color on this page) */
-.about-page {
-  --sky: #38bdf8;
-  --sky-bright: #7dd3fc;
-  --sky-soft: #bae6fd;
-  --sky-glow: rgba(56, 189, 248, 0.15);
+  /* ヒーロー〜各セクション〜戻るリンクまでの縦リズム（子の margin-bottom と二重にしない） */
+  --about-section-gap: clamp(2.5rem, 5vw, 3rem);
 }
 
 .about-page a {
@@ -35,54 +29,59 @@
   text-decoration: none;
 }
 
-.about-page .brand:hover {
-  color: var(--sky-bright);
-  text-decoration: none;
-}
-
 .about-page main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--about-section-gap);
+  box-sizing: border-box;
+  width: 100%;
   max-width: 960px;
-  padding-top: 2.5rem;
+  min-width: 0; /* 子の横スクロール列が intrinsic 幅で親を押し広げないようにする */
+  margin: 0 auto;
+  padding: clamp(1.75rem, 4vw, 2.5rem) clamp(1.1rem, 4vw, 1.75rem) 4rem;
+  padding-bottom: max(4rem, env(safe-area-inset-bottom, 0px));
 }
 
-.about-page .about-hero {
+/* flex 子の min-width:auto だと、skills-grid の最小幅でセクション全体が viewport 幅まで膨らむ */
+.about-page main > * {
+  min-width: 0;
+}
+
+/* style.css の section / .hero の下マージンと main の gap が二重にならないようリセット */
+.about-page main > .hero {
+  margin-bottom: 0;
+}
+
+.about-page main > section {
+  margin-bottom: 0;
+}
+
+/* ヒーロー: Home と同じ hero / hero-intro--solo。本文カラム幅のみ About で揃える */
+.about-page .about-hero.hero {
   max-width: 720px;
-  margin: 0 auto 3rem;
-  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.about-page .about-hero__catch {
-  margin: 0;
-  font-size: clamp(1.05rem, 2.8vw, 1.35rem);
-  font-weight: 600;
-  line-height: 1.55;
-  color: var(--text);
-  letter-spacing: 0.04em;
+/* プロフィール: Home と同じ section + h2 + card。本文カラム幅は他セクションと揃える */
+.about-page #profile {
+  max-width: 720px;
+  margin: 0 auto;
 }
 
-.about-page .about-hero__catch::after {
-  content: "";
-  display: block;
-  width: 48px;
-  height: 3px;
-  margin: 1.25rem auto 0;
-  background: var(--sky);
-  border-radius: 2px;
-  box-shadow: 0 0 20px var(--sky-glow);
+.about-page .about-portfolio .btn {
+  margin-top: 0.25rem;
+}
+
+.about-page a.btn,
+.about-page a.btn:hover {
+  color: #fff;
+  text-decoration: none;
 }
 
 .about-page .about-section {
   max-width: 720px;
-  margin: 0 auto 3rem;
-}
-
-.about-page .about-section h2 {
-  margin: 0 0 1rem;
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--sky);
+  margin: 0 auto;
 }
 
 .about-page .about-prose p {
@@ -101,13 +100,18 @@
   font-size: 0.95rem;
 }
 
-.about-page .values-list {
-  margin: 1.5rem 0 0;
+/* Values / Introduction / Future 共通: 箇条書き＋先頭ラベル（strong）＋ダッシュ */
+.about-page .values-list,
+.about-page .intro-list,
+.about-page .future-list {
+  margin: 1rem 0 0;
   padding: 0;
   list-style: none;
 }
 
-.about-page .values-list li {
+.about-page .values-list li,
+.about-page .intro-list li,
+.about-page .future-list li {
   position: relative;
   margin: 0 0 1rem;
   padding-left: 1rem;
@@ -115,11 +119,15 @@
   font-size: 0.95rem;
 }
 
-.about-page .values-list strong {
+.about-page .values-list strong,
+.about-page .intro-list strong,
+.about-page .future-list strong {
   color: var(--text);
 }
 
-.about-page .values-list li::before {
+.about-page .values-list li::before,
+.about-page .intro-list li::before,
+.about-page .future-list li::before {
   content: "";
   position: absolute;
   left: 0;
@@ -132,27 +140,51 @@
 }
 
 .about-page .skills-section {
-  margin: 3rem auto 0;
+  box-sizing: border-box;
+  width: 100%;
   max-width: 960px;
+  margin: 0 auto;
 }
 
+/* 日本語見出しは section h2 の uppercase を外す（色・サイズは style.css と共通） */
 .about-page .skills-section h2 {
-  margin: 0 0 0.75rem;
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--sky);
-  text-align: center;
+  margin: 0 auto 1rem;
+  max-width: 720px;
+  letter-spacing: 0.08em;
+  text-transform: none;
+  text-align: left;
 }
 
 .about-page .skills-section__lead {
-  margin: 0 auto 1.35rem;
-  max-width: 38rem;
-  text-align: center;
+  margin: 0 auto 1rem;
+  max-width: 720px;
+  text-align: left;
   font-size: 0.88rem;
   color: var(--muted);
   line-height: 1.55;
+}
+
+/* 狭い画面のみ: 横スクロールの存在を示す（本文より一段小さく） */
+.about-page .skills-strip-hint {
+  display: none;
+  max-width: 720px;
+  margin: -0.35rem auto 0.7rem;
+  font-size: 0.72rem;
+  line-height: 1.45;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+  text-align: left;
+  opacity: 0.92;
+}
+
+@media (max-width: 639px) {
+  .about-page .skills-strip-hint {
+    display: block;
+  }
+
+  .about-page .skills-section__lead {
+    margin-bottom: 0.55rem;
+  }
 }
 
 .about-page .skills-grid {
@@ -210,6 +242,42 @@
 
   .about-page .skill-card__icon {
     max-width: 100%;
+  }
+}
+
+/* 狭い画面のみ: スキル一覧を横スクロール＋スナップ（JS・ライブラリなし） */
+@media (max-width: 639px) {
+  .about-page .skills-section > ul.skills-grid {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    gap: 0.85rem;
+    width: 100%;
+    max-width: none;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 0.2rem 0 0.55rem;
+    padding-inline-end: clamp(1.1rem, 4vw, 1.75rem);
+    overflow-x: auto;
+    overflow-y: visible;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: clamp(1.1rem, 4vw, 1.75rem);
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
+  }
+
+  .about-page .skills-section > ul.skills-grid > li.skill-card {
+    flex: 0 0 min(76vw, 18.5rem);
+    scroll-snap-align: start;
+    max-width: none;
+  }
+}
+
+@media (max-width: 639px) and (prefers-reduced-motion: reduce) {
+  .about-page .skills-section > ul.skills-grid {
+    scroll-snap-type: none;
   }
 }
 
@@ -280,28 +348,13 @@
   line-height: 1.45;
 }
 
-.about-page .future-list {
-  margin: 1rem 0 0;
-  padding-left: 1.25rem;
-  color: var(--muted);
-  font-size: 0.95rem;
-}
-
-.about-page .future-list li {
-  margin-bottom: 0.65rem;
-}
-
-.about-page .future-list li:last-child {
-  margin-bottom: 0;
-}
-
 .about-page footer {
   color: var(--muted);
   border-top-color: var(--border);
 }
 
 .about-page .about-back {
-  margin-top: 2.5rem;
+  margin-top: 0;
   text-align: center;
 }
 

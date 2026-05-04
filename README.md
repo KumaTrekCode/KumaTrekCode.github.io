@@ -6,6 +6,8 @@ Static personal portfolio for **GitHub Pages** (`https://kumatrekcode.github.io/
 
 **レイヤー分け:** ルート直下は **GitHub Pages の公開ドキュメントルート**（HTML / CSS / 画像 / 制作物）。**`tools/`** はナビの注入・画像最適化・サイト用 JSON など **npm からだけ触る保守用**です（URL では配信されません）。
 
+**別リポジトリの制作物:** 動的サイトや別プロジェクトのリポジトリはそのままにし、**静的ビルドの出力だけ**をこの repo の `projects/<名前>/` に置く運用が分かりやすいです（成果物のコピー or Actions で PR／デプロイ）。方針を決めたら README か [docs/WORKFLOW.md](docs/WORKFLOW.md) に一言残しておくと、後から見たときに迷いません。
+
 **Important:** After `npm run sync`, **CSS / images / in-page links use paths relative to each HTML file** (e.g. top page uses `assets/…`, nested pages use `../assets/…` or deeper prefixes). This works on **GitHub Pages** and when you open the site under a **subfolder** (e.g. VS Code Live Server: `http://127.0.0.1:5500/KumaTrekCode.github.io/index.html`). **`404.html` keeps `/…` URLs** for nav and CSS so unknown-path requests still load styles on production; nested Live Server may still show MIME errors for 404—use `npx serve` from this folder to preview 404 if needed.
 
 ---
@@ -16,7 +18,7 @@ Static personal portfolio for **GitHub Pages** (`https://kumatrekcode.github.io/
 
 | Path | Purpose |
 |------|---------|
-| `index.html` | Home（**X** 埋め込み `#x-feed` は `tools/partials/home-x-feed.html` から注入、制作物は `#works`） |
+| `index.html` | Home（**X** 埋め込み `#x-feed` は `tools/partials/home-x-feed.html` から注入。**`#works`** のカードは `<!-- site:works:start/end -->` 内を **`tools/render-works.mjs`** が **`tools/projects.json`** から再生成） |
 | `about.html` | 自己紹介の詳細ページ（ナビ「自己紹介」はここへ） |
 | `404.html` | GitHub Pages 404 |
 | `assets/` | 共有 CSS（`style.css` / `about.css` は `@import` で **`tokens.css`** を参照）・ファビコンなど |
@@ -32,7 +34,9 @@ Static personal portfolio for **GitHub Pages** (`https://kumatrekcode.github.io/
 | `tools/partials/site-nav-root.html` | **`404.html` 専用**ナビ（`/…` のまま） |
 | `tools/partials/site-footer.html` | 共通フッター（`<!-- site:footer:start -->` ブロックに注入） |
 | `tools/partials/home-x-feed.html` | トップの X 埋め込みブロック（`<!-- site:home-x-feed:start -->` に注入） |
-| `tools/sync-site.mjs` | **`sync-html-allowlist.json`** に列挙された HTML のみ処理。ナビ・フッター・X ブロック、**`site.config` に基づく OG**、ルート相対パスの**相対パス化**。 |
+| `tools/projects.json` | トップ **`#works`** の制作物一覧（タイトル・一言・リンク・CTA）。編集後は **`npm run sync`**（内部で `render-works` が先に走る）。 |
+| `tools/render-works.mjs` | `projects.json` → `index.html` の `<!-- site:works:start -->`〜`end` を書き換え（`npm run render:works` 単体でも可）。 |
+| `tools/sync-site.mjs` | **`sync-html-allowlist.json`** に列挙された HTML のみ処理。ナビ・フッター・X ブロック、**`site.config` に基づく OG**、ルート相対パスの**相対パス化**。終了時、allowlist 外のサイト用 `.html` があれば **警告**（`tools/` 配下は除外）。 |
 | `tools/sync-html-allowlist.json` | **`npm run sync` が書き換える HTML のパス一覧**（新規ページはここに追加）。 |
 | `tools/IMAGES.md` | Gemini ファイル名と `icon-skill-*`・About カードの対応表。 |
 | `tools/lint-links.mjs` | `site.config.json` を読み **linkinator** を実行（`npm run lint:links`）。 |
@@ -48,6 +52,7 @@ Static personal portfolio for **GitHub Pages** (`https://kumatrekcode.github.io/
 | `.htmlvalidate.json` | `html-validate` の設定（リポジトリルートで実行） |
 | `.github/workflows/ci.yml` | `npm ci` → **`npm run check`**（`sync`・`build:icons`・`validate`・`lint:links`・`lint:a11y`・`audit`）。 |
 | `.github/workflows/a11y-monthly.yml` | 月次で **`npm run lint:a11y`** のみ実行（手動トリガー可）。 |
+| `.github/dependabot.yml` | **npm** 依存の週次バージョン更新 PR（マージ前に `npm run check` を確認）。 |
 | `.editorconfig` / `.gitignore` | エディタ・Git の共通設定 |
 
 ---

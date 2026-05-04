@@ -3,7 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "sync": "node tools/sync-site.mjs",
+    "render:works": "node tools/render-works.mjs",
+    "sync": "node tools/render-works.mjs && node tools/sync-site.mjs",
     "optimize-images": "node tools/optimize-images.mjs",
     "build:icons": "node tools/build-skill-icons.mjs",
     "validate": "html-validate index.html about.html 404.html projects/open-cafe/index.html projects/open-cafe/site/index.html",

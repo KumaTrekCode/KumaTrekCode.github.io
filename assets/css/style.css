@@ -42,10 +42,11 @@ header {
 
 .brand {
   font-weight: 600;
-  color: var(--text);
+  color: var(--sky-bright);
 }
 
 .brand:hover {
+  color: var(--sky-soft);
   text-decoration: none;
 }
 
@@ -80,6 +81,15 @@ main {
   grid-template-columns: min(42vw, 176px) minmax(0, 1fr);
   gap: clamp(1.25rem, 4vw, 2.25rem);
   align-items: center;
+}
+
+/* 写真なしヒーロー（写真は Profile カードへ） */
+.hero-intro.hero-intro--solo {
+  display: block;
+}
+
+.hero-intro.hero-intro--solo .hero-intro__body {
+  max-width: var(--max);
 }
 
 .hero-intro__media {
@@ -140,12 +150,13 @@ section {
 }
 
 section h2 {
-  font-size: 1.1rem;
-  font-weight: 600;
   margin: 0 0 1rem;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: none;
+  text-align: left;
+  color: var(--sky);
 }
 
 .card {
@@ -153,6 +164,17 @@ section h2 {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 1.25rem 1.5rem;
+}
+
+/* Portfolio カード: 本文は左、CTA ボタンは中央 */
+#works .card {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+#works .card > .btn {
+  align-self: center;
 }
 
 .card h3 {
@@ -232,6 +254,19 @@ footer {
   font-size: 0.9rem;
 }
 
+footer .footer-note {
+  margin: 0 auto 0.9rem;
+  max-width: 36rem;
+  font-size: 0.78rem;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+footer .footer-copy {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
 .btn {
   display: inline-block;
   margin-top: 1rem;
@@ -272,6 +307,90 @@ footer {
 
 .card-text p + p {
   margin-top: 1rem;
+}
+
+/* Profile カード内: 写真 + 本文（Home / About 共通） */
+.profile-card__row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: clamp(1rem, 3vw, 1.5rem);
+  align-items: center;
+}
+
+.profile-card__figure {
+  margin: 0;
+  padding: 0;
+}
+
+.profile-card__figure picture {
+  display: block;
+}
+
+.profile-card__name {
+  margin: 0 0 0.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+@media (max-width: 540px) {
+  .profile-card__row {
+    grid-template-columns: 1fr;
+    justify-items: stretch;
+  }
+
+  /* 写真だけ中央、本文・ボタンは左で統一（読みやすさ・見出しと揃える） */
+  .profile-card__figure {
+    justify-self: center;
+  }
+
+  .profile-card__body {
+    text-align: left;
+    width: 100%;
+  }
+}
+
+/* Profile カード本文: 縦方向の余白を一定の gap で統一 */
+.card-text .profile-card__body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.card-text .profile-card__body > p,
+.card-text .profile-card__body > p + p {
+  margin: 0;
+}
+
+.card-text .profile-card__body > .profile-card__name {
+  margin: 0;
+}
+
+.card-text .profile-card__body > .btn {
+  margin-top: 0;
+  align-self: center;
+}
+
+.card-text .profile-card__body > .home-x-note {
+  margin: 0;
+}
+
+/* Home · Profile カード末尾の X 案内（軽量・埋め込みなし） */
+.home-x-note {
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+.home-x-note a {
+  color: var(--sky);
+  font-weight: 500;
+}
+
+.home-x-note a:hover {
+  color: var(--sky-bright);
+  text-decoration: underline;
 }
 
 .about-figure {

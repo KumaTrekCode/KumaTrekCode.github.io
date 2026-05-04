@@ -1,0 +1,15 @@
+{
+  "projects": [
+    {
+      "title": "Open cafe",
+      "description": "カフェ向けランディングページの静的コーディング（HTML / CSS）。",
+      "note": {
+        "linkUrl": "https://daily-trial.com/",
+        "linkLabel": "デイトラ",
+        "suffix": "の卒業課題。"
+      },
+      "detailHref": "projects/open-cafe/index.html",
+      "ctaLabel": "詳細とプレビュー"
+    }
+  ]
+}

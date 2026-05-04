@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>About | KumaTrekCode</title>
+    <title>Profile | KumaTrekCode</title>
     <meta
       name="description"
-      content="実車評価、車両通信・ECU内部値の計測と良否判定に従事。資格と計測実務を軸に、シミュレーションから実機までを見据えたエンジニアのプロフィール。"
+      content="実機評価、評価対象の通信・ECU内部値の計測と良否判定に従事。資格と計測実務、Web学習とポートフォリオ（デイトラ卒業課題 Open cafe など）を掲載。"
     />
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -16,10 +16,10 @@
       rel="stylesheet"
     />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="About | KumaTrekCode" />
+    <meta property="og:title" content="Profile | KumaTrekCode" />
     <meta
       property="og:description"
-      content="実車評価、車両通信・ECU内部値の計測と良否判定に従事。資格と計測実務を軸に、シミュレーションから実機までを見据えたエンジニアのプロフィール。"
+      content="実機評価、評価対象の通信・ECU内部値の計測と良否判定に従事。資格と計測実務、Web学習とポートフォリオ（デイトラ卒業課題 Open cafe など）を掲載。"
     />
     <meta property="og:url" content="https://kumatrekcode.github.io/about.html" />
     <meta property="og:image" content="https://kumatrekcode.github.io/img/hero-profile.jpg" />
@@ -34,7 +34,7 @@
   <a class="brand" href="index.html">KumaTrekCode</a>
   <div class="nav-links">
     <a href="index.html">Home</a>
-    <a href="about.html">About</a>
+    <a href="about.html">Profile</a>
     <a href="index.html#works">Portfolio</a>
   </div>
 </nav>
@@ -42,25 +42,74 @@
 <!-- site:nav:end -->
     </header>
     <main>
-      <div class="about-hero">
-        <p class="about-hero__catch">
-          実車の計測データで筋道を立て、検証で裏を取り、良否判定まで責任を持ってつなぐ。
-        </p>
+      <div
+        class="hero hero-intro hero-intro--solo about-hero"
+        aria-label="キャッチコピーとこのページの案内"
+      >
+        <div class="hero-intro__body">
+          <h1>
+            現場の風と、論理の調和。<br />
+            ひとつひとつを丁寧に、楽しみながら追求する。
+          </h1>
+          <p class="lead">
+            このページでは、仕事観、スキルと考え方、制作物を順にまとめています。学びの更新は、下の
+            X 欄からもご覧いただけます。
+          </p>
+        </div>
       </div>
+
+      <section id="profile" aria-labelledby="profile-heading">
+        <h2 id="profile-heading">Profile</h2>
+        <div class="card card-text">
+          <div class="profile-card__row">
+            <figure class="profile-card__figure">
+              <picture>
+                <source srcset="img/hero-profile.webp" type="image/webp" />
+                <img
+                  class="hero-avatar"
+                  src="img/hero-profile.jpg"
+                  width="720"
+                  height="540"
+                  alt="KumaTrekCodeのプロフィール画像"
+                  decoding="async"
+                  loading="eager"
+                />
+              </picture>
+            </figure>
+            <div class="profile-card__body">
+              <p class="profile-card__name">
+                KumaTrekCode<span aria-hidden="true"> 🐻</span>
+              </p>
+              <p>
+                ハードの事象を、ソフトの力で数値化する。<br />
+                実機評価という「ハード」の現場で起きる事象を、プログラミングという「ソフト」の力で正確に数値化し、開発のスピードと品質に寄与することを目指しています。
+                試験の企画から現場での実施までを段取りよく進め、計測で得た事実にもとづいて結論の説明まで責任を持つ<strong>いまの立場</strong>として、現場と仕様のあいだを正しくつなぐテストエンジニアでありたいと考えています。
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <section class="about-section" aria-labelledby="intro-heading">
         <h2 id="intro-heading">Introduction</h2>
-        <div class="about-prose">
-          <p>
-            仕組みを分解して理解し、情報を整理して伝えることに強みがあります。手順を決めたら抜け道を作らずに進め、完了まで責任を持つタイプです。
-          </p>
-          <p>
-            現在の業務は<strong>実車評価</strong>が中心です。車両の通信や<strong>ECU の内部値の計測</strong>を行い、取得したデータに基づいて<strong>良否判定</strong>まで担当しています。仕様とログの両面から、説明可能な形で結論を出すことを大切にしています。
-          </p>
-          <p>
-            現場で培った車両・電気・化学品の素地と、計測・評価の経験が相互に補強される働き方です。
-          </p>
-        </div>
+        <p class="about-prose--tight">役割と、大切にしている姿勢</p>
+        <ul class="intro-list" aria-label="Introduction の要点">
+          <li>
+            <strong>納得感と完遂力</strong>
+            —
+            仕組みを分解して本質を理解し、自分の中で納得できるテーマでは、不要な寄り道をせず<strong>集中して</strong>取り組みます。計画した手順は「抜け道」を作らず着実に進め、最後まで責任を持ってやり遂げるのが私のスタイルです。
+          </li>
+          <li>
+            <strong>事実に基づく実機評価</strong>
+            —
+            現在は<strong>実機評価</strong>を中心に、評価対象の通信や<strong>ECU内部値の計測</strong>から<strong>良否判定</strong>までを担っています。仕様とログの双方から「なぜこの結論に至ったか」を誰もが納得できる形で言語化することを大切にしています。
+          </li>
+          <li>
+            <strong>現場経験 × デジタルの視点</strong>
+            —
+            長年の実機計測で培った感覚を土台に、プログラミング学習で得た<strong>論理的な構造化スキル</strong>を掛け合わせる。現在は、学習した内容を少しずつ実務に還元し、計測データの整理や自動化を通じて、評価プロセスの精度を高める試みを始めています。
+          </li>
+        </ul>
       </section>
 
       <section class="about-section" aria-labelledby="values-heading">
@@ -85,66 +134,14 @@
       <section class="skills-section" aria-labelledby="skills-heading">
         <h2 id="skills-heading">保有スキル</h2>
         <p class="about-prose--tight skills-section__lead">
-          資格・免許と、実務での<strong>車載計測・評価</strong>を、いまの自分の軸として整理しています。
+          資格・免許と、実務での<strong>実機計測・評価</strong>を、いまの自分の軸として整理しています。
         </p>
-        <!-- 大型〜ECU: npm run build:icons（ECU は Gemini lvfa8 → icon-skill-ecu-*） -->
-        <ul class="skills-grid">
-          <li class="skill-card">
-            <picture>
-              <source
-                type="image/webp"
-                media="(max-width: 520px)"
-                srcset="img/icon-skill-large-vehicle-sm.webp"
-              />
-              <source
-                type="image/webp"
-                media="(max-width: 900px)"
-                srcset="img/icon-skill-large-vehicle-md.webp"
-              />
-              <source type="image/webp" srcset="img/icon-skill-large-vehicle-lg.webp" />
-              <source media="(max-width: 520px)" srcset="img/icon-skill-large-vehicle-sm.png" />
-              <source media="(max-width: 900px)" srcset="img/icon-skill-large-vehicle-md.png" />
-              <img
-                class="skill-card__icon"
-                src="img/icon-skill-large-vehicle-lg.png"
-                width="1195"
-                height="896"
-                alt="大型自動車免許のアイコン"
-                loading="lazy"
-                decoding="async"
-              />
-            </picture>
-            <p class="skill-card__title">大型運転</p>
-            <p class="skill-card__note">大型自動車免許。重量物・長尺の扱いと、車両挙動への感覚の土台</p>
-          </li>
-          <li class="skill-card">
-            <picture>
-              <source
-                type="image/webp"
-                media="(max-width: 520px)"
-                srcset="img/icon-skill-auto-mechanic-sm.webp"
-              />
-              <source
-                type="image/webp"
-                media="(max-width: 900px)"
-                srcset="img/icon-skill-auto-mechanic-md.webp"
-              />
-              <source type="image/webp" srcset="img/icon-skill-auto-mechanic-lg.webp" />
-              <source media="(max-width: 520px)" srcset="img/icon-skill-auto-mechanic-sm.png" />
-              <source media="(max-width: 900px)" srcset="img/icon-skill-auto-mechanic-md.png" />
-              <img
-                class="skill-card__icon"
-                src="img/icon-skill-auto-mechanic-lg.png"
-                width="1195"
-                height="896"
-                alt="二級自動車整備士のアイコン"
-                loading="lazy"
-                decoding="async"
-              />
-            </picture>
-            <p class="skill-card__title">自動車整備士</p>
-            <p class="skill-card__note">二級自動車整備士。機構と故障の因果を追うときの基礎体力</p>
-          </li>
+        <!-- <p class="skills-strip-hint" aria-hidden="true">続きのスキルは、左右にスワイプして表示できます。</p> -->
+        <!-- 表示順: 電気工事士 → ECU → 自動車整備 → 大型 → 危険物。build:icons（ECU は Gemini lvfa8 → icon-skill-ecu-*） -->
+        <ul
+          class="skills-grid"
+          aria-label="保有スキル一覧。狭い画面では左右にスワイプしてすべて表示できます。"
+        >
           <li class="skill-card">
             <picture>
               <source
@@ -157,9 +154,18 @@
                 media="(max-width: 900px)"
                 srcset="img/icon-skill-electrician-md.webp"
               />
-              <source type="image/webp" srcset="img/icon-skill-electrician-lg.webp" />
-              <source media="(max-width: 520px)" srcset="img/icon-skill-electrician-sm.png" />
-              <source media="(max-width: 900px)" srcset="img/icon-skill-electrician-md.png" />
+              <source
+                type="image/webp"
+                srcset="img/icon-skill-electrician-lg.webp"
+              />
+              <source
+                media="(max-width: 520px)"
+                srcset="img/icon-skill-electrician-sm.png"
+              />
+              <source
+                media="(max-width: 900px)"
+                srcset="img/icon-skill-electrician-md.png"
+              />
               <img
                 class="skill-card__icon"
                 src="img/icon-skill-electrician-lg.png"
@@ -171,35 +177,9 @@
               />
             </picture>
             <p class="skill-card__title">電気工事士</p>
-            <p class="skill-card__note">第２種電気工事士。制御回路・電源まわりの安全と規格の素地</p>
-          </li>
-          <li class="skill-card">
-            <picture>
-              <source
-                type="image/webp"
-                media="(max-width: 520px)"
-                srcset="img/icon-skill-hazmat-sm.webp"
-              />
-              <source
-                type="image/webp"
-                media="(max-width: 900px)"
-                srcset="img/icon-skill-hazmat-md.webp"
-              />
-              <source type="image/webp" srcset="img/icon-skill-hazmat-lg.webp" />
-              <source media="(max-width: 520px)" srcset="img/icon-skill-hazmat-sm.png" />
-              <source media="(max-width: 900px)" srcset="img/icon-skill-hazmat-md.png" />
-              <img
-                class="skill-card__icon"
-                src="img/icon-skill-hazmat-lg.png"
-                width="1195"
-                height="896"
-                alt="危険物取扱者のアイコン"
-                loading="lazy"
-                decoding="async"
-              />
-            </picture>
-            <p class="skill-card__title">危険物取扱</p>
-            <p class="skill-card__note">危険物取扱者 第1〜6類。化学品の性質と保管・運用上のリスク意識</p>
+            <p class="skill-card__note">
+              第２種電気工事士。制御回路・電源まわりの安全と規格の素地
+            </p>
           </li>
           <li class="skill-card">
             <picture>
@@ -214,21 +194,145 @@
                 srcset="img/icon-skill-ecu-md.webp"
               />
               <source type="image/webp" srcset="img/icon-skill-ecu-lg.webp" />
-              <source media="(max-width: 520px)" srcset="img/icon-skill-ecu-sm.png" />
-              <source media="(max-width: 900px)" srcset="img/icon-skill-ecu-md.png" />
+              <source
+                media="(max-width: 520px)"
+                srcset="img/icon-skill-ecu-sm.png"
+              />
+              <source
+                media="(max-width: 900px)"
+                srcset="img/icon-skill-ecu-md.png"
+              />
               <img
                 class="skill-card__icon"
                 src="img/icon-skill-ecu-lg.png"
                 width="1195"
                 height="896"
-                alt="車載ネットワーク・ECU 計測のイメージイラスト"
+                alt="実機上のネットワーク・ECU 計測のイメージイラスト"
                 loading="lazy"
                 decoding="async"
               />
             </picture>
-            <p class="skill-card__title">ECU などの計測</p>
+            <p class="skill-card__title">ECU計測</p>
             <p class="skill-card__note">
-              車両通信や ECU 内部値の取得・整理を行い、実車評価における良否判定の根拠づくりに使っています。
+              評価対象の通信や ECU
+              内部値の取得・整理を行い、実機評価における良否判定の根拠づくりに使っています。
+            </p>
+          </li>
+          <li class="skill-card">
+            <picture>
+              <source
+                type="image/webp"
+                media="(max-width: 520px)"
+                srcset="img/icon-skill-auto-mechanic-sm.webp"
+              />
+              <source
+                type="image/webp"
+                media="(max-width: 900px)"
+                srcset="img/icon-skill-auto-mechanic-md.webp"
+              />
+              <source
+                type="image/webp"
+                srcset="img/icon-skill-auto-mechanic-lg.webp"
+              />
+              <source
+                media="(max-width: 520px)"
+                srcset="img/icon-skill-auto-mechanic-sm.png"
+              />
+              <source
+                media="(max-width: 900px)"
+                srcset="img/icon-skill-auto-mechanic-md.png"
+              />
+              <img
+                class="skill-card__icon"
+                src="img/icon-skill-auto-mechanic-lg.png"
+                width="1195"
+                height="896"
+                alt="二級自動車整備士のアイコン"
+                loading="lazy"
+                decoding="async"
+              />
+            </picture>
+            <p class="skill-card__title">自動車整備士</p>
+            <p class="skill-card__note">
+              二級自動車整備士。機構と故障の因果を追うときの基礎体力
+            </p>
+          </li>
+          <li class="skill-card">
+            <picture>
+              <source
+                type="image/webp"
+                media="(max-width: 520px)"
+                srcset="img/icon-skill-large-vehicle-sm.webp"
+              />
+              <source
+                type="image/webp"
+                media="(max-width: 900px)"
+                srcset="img/icon-skill-large-vehicle-md.webp"
+              />
+              <source
+                type="image/webp"
+                srcset="img/icon-skill-large-vehicle-lg.webp"
+              />
+              <source
+                media="(max-width: 520px)"
+                srcset="img/icon-skill-large-vehicle-sm.png"
+              />
+              <source
+                media="(max-width: 900px)"
+                srcset="img/icon-skill-large-vehicle-md.png"
+              />
+              <img
+                class="skill-card__icon"
+                src="img/icon-skill-large-vehicle-lg.png"
+                width="1195"
+                height="896"
+                alt="大型自動車免許のアイコン"
+                loading="lazy"
+                decoding="async"
+              />
+            </picture>
+            <p class="skill-card__title">大型運転</p>
+            <p class="skill-card__note">
+              大型自動車免許。重量物・長尺の扱いと、実機の挙動への感覚の土台
+            </p>
+          </li>
+          <li class="skill-card">
+            <picture>
+              <source
+                type="image/webp"
+                media="(max-width: 520px)"
+                srcset="img/icon-skill-hazmat-sm.webp"
+              />
+              <source
+                type="image/webp"
+                media="(max-width: 900px)"
+                srcset="img/icon-skill-hazmat-md.webp"
+              />
+              <source
+                type="image/webp"
+                srcset="img/icon-skill-hazmat-lg.webp"
+              />
+              <source
+                media="(max-width: 520px)"
+                srcset="img/icon-skill-hazmat-sm.png"
+              />
+              <source
+                media="(max-width: 900px)"
+                srcset="img/icon-skill-hazmat-md.png"
+              />
+              <img
+                class="skill-card__icon"
+                src="img/icon-skill-hazmat-lg.png"
+                width="1195"
+                height="896"
+                alt="危険物取扱者のアイコン"
+                loading="lazy"
+                decoding="async"
+              />
+            </picture>
+            <p class="skill-card__title">危険物取扱</p>
+            <p class="skill-card__note">
+              危険物取扱者 第1〜6類。化学品の性質と保管・運用上のリスク意識
             </p>
           </li>
         </ul>
@@ -237,10 +341,14 @@
       <section class="skills-section" aria-labelledby="learning-heading">
         <h2 id="learning-heading">今後取得・強化したいスキル</h2>
         <p class="about-prose--tight skills-section__lead">
-          手段ではなく、仕事に接続したい能力として優先しています。Web・データ処理・Linux はいずれも <strong>Gemini 由来の tier 画像</strong>（build:icons で再生成）です。
+          Web・データ処理・Linux を通して、実機評価で得た知見を<strong>速く・正確に・説明しやすく</strong>還元するために、いま伸ばしている分野です。
         </p>
+        <!-- <p class="skills-strip-hint" aria-hidden="true">続きのスキルは、左右にスワイプして表示できます。</p> -->
         <!-- Web: icon-skill-webdev-*。Python: icon-skill-future-python-*（Gemini 9km4nj）。Linux: icon-skill-future-linux-*（Gemini l0mtfk） -->
-        <ul class="skills-grid skills-grid--three">
+        <ul
+          class="skills-grid skills-grid--three"
+          aria-label="今後取得・強化したいスキル一覧。狭い画面では左右にスワイプしてすべて表示できます。"
+        >
           <li class="skill-card">
             <picture>
               <source
@@ -253,9 +361,18 @@
                 media="(max-width: 900px)"
                 srcset="img/icon-skill-webdev-md.webp"
               />
-              <source type="image/webp" srcset="img/icon-skill-webdev-lg.webp" />
-              <source media="(max-width: 520px)" srcset="img/icon-skill-webdev-sm.png" />
-              <source media="(max-width: 900px)" srcset="img/icon-skill-webdev-md.png" />
+              <source
+                type="image/webp"
+                srcset="img/icon-skill-webdev-lg.webp"
+              />
+              <source
+                media="(max-width: 520px)"
+                srcset="img/icon-skill-webdev-sm.png"
+              />
+              <source
+                media="(max-width: 900px)"
+                srcset="img/icon-skill-webdev-md.png"
+              />
               <img
                 class="skill-card__icon"
                 src="img/icon-skill-webdev-lg.png"
@@ -268,7 +385,8 @@
             </picture>
             <p class="skill-card__title">Web 開発</p>
             <p class="skill-card__note">
-              HTML / CSS / JavaScript。ポートフォリオや小さなツールを通じて、説明可能な形で成果を残す力を伸ばす。
+              HTML / CSS / JavaScript。評価レポートや計測用ツールの UI
+              を、見た人がすぐ状況を把握できる形にまとめる力をつけたい。
             </p>
           </li>
           <li class="skill-card">
@@ -283,9 +401,18 @@
                 media="(max-width: 900px)"
                 srcset="img/icon-skill-future-python-md.webp"
               />
-              <source type="image/webp" srcset="img/icon-skill-future-python-lg.webp" />
-              <source media="(max-width: 520px)" srcset="img/icon-skill-future-python-sm.png" />
-              <source media="(max-width: 900px)" srcset="img/icon-skill-future-python-md.png" />
+              <source
+                type="image/webp"
+                srcset="img/icon-skill-future-python-lg.webp"
+              />
+              <source
+                media="(max-width: 520px)"
+                srcset="img/icon-skill-future-python-sm.png"
+              />
+              <source
+                media="(max-width: 900px)"
+                srcset="img/icon-skill-future-python-md.png"
+              />
               <img
                 class="skill-card__icon"
                 src="img/icon-skill-future-python-lg.png"
@@ -298,7 +425,8 @@
             </picture>
             <p class="skill-card__title">データ処理・自動化</p>
             <p class="skill-card__note">
-              Python と標準ライブラリ、pandas・可視化。ログや試験データの整形・集計から、再現可能な手順で判断までつなげ、共有しやすい形にしたい。
+              Python、pandas、可視化。計測ログや ECU
+              内部値の整形・解析をスクリプト化し、同じ手順で繰り返せる形にして良否の説明までつなげたい。
             </p>
           </li>
           <li class="skill-card">
@@ -313,9 +441,18 @@
                 media="(max-width: 900px)"
                 srcset="img/icon-skill-future-linux-md.webp"
               />
-              <source type="image/webp" srcset="img/icon-skill-future-linux-lg.webp" />
-              <source media="(max-width: 520px)" srcset="img/icon-skill-future-linux-sm.png" />
-              <source media="(max-width: 900px)" srcset="img/icon-skill-future-linux-md.png" />
+              <source
+                type="image/webp"
+                srcset="img/icon-skill-future-linux-lg.webp"
+              />
+              <source
+                media="(max-width: 520px)"
+                srcset="img/icon-skill-future-linux-sm.png"
+              />
+              <source
+                media="(max-width: 900px)"
+                srcset="img/icon-skill-future-linux-md.png"
+              />
               <img
                 class="skill-card__icon"
                 src="img/icon-skill-future-linux-lg.png"
@@ -328,23 +465,92 @@
             </picture>
             <p class="skill-card__title">開発・計測環境（Linux）</p>
             <p class="skill-card__note">
-              Ubuntu、シェル、パッケージと権限、Git / GitHub。計測・解析・自動化のための土台を手順として固定し、CLI はその入口として扱いつつ、自分やチームが同じ構成を後から取り戻せるようにしたい。
+              Ubuntu、シェル、Git。計測と解析を同じ環境で再現できる土台にし、後から同じ構成を取り戻せるようにしたい。
             </p>
           </li>
         </ul>
       </section>
 
+      <section
+        class="about-section about-portfolio"
+        aria-labelledby="portfolio-heading"
+      >
+        <h2 id="portfolio-heading">Portfolio</h2>
+        <div class="about-prose">
+          <p>
+            トップ・About・各制作物の説明ページを含む<strong>このサイト全体</strong>も、HTML
+            / CSS で組んだ静的なポートフォリオです。GitHub Pages
+            で公開しており、<strong
+              >このサイト自体が Web 制作の能力を示すひとつの成果</strong
+            >になるようにしています。業務とは切り分けた<strong>学習・アウトプット</strong>の置き場でもあります。
+          </p>
+          <p>
+            制作物としてメインで載せているのは、<a
+              href="https://daily-trial.com/"
+              rel="noopener noreferrer"
+              target="_blank"
+              >デイトラ</a
+            >の<strong>卒業課題</strong>として取り組んだカフェサイト「<strong
+              >Open cafe</strong
+            >」の静的コーディング版です。課題の要件に沿って<strong>完走したうえで</strong>ここに載せており、概要・使用技術・プレビューは次のページにまとめています。
+          </p>
+          <p>
+            <a class="btn" href="projects/open-cafe/index.html"
+              >Open cafe の説明とプレビューへ</a
+            >
+          </p>
+        </div>
+      </section>
+
       <section class="about-section" aria-labelledby="future-heading">
         <h2 id="future-heading">目指している姿</h2>
         <p class="about-prose--tight">長期的なゴール</p>
-        <ul class="future-list">
+        <ul class="future-list" aria-label="目指している姿の要点">
           <li>
-            <strong>シミュレーションから実機評価まで</strong>をトータルに設計・実行し、<strong>良否判定まで一貫</strong>して担えること。上流のモデル・シミュレーションと、現車の計測・判定を同じ設計思想でつなげたいです。
+            <strong>ハードとソフト、両輪を回せるテストエンジニア</strong>
+            —
+            実機の挙動（ハード）を踏まえ、計測データの整理・解析に<strong>自らのコード</strong>を組み込み、必要に応じて<strong>シミュレーション評価</strong>まで設計・実行できるようにし、試験の計画から現場の良否判定までをひと続きの責任で引き受けられるテストエンジニアを、次の段階の目標にしています。
           </li>
           <li>
-            現時点では業務の比重が<strong>実機評価</strong>に寄っています。計測データに基づく判断の精度と説明責任を高めながら、上流との接続を少しずつ広げていく段階だと捉えています。
+            <strong>上流と現場を繋ぐ役割</strong>
+            —
+            シミュレーション上の理論と、現場で起きている事実。その両方を等しく語り、評価の前提と結果を一枚にそろえられる専門性を磨くことで、開発全体のスムーズな進行に貢献できる存在でありたいと考えています。
           </li>
         </ul>
+      </section>
+
+      <section
+        class="about-section"
+        id="x-feed"
+        aria-labelledby="x-feed-heading"
+      >
+        <h2 id="x-feed-heading">X</h2>
+        <div class="card x-embed-card">
+          <p class="x-embed-lead">
+            学習メモや気づきを X
+            でも共有しています。埋め込みの表示には数秒かかることがあります。表示されない場合は広告ブロックや
+            X
+            側の制限の可能性があるため、しばらく待って再読み込みするか、下のリンクから直接開いてください。
+          </p>
+          <div class="x-embed">
+            <a
+              class="twitter-timeline"
+              data-height="520"
+              data-theme="dark"
+              data-chrome="nofooter transparent"
+              href="https://twitter.com/30Kuma22550"
+              >@30Kuma22550 のポスト</a
+            >
+          </div>
+          <p class="note">
+            <a
+              href="https://x.com/30Kuma22550"
+              rel="noopener noreferrer"
+              target="_blank"
+              >X でプロフィールを開く</a
+            >
+          </p>
+        </div>
       </section>
 
       <p class="about-back">
@@ -352,8 +558,18 @@
       </p>
     </main>
     <!-- site:footer:start -->
-<footer>© KumaTrekCode</footer>
+<footer>
+  <p class="footer-note">
+    ※ 本サイトで使用している一部のアイコン画像は、Gemini（生成AI）を用いて作成しています。
+  </p>
+  <p class="footer-copy">© KumaTrekCode</p>
+</footer>
 
 <!-- site:footer:end -->
+    <script
+      async
+      src="https://platform.twitter.com/widgets.js"
+      charset="utf-8"
+    ></script>
   </body>
 </html>
