@@ -6,7 +6,7 @@
     <title>Open cafe | デイトラ卒業課題（静的）| KumaTrekCode</title>
     <meta
       name="description"
-      content="デイトラ（https://daily-trial.com/）卒業課題「Open cafe」の静的コーディング版。概要・使用技術・プレビュー。"
+      content="デイトラ卒業課題「Open cafe」。WordPress テーマから書き出したデモの入口と、教材用静的版の案内。"
     />
     <meta property="og:url" content="https://kumatrekcode.github.io/projects/open-cafe/index.html" />
     <meta property="og:image" content="https://kumatrekcode.github.io/img/hero-profile.jpg" />
@@ -21,7 +21,7 @@
   <div class="nav-links">
     <a href="../../index.html">Home</a>
     <a href="../../about.html">Profile</a>
-    <a href="../../index.html#works">Portfolio</a>
+    <a href="../../projects/open-cafe/index.html">Portfolio</a>
   </div>
 </nav>
 
@@ -29,42 +29,32 @@
     </header>
     <main>
       <div class="hero">
-        <h1>Open cafe（静的サイト）</h1>
+        <h1>Open cafe（卒業課題）</h1>
         <p class="lead">
           <a href="https://daily-trial.com/" rel="noopener noreferrer" target="_blank">デイトラ</a
-          >の<strong>卒業課題</strong>として制作した、カフェ「Open
-          cafe」向けランディングページの<strong>静的コーディング版</strong>です。デザインカンプをもとに HTML / CSS
-          で組み立て、GitHub Pages 上のこのリポジトリで公開しています。
+          >の卒業課題「Open cafe」。カンプをもとに HTML / CSS で組み、WordPress テーマ化したうえで静的書き出しをこのサイトで公開しています。
         </p>
       </div>
-      <section>
-        <h2>概要</h2>
+
+      <section aria-labelledby="about-heading">
+        <h2 id="about-heading">概要</h2>
         <div class="card card-text">
           <p>
-            課題の目的は、お店の魅力（コンセプト・メニュー・アクセスなど）を一枚のサイトで伝え、来店や問い合わせにつなげることです。画像・タイポグラフィ・余白のバランスをカンプに寄せながら、セマンティックなマークアップと保守しやすいクラス設計を意識しました。
-          </p>
-          <p>
-            本ページはポートフォリオ用の<strong>説明・入口</strong>です。実際のマークアップ一式は
-            <code>projects/open-cafe/site/</code> に配置し、同梱の <code>site/index.html</code> から閲覧できる形にしています。
+            カフェの魅力を一枚で伝えるランディングです。技術スタックは HTML / CSS、WordPress テーマ、GitHub Pages です。
           </p>
         </div>
       </section>
-      <section>
-        <h2>使用技術・体制</h2>
+
+      <section id="demo" aria-labelledby="demo-heading">
+        <h2 id="demo-heading">デモを見る</h2>
         <div class="card card-text">
-          <p>HTML5、CSS3（カンプ準拠のレイアウト・レスポンシブ）、Git / GitHub Pages。</p>
-          <p>仕上げの微調整やアセット差し替えは、学習の進行に合わせて更新していきます。</p>
-        </div>
-      </section>
-      <section>
-        <h2>プレビュー</h2>
-        <div class="card card-text">
-          <p>
-            <a href="site/index.html">静的サイトを開く（site/index.html）</a>
+          <p>書き出し済みのページをそのまま表示します。</p>
+          <p class="open-cafe-project__demo-btn">
+            <a class="btn" href="../open-cafe-wp-export/index.html">デモサイトを開く</a>
           </p>
-          <p class="note">
-            成果物のファイルをまだコピーしていない場合は、プレースホルダ画面が表示されます。ビルド済みの
-            <code>index.html</code> と CSS・画像を <code>site/</code> に置き換えてください。
+          <p class="note open-cafe-project__demo-note">
+            教材どおりの手書き HTML だけの版は
+            <a href="site/index.html">こちら</a>（未配置のときはプレースホルダ）。
           </p>
         </div>
       </section>

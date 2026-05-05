@@ -2,6 +2,8 @@
 
 GitHub Pages 用の静的 HTML リポジトリ向けの、変更から公開までの手順です。
 
+**Open Cafe の WP 書き出しを AI で整える・`gh-pages-static` から rsync する**ときは、コピペ用プロンプトを **[docs/prompts/README.md](./prompts/README.md)** にまとめてあります（内容は随時更新してください）。
+
 ## よく触るファイル
 
 | 目的 | 触る場所 |

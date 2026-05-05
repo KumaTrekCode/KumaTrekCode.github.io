@@ -13,6 +13,7 @@ const pages = [
   "404.html",
   "projects/open-cafe/index.html",
   "projects/open-cafe/site/index.html",
+  "projects/open-cafe-wp-export/index.html",
 ];
 
 for (const rel of pages) {
