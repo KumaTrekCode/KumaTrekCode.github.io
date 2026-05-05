@@ -47,7 +47,8 @@
 
 4. 同期後、次を**短く案内**する:
 
-   - `DEST` 直下に**新しい `*.html`** がある場合、`tools/sync-html-allowlist.json` に各パスを追記。  
+   - `DEST` 直下に**新しい `*.html`** がある場合、登録プロンプト（`docs/prompts/page-register.md`）に沿って
+     `tools/sync-html-allowlist.json` / `tools/lint-a11y.mjs` に各パスを追記。  
    - `index.html` 等の**手入れ済みブロック**（注意帯・戻るリンク）は上書きで**消える**可能性がある。消えたら `gh-pages-static` 側にブロックを入れてから再同期するか、`DEST` で再挿入。  
    - リポジトリルートで `npm run sync` を実行できる旨。
 

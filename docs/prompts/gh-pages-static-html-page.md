@@ -97,7 +97,8 @@
 
 ## リポジトリ側の作業（人間または別タスク）
 
-- 新規 `*.html` を追加したら **`tools/sync-html-allowlist.json`** にパスを1行追加する。
+- 新規 `*.html` を追加したら **登録プロンプト**（`docs/prompts/page-register.md`）に沿って、
+  **`tools/sync-html-allowlist.json`** と **`tools/lint-a11y.mjs`** にパスを追加する。
 - **全ページのリンクが揃ったあと**、`tools/lint-links.mjs` の `entryPoints` に **`projects/open-cafe-wp-export/index.html`** を足して一括リンクチェックできる（未揃いの間は 404 が出る）。
 - WP 書き出し HTML は **`package.json` の `html-validate` 対象に含めない**運用と相性がよい。
 

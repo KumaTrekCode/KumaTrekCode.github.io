@@ -1,0 +1,41 @@
+/* KumaTrekCode patch layer for static export.
+   Keep small, additive overrides here to survive WP re-export workflow. */
+
+/* Drawer close button: WP expects ../img/common/close.png (missing in static).
+   Render: white circle + brown × via CSS. */
+.drawer__close {
+  background: #fff;
+  border-radius: 9999px;
+}
+
+.drawer__close::before {
+  background-image: none;
+  width: 28px;
+  height: 2px;
+  background: var(--cr-main, #382620);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.drawer__close::after {
+  content: "";
+  width: 28px;
+  height: 2px;
+  background: var(--cr-main, #382620);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+/* Menu page filter */
+.kuma-is-hidden {
+  display: none !important;
+}
+
+.kuma-menu-nav .kuma-is-active {
+  background: var(--cr-main, #382620);
+}
+
