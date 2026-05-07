@@ -35,7 +35,7 @@
   gap: var(--about-section-gap);
   box-sizing: border-box;
   width: 100%;
-  max-width: 960px;
+  max-width: var(--container-wide);
   min-width: 0; /* 子の横スクロール列が intrinsic 幅で親を押し広げないようにする */
   margin: 0 auto;
   padding: clamp(1.75rem, 4vw, 2.5rem) clamp(1.1rem, 4vw, 1.75rem) 4rem;
@@ -58,14 +58,14 @@
 
 /* ヒーロー: Home と同じ hero / hero-intro--solo。本文カラム幅のみ About で揃える */
 .about-page .about-hero.hero {
-  max-width: 720px;
+  max-width: var(--content);
   margin-left: auto;
   margin-right: auto;
 }
 
 /* プロフィール: Home と同じ section + h2 + card。本文カラム幅は他セクションと揃える */
 .about-page #profile {
-  max-width: 720px;
+  max-width: var(--content);
   margin: 0 auto;
 }
 
@@ -80,7 +80,7 @@
 }
 
 .about-page .about-section {
-  max-width: 720px;
+  max-width: var(--content);
   margin: 0 auto;
 }
 
@@ -142,22 +142,23 @@
 .about-page .skills-section {
   box-sizing: border-box;
   width: 100%;
-  max-width: 960px;
+  max-width: var(--content);
   margin: 0 auto;
 }
 
 /* 日本語見出しは section h2 の uppercase を外す（色・サイズは style.css と共通） */
 .about-page .skills-section h2 {
   margin: 0 auto 1rem;
-  max-width: 720px;
+  max-width: var(--content);
   letter-spacing: 0.08em;
   text-transform: none;
   text-align: left;
+  overflow-wrap: anywhere;
 }
 
 .about-page .skills-section__lead {
   margin: 0 auto 1rem;
-  max-width: 720px;
+  max-width: var(--content);
   text-align: left;
   font-size: 0.88rem;
   color: var(--muted);
@@ -167,7 +168,7 @@
 /* 狭い画面のみ: 横スクロールの存在を示す（本文より一段小さく） */
 .about-page .skills-strip-hint {
   display: none;
-  max-width: 720px;
+  max-width: var(--content);
   margin: -0.35rem auto 0.7rem;
   font-size: 0.72rem;
   line-height: 1.45;
@@ -177,7 +178,7 @@
   opacity: 0.92;
 }
 
-@media (max-width: 639px) {
+@media (max-width: 640px) {
   .about-page .skills-strip-hint {
     display: block;
   }
@@ -189,22 +190,34 @@
 
 .about-page .skills-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  /* 固定列だと中身の都合で横はみ出しが起きやすいので、幅に応じて可変にする */
+  grid-template-columns: repeat(auto-fit, minmax(10.5rem, 1fr));
   gap: clamp(0.75rem, 2vw, 1.25rem);
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
+/* PC: 2列で縦に流す（保有: 3+2 / 今後: 2+1 の配置が自然に決まる） */
+@media (min-width: 901px) {
+  .about-page .skills-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .about-page .skills-grid--three {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 @media (max-width: 900px) {
   .about-page .skills-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(10.5rem, 1fr));
   }
 }
 
 @media (max-width: 520px) {
   .about-page .skills-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(10.5rem, 1fr));
   }
 }
 
@@ -246,7 +259,7 @@
 }
 
 /* 狭い画面のみ: スキル一覧を横スクロール＋スナップ（JS・ライブラリなし） */
-@media (max-width: 639px) {
+@media (max-width: 640px) {
   .about-page .skills-section > ul.skills-grid {
     display: flex;
     flex-direction: row;
@@ -275,7 +288,7 @@
   }
 }
 
-@media (max-width: 639px) and (prefers-reduced-motion: reduce) {
+@media (max-width: 640px) and (prefers-reduced-motion: reduce) {
   .about-page .skills-section > ul.skills-grid {
     scroll-snap-type: none;
   }
@@ -290,8 +303,11 @@
   border: 1px solid var(--border);
   border-radius: 12px;
   background: var(--surface);
+  min-width: 0;
   min-height: 0;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
 .about-page .skill-card:hover {
@@ -339,6 +355,7 @@
   font-weight: 600;
   line-height: 1.45;
   color: var(--text);
+  overflow-wrap: anywhere;
 }
 
 .about-page .skill-card__note {
@@ -346,6 +363,7 @@
   font-size: clamp(0.72rem, 1.4vw, 0.82rem);
   color: var(--muted);
   line-height: 1.45;
+  overflow-wrap: anywhere;
 }
 
 .about-page footer {

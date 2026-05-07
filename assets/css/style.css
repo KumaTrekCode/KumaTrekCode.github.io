@@ -30,9 +30,9 @@ header {
 }
 
 .nav {
-  max-width: 880px;
+  max-width: var(--container);
   margin: 0 auto;
-  padding: 1rem 1.25rem;
+  padding: 1rem var(--page-pad-x);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -67,9 +67,9 @@ header {
 }
 
 main {
-  max-width: 880px;
+  max-width: var(--container);
   margin: 0 auto;
-  padding: 2rem 1.25rem 4rem;
+  padding: 2rem var(--page-pad-x) 4rem;
 }
 
 .hero {

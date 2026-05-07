@@ -12,6 +12,15 @@ Static personal portfolio for **GitHub Pages** (`https://kumatrekcode.github.io/
 
 ---
 
+## CSS maintenance / CSS 保守メモ（共通化ルール）
+
+- **Layout widths**: `assets/css/tokens.css` の `--container` / `--content` / `--container-wide` を唯一の基準にする（数値を各 CSS に散らさない）。
+- **Page padding**: `--page-pad-x` を共通で使う（nav/main など）。
+- **Page CSS**: `style.css` は共通、ページ固有は `about.css` のように **追加中心**で書き、共通ルールの打ち消しを増やさない。
+- **Nav/Footer**: HTML を直接編集せず、`tools/partials/` を編集してから **`npm run sync`** で注入する（手修正は次回 sync で消える）。
+
+---
+
 ## Repository layout / ディレクトリ構成
 
 ### 公開サイト（ルート＝ Pages のドキュメントルート）
@@ -76,6 +85,15 @@ Static personal portfolio for **GitHub Pages** (`https://kumatrekcode.github.io/
 - **X 埋め込み:** `tools/partials/home-x-feed.html`
 - 編集後に **`npm run sync`**。対応する `<!-- site:*:start -->`〜`end` 内が上書きされます。
 - **該当ブロックを手だけ直さない**（次回 `sync` で消えるため）。必ずパーシャル経由にする。
+
+### 2.1. WP 書き出しページの a11y 修正（Open cafe デモ）
+
+WP 書き出しの `projects/open-cafe-wp-export/*.html` は、axe のルールにより `<dt>/<dd>` が `<dl>` 外にあると指摘されます。
+必要なら次を実行して、`.access__dl` を `<dl class="access__dl">` に自動変換します。
+
+```bash
+npm run fix:wp-export-a11y
+```
 
 ### 3. サイト URL・OG 画像（カスタムドメインなど）
 

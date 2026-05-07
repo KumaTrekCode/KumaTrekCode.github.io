@@ -21,14 +21,14 @@
 
 ## 必須ルール
 
-1. **アセット・CSS・JS・画像**  
-   - 同一フォルダー内参照は **`./assets/...`** のように **相対パス**に揃える。  
+1. **アセット・CSS・JS・画像**
+   - 同一フォルダー内参照は **`./assets/...`** のように **相対パス**に揃える。
    - **`/wp-content/...` のようなサイトルート相対**や、ローカルだけ通る絶対 URL は使わない。
 
-2. **ページ同士のリンク**  
+2. **ページ同士のリンク**
    - ナビ・本文の **他ページへのリンク**は、実在する **`./別ページ.html`** 形式に直す。
 
-3. **`canonical` / `og:url`**  
+3. **`canonical` / `og:url`**
    - そのページ自身を指すようにする（例: `./concept.html`）。トップの `./index.html` のままにしない。
 
 4. **KumaTrekCode 用ブロック（全ページ共通・必須）**  
@@ -59,7 +59,12 @@
 
 ```html
 <p class="kuma-demo-disclaimer" role="note">
-  このページは<a href="https://daily-trial.com/" target="_blank" rel="noopener noreferrer">デイトラ</a>の教材に沿った<strong>課題用デモ</strong>です。実在する店舗の公式サイトではありません。
+  このページは<a
+    href="https://daily-trial.com/"
+    target="_blank"
+    rel="noopener noreferrer"
+    >デイトラ</a
+  >の教材に沿った<strong>課題用デモ</strong>です。実在する店舗の公式サイトではありません。
 </p>
 ```
 
@@ -83,16 +88,18 @@
   }
 </style>
 <div class="portfolio-return-kuma">
-  <a href="../open-cafe/index.html">KumaTrekCode の Open cafe 紹介ページへ戻る</a>
+  <a href="../open-cafe/index.html"
+    >KumaTrekCode の Open cafe 紹介ページへ戻る</a
+  >
 </div>
 ```
 
 **`../open-cafe/index.html`** は `open-cafe-wp-export` と `open-cafe` が兄弟ディレクトリである前提。**変えない。**
 
-5. **`<body>` の `class` / `id`**  
+5. **`<body>` の `class` / `id`**
    - WP 書き出しのまま（デザイン用クラスは削除しない）。
 
-6. **読み込む `script`**  
+6. **読み込む `script`**
    - そのページの書き出しに含まれるスクリプトだけ残す。
 
 ## リポジトリ側の作業（人間または別タスク）
@@ -109,10 +116,10 @@
 
 ## 自己チェック（生成後）
 
-- [ ] `projects/open-cafe-wp-export/[PAGE].html` を開き、**CSS・画像・JS が 404 にならない**  
-- [ ] 注意帯が **ヘッダーより上**に出ている  
-- [ ] ページ最下部に **「KumaTrekCode の Open cafe 紹介ページへ戻る」** がある  
-- [ ] ナビの主要リンクが **同フォルダー内の存在する HTML** を指している  
+- [ ] `projects/open-cafe-wp-export/[PAGE].html` を開き、**CSS・画像・JS が 404 にならない**
+- [ ] 注意帯が **ヘッダーより上**に出ている
+- [ ] ページ最下部に **「KumaTrekCode の Open cafe 紹介ページへ戻る」** がある
+- [ ] ナビの主要リンクが **同フォルダー内の存在する HTML** を指している
 
 ---
 
