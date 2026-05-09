@@ -25,7 +25,9 @@ if (existsSync(allowlistPath)) {
 
 const navBlock = /<!-- site:nav:start -->[\s\S]*?<!-- site:nav:end -->/;
 const footerBlock = /<!-- site:footer:start -->[\s\S]*?<!-- site:footer:end -->/;
-const xFeedBlock = /<!-- site:home-x-feed:start -->[\s\S]*?<!-- site:home-x-feed:end -->/;
+/** Leading horizontal whitespace on the marker line is part of the match so it is not left behind on each sync. */
+const aboutSectionsBlock =
+  /[ \t]*<!-- site:about-sections:start -->[\s\S]*?\n[ \t]*<!-- site:about-sections:end -->/;
 
 function walkHtmlFiles(dir, out = []) {
   for (const name of readdirSync(dir)) {
@@ -67,7 +69,8 @@ function renderNav(relPrefix) {
 function injectOg(html, relPath) {
   if (!/property="og:url"/.test(html) || !/property="og:image"/.test(html)) return html;
   const base = String(cfg.canonicalSite || "https://kumatrekcode.github.io").replace(/\/$/, "");
-  const ogImgPath = String(cfg.ogImage || "/img/hero-profile.jpg");
+  const byPage = cfg.ogImageByPage && typeof cfg.ogImageByPage === "object" ? cfg.ogImageByPage[relPath] : null;
+  const ogImgPath = String(byPage || cfg.ogImage || "/img/hero-profile.jpg");
   const ogImageAbs = ogImgPath.startsWith("http")
     ? ogImgPath
     : ogImgPath.startsWith("/")
@@ -102,7 +105,12 @@ function hasOgMeta(html) {
 }
 
 function shouldProcess(html) {
-  return navBlock.test(html) || footerBlock.test(html) || xFeedBlock.test(html) || hasOgMeta(html);
+  return (
+    navBlock.test(html) ||
+    footerBlock.test(html) ||
+    aboutSectionsBlock.test(html) ||
+    hasOgMeta(html)
+  );
 }
 
 /** allowlist に載っていない .html があれば警告（sync はしない） */
@@ -138,9 +146,15 @@ for (const abs of htmlAbsList) {
     html = html.replace(footerBlock, `<!-- site:footer:start -->\n${footer}\n<!-- site:footer:end -->`);
   }
 
-  if (xFeedBlock.test(html)) {
-    const xf = readFileSync(resolve(root, "tools", "partials", "home-x-feed.html"), "utf8");
-    html = html.replace(xFeedBlock, `<!-- site:home-x-feed:start -->\n${xf}\n<!-- site:home-x-feed:end -->`);
+  if (aboutSectionsBlock.test(html)) {
+    const aboutSections = readFileSync(
+      resolve(root, "tools", "partials", "about-sections.html"),
+      "utf8",
+    );
+    html = html.replace(
+      aboutSectionsBlock,
+      `      <!-- site:about-sections:start -->\n${aboutSections}\n      <!-- site:about-sections:end -->`,
+    );
   }
 
   html = injectOg(html, rel);

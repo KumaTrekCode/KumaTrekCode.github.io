@@ -1,9 +1,22 @@
 @import "./tokens.css";
+@import "./portfolio-project.css";
 
 *,
 *::before,
 *::after {
   box-sizing: border-box;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 body {
@@ -88,10 +101,6 @@ main {
   display: block;
 }
 
-.hero-intro.hero-intro--solo .hero-intro__body {
-  max-width: var(--max);
-}
-
 .hero-intro__media {
   margin: 0;
   padding: 0;
@@ -99,18 +108,6 @@ main {
 
 .hero-intro__media picture {
   display: block;
-}
-
-.hero-avatar {
-  display: block;
-  width: 100%;
-  max-width: 176px;
-  height: auto;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid var(--border);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
 }
 
 @media (max-width: 540px) {
@@ -125,10 +122,6 @@ main {
     width: 100%;
   }
 
-  .hero-intro__body .lead {
-    margin-left: auto;
-    margin-right: auto;
-  }
 }
 
 .hero h1 {
@@ -138,10 +131,16 @@ main {
   letter-spacing: -0.02em;
 }
 
+/* 見出しの意図した改行は狭い画面のみ（.hero-intro と同じ 540px 境目） */
+@media (min-width: 541px) {
+  .br-narrow-only {
+    display: none;
+  }
+}
+
 .lead {
   color: var(--muted);
   font-size: 1.05rem;
-  max-width: var(--max);
   margin: 0;
 }
 
@@ -298,21 +297,6 @@ footer .footer-copy {
   margin-top: 1rem;
 }
 
-/* projects/open-cafe/index.html — デモへの主ボタン */
-.open-cafe-project__demo-btn {
-  margin-top: 0.75rem;
-}
-
-.open-cafe-project__demo-btn .btn {
-  margin-top: 0;
-}
-
-.open-cafe-project__demo-note {
-  margin-top: 1.25rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--border);
-}
-
 /* Multi-paragraph blocks in cards (e.g. About) */
 .card-text p {
   margin: 0;
@@ -324,70 +308,107 @@ footer .footer-copy {
   margin-top: 1rem;
 }
 
-/* Profile カード内: 写真 + 本文（Home / About 共通） */
-.profile-card__row {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: clamp(1rem, 3vw, 1.5rem);
-  align-items: center;
-}
-
-.profile-card__figure {
-  margin: 0;
+/* X 風プロフィール: ヘッダ帯 + はみ出す円形アバター + 左揃え本文（Home / Profile 共通） */
+.card.profile-x-card {
   padding: 0;
+  overflow: hidden;
 }
 
-.profile-card__figure picture {
+.profile-x-banner {
+  height: clamp(92px, 22vw, 152px);
+  background-color: var(--surface);
+  background-image:
+    linear-gradient(to bottom, transparent 0%, rgba(23, 27, 36, 0.55) 85%, var(--surface) 100%),
+    url("../../img/profile-header.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.profile-x-content {
+  padding: 0 1.5rem 1.25rem;
+}
+
+.profile-x-avatar {
+  margin: 0;
+  margin-top: calc(-0.5 * clamp(4.5rem, 14vw, 5.75rem));
+  margin-bottom: 0.35rem;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.profile-x-avatar picture {
   display: block;
 }
 
-.profile-card__name {
-  margin: 0 0 0.5rem;
-  font-size: 1.1rem;
-  font-weight: 600;
+.profile-x-avatar img {
+  display: block;
+  width: clamp(4.5rem, 14vw, 5.75rem);
+  height: auto;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--surface);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
+}
+
+.profile-x-name {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 700;
   color: var(--text);
+  letter-spacing: -0.02em;
+  line-height: 1.25;
 }
 
-@media (max-width: 540px) {
-  .profile-card__row {
-    grid-template-columns: 1fr;
-    justify-items: stretch;
-  }
-
-  /* 写真だけ中央、本文・ボタンは左で統一（読みやすさ・見出しと揃える） */
-  .profile-card__figure {
-    justify-self: center;
-  }
-
-  .profile-card__body {
-    text-align: left;
-    width: 100%;
-  }
+.profile-x-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
 }
 
-/* Profile カード本文: 縦方向の余白を一定の gap で統一 */
-.card-text .profile-card__body {
+.profile-x-meta p + p {
+  margin-top: 0;
+}
+
+.profile-x-handle {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.35;
+}
+
+.profile-x-handle a {
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.profile-x-handle a:hover {
+  color: var(--sky-bright);
+  text-decoration: underline;
+}
+
+.card-text .profile-x-body {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 1rem;
 }
 
-.card-text .profile-card__body > p,
-.card-text .profile-card__body > p + p {
+.card-text .profile-x-body > p,
+.card-text .profile-x-body > p + p {
   margin: 0;
 }
 
-.card-text .profile-card__body > .profile-card__name {
+.card-text .profile-x-body .profile-x-meta p {
   margin: 0;
 }
 
-.card-text .profile-card__body > .btn {
+.card-text .profile-x-body > .btn {
   margin-top: 0;
   align-self: center;
 }
 
-.card-text .profile-card__body > .home-x-note {
+.card-text .profile-x-body > .home-x-note {
   margin: 0;
 }
 
@@ -429,24 +450,4 @@ footer .footer-copy {
 
 .hero-intro__body .lead {
   line-height: 1.65;
-}
-
-.x-embed-card .x-embed-lead {
-  margin: 0 0 1rem;
-  color: var(--muted);
-  font-size: 0.95rem;
-}
-
-.x-embed {
-  min-height: 200px;
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.x-embed .twitter-timeline {
-  display: block;
-}
-
-.x-embed-card .note {
-  margin-bottom: 0;
 }

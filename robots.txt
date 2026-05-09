@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kumatrekcode.github.io/sitemap.xml

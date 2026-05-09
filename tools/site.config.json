@@ -1,5 +1,8 @@
 {
   "canonicalSite": "https://kumatrekcode.github.io",
   "socialX": "https://x.com/30Kuma22550",
-  "ogImage": "/img/hero-profile.jpg"
+  "ogImage": "/img/hero-profile.jpg",
+  "ogImageByPage": {
+    "projects/open-cafe/index.html": "/projects/open-cafe/open-cafe-demo-desktop.png"
+  }
 }

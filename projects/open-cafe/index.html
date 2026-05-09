@@ -9,11 +9,11 @@
       content="デイトラ卒業課題「Open cafe」。WordPress テーマから書き出したデモの入口と、教材用静的版の案内。"
     />
     <meta property="og:url" content="https://kumatrekcode.github.io/projects/open-cafe/index.html" />
-    <meta property="og:image" content="https://kumatrekcode.github.io/img/hero-profile.jpg" />
+    <meta property="og:image" content="https://kumatrekcode.github.io/projects/open-cafe/open-cafe-demo-desktop.png" />
     <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="../../assets/css/style.css" />
   </head>
-  <body>
+  <body class="portfolio-page">
     <header>
       <!-- site:nav:start -->
 <nav class="nav">
@@ -28,36 +28,53 @@
 <!-- site:nav:end -->
     </header>
     <main>
-      <div class="hero">
-        <h1>Open cafe（卒業課題）</h1>
-        <p class="lead">
-          <a href="https://daily-trial.com/" rel="noopener noreferrer" target="_blank">デイトラ</a
-          >の卒業課題「Open cafe」。カンプをもとに HTML / CSS で組み、WordPress テーマ化したうえで静的書き出しをこのサイトで公開しています。
+      <div class="hero portfolio-project-hero">
+        <h1 id="project-title">Open cafe</h1>
+        <p class="portfolio-project-meta">
+          <a href="https://daily-trial.com/" rel="noopener noreferrer" target="_blank">デイトラ</a>
+          卒業課題 · 静的ランディング
         </p>
       </div>
 
-      <section aria-labelledby="about-heading">
-        <h2 id="about-heading">概要</h2>
-        <div class="card card-text">
-          <p>
-            カフェの魅力を一枚で伝えるランディングです。技術スタックは HTML / CSS、WordPress テーマ、GitHub Pages です。
-          </p>
+      <section class="portfolio-demo-section" aria-label="デモの画面">
+        <div class="portfolio-demo-card">
+          <div class="portfolio-demo-shots">
+            <figure class="portfolio-demo-shot">
+              <img
+                src="open-cafe-demo-desktop.png"
+                width="1024"
+                height="645"
+                alt="Open cafe デモサイトのデスクトップ表示。左にナビ、右にヒーローとニュースカード。"
+                loading="lazy"
+                decoding="async"
+              />
+            </figure>
+            <figure class="portfolio-demo-shot portfolio-demo-shot--mobile">
+              <img
+                src="open-cafe-demo-mobile.png"
+                width="311"
+                height="548"
+                alt="Open cafe デモサイトのスマートフォン表示。ヒーローと Pick UP ニュース。"
+                loading="lazy"
+                decoding="async"
+              />
+            </figure>
+          </div>
         </div>
       </section>
 
-      <section id="demo" aria-labelledby="demo-heading">
-        <h2 id="demo-heading">デモを見る</h2>
-        <div class="card card-text">
-          <p>書き出し済みのページをそのまま表示します。</p>
-          <p class="open-cafe-project__demo-btn">
-            <a class="btn" href="../open-cafe-wp-export/index.html">デモサイトを開く</a>
-          </p>
-          <p class="note open-cafe-project__demo-note">
-            教材どおりの手書き HTML だけの版は
-            <a href="site/index.html">こちら</a>（未配置のときはプレースホルダ）。
-          </p>
-        </div>
+      <section class="portfolio-actions" aria-label="デモへのリンク">
+        <p class="open-cafe-project__demo-btn">
+          <a class="btn" href="../open-cafe-wp-export/index.html">デモサイトを開く</a>
+        </p>
+        <p class="portfolio-project-foot">
+          <a href="site/index.html">教材用の静的 HTML</a>
+        </p>
       </section>
+
+      <p class="portfolio-project-back">
+        <a href="../../index.html">Home に戻る</a>
+      </p>
     </main>
     <!-- site:footer:start -->
 <footer>

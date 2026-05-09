@@ -52,21 +52,24 @@
             ひとつひとつを丁寧に、楽しみながら追求する。
           </h1>
           <p class="lead">
-            このページでは、仕事観、スキルと考え方、制作物を順にまとめています。学びの更新は、下の
-            X 欄からもご覧いただけます。
+            このページでは、仕事観・スキルと考え方を中心にまとめています。制作物の一覧と説明は
+            <a href="index.html#works">Home</a>
+            の Portfolioやナビから各ページをご覧ください。学びの更新は
+            <a href="https://x.com/30Kuma22550" rel="noopener noreferrer" target="_blank">X（@30Kuma22550）</a>
+            でも共有しています。
           </p>
         </div>
       </div>
 
       <section id="profile" aria-labelledby="profile-heading">
         <h2 id="profile-heading">Profile</h2>
-        <div class="card card-text">
-          <div class="profile-card__row">
-            <figure class="profile-card__figure">
+        <div class="card card-text profile-x-card">
+          <div class="profile-x-banner" aria-hidden="true"></div>
+          <div class="profile-x-content">
+            <figure class="profile-x-avatar">
               <picture>
                 <source srcset="img/hero-profile.webp" type="image/webp" />
                 <img
-                  class="hero-avatar"
                   src="img/hero-profile.jpg"
                   width="720"
                   height="540"
@@ -76,10 +79,17 @@
                 />
               </picture>
             </figure>
-            <div class="profile-card__body">
-              <p class="profile-card__name">
-                KumaTrekCode<span aria-hidden="true"> 🐻</span>
-              </p>
+            <div class="profile-x-body">
+              <div class="profile-x-meta">
+                <p class="profile-x-name">
+                  KumaTrekCode<span aria-hidden="true"> 🐻</span>
+                </p>
+                <p class="profile-x-handle">
+                  <a href="https://x.com/30Kuma22550" rel="noopener noreferrer" target="_blank"
+                    >@30Kuma22550</a
+                  >
+                </p>
+              </div>
               <p>
                 ハードの事象を、ソフトの力で数値化する。<br />
                 実機評価という「ハード」の現場で起きる事象を、プログラミングという「ソフト」の力で正確に数値化し、開発のスピードと品質に寄与することを目指しています。
@@ -90,9 +100,10 @@
         </div>
       </section>
 
+      <!-- site:about-sections:start -->
       <section class="about-section" aria-labelledby="intro-heading">
         <h2 id="intro-heading">Introduction</h2>
-        <p class="about-prose--tight">役割と、大切にしている姿勢</p>
+        <p class="about-prose--tight">役割と、仕事でのスタンス</p>
         <ul class="intro-list" aria-label="Introduction の要点">
           <li>
             <strong>納得感と完遂力</strong>
@@ -102,7 +113,7 @@
           <li>
             <strong>事実に基づく実機評価</strong>
             —
-            現在は<strong>実機評価</strong>を中心に、評価対象の通信や<strong>ECU内部値の計測</strong>から<strong>良否判定</strong>までを担っています。仕様とログの双方から「なぜこの結論に至ったか」を誰もが納得できる形で言語化することを大切にしています。
+            現在は<strong>実機評価</strong>を中心に、評価対象の通信や<strong>ECU内部値の計測</strong>から<strong>良否判定</strong>までを担っています。仕様とログの双方から「なぜこの結論に至ったか」を誰もが納得できる形で言語化し、後からたどれるように残すことを重視しています。
           </li>
           <li>
             <strong>現場経験 × デジタルの視点</strong>
@@ -114,7 +125,7 @@
 
       <section class="about-section" aria-labelledby="values-heading">
         <h2 id="values-heading">Values</h2>
-        <p class="about-prose--tight">大切にしていること</p>
+        <p class="about-prose--tight">考え方の指針</p>
         <ul class="values-list">
           <li>
             <strong>Minimalism</strong>
@@ -472,37 +483,6 @@
         </ul>
       </section>
 
-      <section
-        class="about-section about-portfolio"
-        aria-labelledby="portfolio-heading"
-      >
-        <h2 id="portfolio-heading">Portfolio</h2>
-        <div class="about-prose">
-          <p>
-            トップ・About・各制作物の説明ページを含む<strong>このサイト全体</strong>も、HTML
-            / CSS で組んだ静的なポートフォリオです。GitHub Pages
-            で公開しており、<strong
-              >このサイト自体が Web 制作の能力を示すひとつの成果</strong
-            >になるようにしています。業務とは切り分けた<strong>学習・アウトプット</strong>の置き場でもあります。
-          </p>
-          <p>
-            制作物としてメインで載せているのは、<a
-              href="https://daily-trial.com/"
-              rel="noopener noreferrer"
-              target="_blank"
-              >デイトラ</a
-            >の<strong>卒業課題</strong>として取り組んだカフェサイト「<strong
-              >Open cafe</strong
-            >」の静的コーディング版です。課題の要件に沿って<strong>完走したうえで</strong>ここに載せており、概要・使用技術・プレビューは次のページにまとめています。
-          </p>
-          <p>
-            <a class="btn" href="projects/open-cafe/index.html"
-              >Open cafe の説明とプレビューへ</a
-            >
-          </p>
-        </div>
-      </section>
-
       <section class="about-section" aria-labelledby="future-heading">
         <h2 id="future-heading">目指している姿</h2>
         <p class="about-prose--tight">長期的なゴール</p>
@@ -520,39 +500,7 @@
         </ul>
       </section>
 
-      <section
-        class="about-section"
-        id="x-feed"
-        aria-labelledby="x-feed-heading"
-      >
-        <h2 id="x-feed-heading">X</h2>
-        <div class="card x-embed-card">
-          <p class="x-embed-lead">
-            学習メモや気づきを X
-            でも共有しています。埋め込みの表示には数秒かかることがあります。表示されない場合は広告ブロックや
-            X
-            側の制限の可能性があるため、しばらく待って再読み込みするか、下のリンクから直接開いてください。
-          </p>
-          <div class="x-embed">
-            <a
-              class="twitter-timeline"
-              data-height="520"
-              data-theme="dark"
-              data-chrome="nofooter transparent"
-              href="https://twitter.com/30Kuma22550"
-              >@30Kuma22550 のポスト</a
-            >
-          </div>
-          <p class="note">
-            <a
-              href="https://x.com/30Kuma22550"
-              rel="noopener noreferrer"
-              target="_blank"
-              >X でプロフィールを開く</a
-            >
-          </p>
-        </div>
-      </section>
+      <!-- site:about-sections:end -->
 
       <p class="about-back">
         <a href="index.html">Home に戻る</a>
@@ -567,10 +515,5 @@
 </footer>
 
 <!-- site:footer:end -->
-    <script
-      async
-      src="https://platform.twitter.com/widgets.js"
-      charset="utf-8"
-    ></script>
   </body>
 </html>

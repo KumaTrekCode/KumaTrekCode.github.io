@@ -1,0 +1,342 @@
+<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>shop | Open Cafe</title>
+<meta name="robots" content="index, follow">
+<!-- SEO SIMPLE PACK 3.6.3 -->
+<link rel="canonical" href="./shop.html">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:type" content="article">
+<meta property="og:image" content="./assets/logo_light.png">
+<meta property="og:title" content="shop | Open Cafe">
+<meta property="og:url" content="./shop.html">
+<meta property="og:site_name" content="Open Cafe">
+<meta name="twitter:card" content="summary">
+<!-- / SEO SIMPLE PACK -->
+
+
+<link rel="icon" href="./assets/logo_light.png">
+<link rel="stylesheet" id="open-cafe-dist-css" href="./assets/style(1).css" media="all">
+<style id="kuma-demo-disclaimer-style">
+  .kuma-demo-disclaimer {
+    margin: 0;
+    padding: 0.5rem 1rem;
+    font-size: 0.8125rem;
+    line-height: 1.55;
+    text-align: center;
+    background: #1e293b;
+    color: #e2e8f0;
+    font-family: system-ui, sans-serif;
+  }
+  .kuma-demo-disclaimer a {
+    color: #93c5fd;
+    text-decoration: underline;
+  }
+</style>
+
+</head>
+<body class="wp-singular page-template page-template-page-shop page-template-page-shop-php page page-id-14 wp-theme-KUMA_DYA36_Open-Cafe page-shop" id="top">
+<p class="kuma-demo-disclaimer" role="note">
+  このページは<a href="https://daily-trial.com/" target="_blank" rel="noopener noreferrer">デイトラ</a>の教材に沿った<strong>課題用デモ</strong>です。実在する店舗の公式サイトではありません。
+</p>
+
+<!--
+  [WordPress 専用] 固定ページ /shop/（Shop テンプレート）の本文「先頭〜店舗一覧ループ直前」。
+  静的プレビューは data/stores.json を元に build が dist/shop.html を生成（同期後は本ファイルと同系の shop-body.html）。
+  ループ部は inc/shop-page-dynamic.php が出力する。
+-->
+    <div class="viewport-clip">
+      <div class="content-center">
+        <div class="Top">
+<!--
+  店舗ページ・ヒーロー兼ヘッダー（1 HTML で PC/SP レスポンシブ）
+  Figma: mainvisual-pc 19719:6385 / mainvisual-sp 19719:6392
+  スタイル: concept-page-hero（_concept-page.scss）＋ body.page-shop（_shop-page.scss）
+  画像: img/shop/pc/mainvisual-pc.png · img/shop/sp/mainvisual-sp.png
+-->
+<header class="page-hero-header site-header concept-page-hero" data-node-id-pc="19719:6385" data-node-id-sp="19719:6392">
+  <div class="concept-page-hero__bg" aria-hidden="true">
+    <picture>
+      <source media="(min-width: 1280px)" srcset="./assets/mainvisual-pc.png">
+      <img src="./assets/mainvisual-sp.png" alt="" decoding="async" class="lazyloaded">
+    </picture>
+  </div>
+  <div class="concept-page-hero__overlay" aria-hidden="true"></div>
+  <div class="concept-page-hero__line" aria-hidden="true">
+    <div class="concept-page-hero__line-inner"></div>
+  </div>
+  <div class="concept-page-hero__title">
+    <p class="concept-page-hero__title-en">shop</p>
+    <p class="concept-page-hero__title-ja">店舗情報</p>
+  </div>
+  <div class="header__inner header__inner--concept header__inner--shop-sp">
+    <button class="header__hamburger shop-page-hero__menu-fab" id="hamburgerBtn" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="drawer">
+      <img class="header__drawer-icon-open shop-page-hero__icon-pc lazyload" src="./assets/icon-drawer-menu-white.svg" width="28" height="18" alt="" decoding="async">
+      <img class="shop-page-hero__icon-sp ls-is-cached lazyloaded" src="./assets/icon-drawer-menu-white.svg" alt="" width="28" height="18" decoding="async">
+    </button>
+  </div>
+</header>
+
+        </div>
+<div class="drawer-overlay" id="drawerOverlay"></div>
+<aside class="drawer" id="drawer">
+  <div class="drawer__header">
+    <a class="drawer__logo" href="./index.html">
+      <img src="./assets/logo_light.png" alt="Open Cafe" decoding="async" class="lazyloaded">
+    </a>
+    <button class="drawer__close" id="drawerClose" aria-label="メニューを閉じる" data-drawer-close=""></button>
+  </div>
+  <div class="drawer__body">
+    <nav aria-label="モバイルメニュー">
+      <ul class="drawer__nav">
+  <li class="drawer__item"><a href="./index.html" class="drawer__link"><span class="drawer__link-en">TOP</span><span class="drawer__link-separator">／</span><span class="drawer__link-ja">トップ</span></a></li>
+  <li class="drawer__item"><a href="./concept.html" class="drawer__link"><span class="drawer__link-en">CONCEPT</span><span class="drawer__link-separator">／</span><span class="drawer__link-ja">コンセプト</span></a></li>
+  <li class="drawer__item"><a href="./menu.html" class="drawer__link"><span class="drawer__link-en">MENU</span><span class="drawer__link-separator">／</span><span class="drawer__link-ja">メニュー</span></a></li>
+  <li class="drawer__item"><a href="./news.html" class="drawer__link"><span class="drawer__link-en">NEWS</span><span class="drawer__link-separator">／</span><span class="drawer__link-ja">お知らせ</span></a></li>
+  <li class="drawer__item"><a href="./shop.html" class="drawer__link" aria-current="page"><span class="drawer__link-en">SHOP</span><span class="drawer__link-separator">／</span><span class="drawer__link-ja">店舗情報</span></a></li>
+  <li class="drawer__item"><a href="./gift.html" class="drawer__link"><span class="drawer__link-en">GIFT</span><span class="drawer__link-separator">／</span><span class="drawer__link-ja">ギフト・贈り物</span></a></li>
+  <li class="drawer__item"><a href="./contact.html" class="drawer__link"><span class="drawer__link-en">CONTACT</span><span class="drawer__link-separator">／</span><span class="drawer__link-ja">お問い合わせ</span></a></li>
+</ul>
+    </nav>
+    <div class="drawer__social">      <a href="https://x.com/30Kuma22550" class="drawer__social-link" aria-label="Twitter" target="_blank" rel="noopener noreferrer"><img src="./assets/icon-awesome-twitter.png" alt="Twitter" decoding="async" class="lazyloaded"></a>
+      <a href="https://www.instagram.com/opencafe" class="drawer__social-link" aria-label="Instagram" target="_blank" rel="noopener noreferrer"><img src="./assets/icon-awesome-instagram.png" alt="Instagram" decoding="async" class="lazyloaded"></a>
+      <a href="https://www.youtube.com/" class="drawer__social-link" aria-label="YouTube" target="_blank" rel="noopener noreferrer"><img src="./assets/icon-awesome-youtube.png" alt="YouTube" decoding="async" class="lazyloaded"></a></div>
+  </div>
+</aside>
+
+<!--
+  店舗ページ本文（パンくず〜店舗一覧ループ前）
+-->
+<div class="page-content-wrap" id="shop-content">
+  <nav class="concept-page__pankuzu shop-page__pankuzu" aria-label="パンくず" data-node-id-pc="19719:6386" data-node-id-sp="19719:6393">
+    <a href="./index.html">TOP</a>
+    <p>&gt;</p>
+    <p>店舗情報</p>
+  </nav>
+
+  <main class="shop-page__main" aria-label="店舗一覧" data-node-id-pc="19719:6387" data-node-id-sp="19719:6394">
+    <div class="shop-page__items" data-node-id-pc="19719:7178" data-node-id-sp="19719:8572">
+	<section class="shop-page__section" aria-labelledby="shop-heading-171">
+		<h2 class="shop-page__h2" id="shop-heading-171">OPEN CAFE　吉祥寺店</h2>
+		<div class="shop-page__block">
+			<div class="shop-page__photo">
+									<img width="688" height="377" src="./assets/kichijoji-1024x758.jpg" class="attachment-large size-large wp-post-image lazyautosizes ls-is-cached lazyloaded" alt="OPEN CAFE　吉祥寺店の店内" loading="lazy" decoding="async" data-sizes="auto" sizes="688px" srcset="./assets/kichijoji-1024x758.jpg 1024w, ./assets/kichijoji-300x222.jpg 300w, ./assets/kichijoji-768x568.jpg 768w, ./assets/kichijoji.jpg 1280w">							</div>
+			<dl class="shop-page__dl">
+				<div class="shop-page__row shop-page__row--address">
+					<dt class="shop-page__dt">住所</dt>
+					<dd class="shop-page__dd"><p class="shop-page__dd-line">〒000-0000</p><p class="shop-page__dd-line">東京都武蔵野市吉祥寺南町一丁目</p></dd>
+				</div>
+				<div class="shop-page__row shop-page__row--hours">
+					<dt class="shop-page__dt">営業時間</dt>
+					<dd class="shop-page__dd"><p class="shop-page__dd-line">7:00〜21:00</p><p class="shop-page__dd-line">※ラストオーダー 20:30</p></dd>
+				</div>
+				<div class="shop-page__row shop-page__row--tel">
+					<dt class="shop-page__dt">TEL</dt>
+					<dd class="shop-page__dd">
+													<a class="shop-page__dd-link" href="tel:0123456789">0123-456-789</a>
+											</dd>
+				</div>
+				<div class="shop-page__row shop-page__row--closed">
+					<dt class="shop-page__dt">定休日</dt>
+					<dd class="shop-page__dd">水曜日</dd>
+				</div>
+				<div class="shop-page__row shop-page__row--mail">
+					<dt class="shop-page__dt">Mail</dt>
+					<dd class="shop-page__dd">
+													<a class="shop-page__dd-link" href="mailto:example@mail.com">example@mail.com</a>
+											</dd>
+				</div>
+				<div class="shop-page__row shop-page__row--seats">
+					<dt class="shop-page__dt">座席</dt>
+					<dd class="shop-page__dd">テーブル20席 ／ カウンター席6席</dd>
+				</div>
+			</dl>
+		</div>
+	</section>
+		<section class="shop-page__section" aria-labelledby="shop-heading-172">
+		<h2 class="shop-page__h2" id="shop-heading-172">OPEN CAFE　阿佐ヶ谷店</h2>
+		<div class="shop-page__block">
+			<div class="shop-page__photo">
+									<img width="688" height="377" src="./assets/asagaya-1024x608.png" class="attachment-large size-large wp-post-image lazyautosizes ls-is-cached lazyloaded" alt="OPEN CAFE　阿佐ヶ谷店の店内" loading="lazy" decoding="async" data-sizes="auto" sizes="688px" srcset="./assets/asagaya-1024x608.png 1024w, ./assets/asagaya-300x178.png 300w, ./assets/asagaya-768x456.png 768w, ./assets/asagaya.png 1280w">							</div>
+			<dl class="shop-page__dl">
+				<div class="shop-page__row shop-page__row--address">
+					<dt class="shop-page__dt">住所</dt>
+					<dd class="shop-page__dd"><p class="shop-page__dd-line">〒000-0000</p><p class="shop-page__dd-line">東京都杉並区阿佐谷0-0-0</p></dd>
+				</div>
+				<div class="shop-page__row shop-page__row--hours">
+					<dt class="shop-page__dt">営業時間</dt>
+					<dd class="shop-page__dd"><p class="shop-page__dd-line">7:00〜19:00</p><p class="shop-page__dd-line">※ラストオーダー18:30</p></dd>
+				</div>
+				<div class="shop-page__row shop-page__row--tel">
+					<dt class="shop-page__dt">TEL</dt>
+					<dd class="shop-page__dd">
+													<a class="shop-page__dd-link" href="tel:0312345678">03-1234-5678</a>
+											</dd>
+				</div>
+				<div class="shop-page__row shop-page__row--closed">
+					<dt class="shop-page__dt">定休日</dt>
+					<dd class="shop-page__dd">年中無休</dd>
+				</div>
+				<div class="shop-page__row shop-page__row--mail">
+					<dt class="shop-page__dt">Mail</dt>
+					<dd class="shop-page__dd">
+													<a class="shop-page__dd-link" href="mailto:asagaya.example@mail.com">asagaya.example@mail.com</a>
+											</dd>
+				</div>
+				<div class="shop-page__row shop-page__row--seats">
+					<dt class="shop-page__dt">座席</dt>
+					<dd class="shop-page__dd">30席</dd>
+				</div>
+			</dl>
+		</div>
+	</section>
+		<section class="shop-page__section" aria-labelledby="shop-heading-173">
+		<h2 class="shop-page__h2" id="shop-heading-173">OPEN CAFE　中野店</h2>
+		<div class="shop-page__block">
+			<div class="shop-page__photo">
+									<img width="688" height="377" src="./assets/nakano-1024x608.png" class="attachment-large size-large wp-post-image lazyautosizes ls-is-cached lazyloaded" alt="OPEN CAFE　中野店の店内" loading="lazy" decoding="async" data-sizes="auto" sizes="688px" srcset="./assets/nakano-1024x608.png 1024w, ./assets/nakano-300x178.png 300w, ./assets/nakano-768x456.png 768w, ./assets/nakano.png 1280w">							</div>
+			<dl class="shop-page__dl">
+				<div class="shop-page__row shop-page__row--address">
+					<dt class="shop-page__dt">住所</dt>
+					<dd class="shop-page__dd"><p class="shop-page__dd-line">〒000-0000</p><p class="shop-page__dd-line">東京都中野区中野0-0-0</p></dd>
+				</div>
+				<div class="shop-page__row shop-page__row--hours">
+					<dt class="shop-page__dt">営業時間</dt>
+					<dd class="shop-page__dd"><p class="shop-page__dd-line">6:00〜22:00</p><p class="shop-page__dd-line">※ラストオーダー21:30</p></dd>
+				</div>
+				<div class="shop-page__row shop-page__row--tel">
+					<dt class="shop-page__dt">TEL</dt>
+					<dd class="shop-page__dd">
+													<a class="shop-page__dd-link" href="tel:0387654321">03-8765-4321</a>
+											</dd>
+				</div>
+				<div class="shop-page__row shop-page__row--closed">
+					<dt class="shop-page__dt">定休日</dt>
+					<dd class="shop-page__dd">火曜日</dd>
+				</div>
+				<div class="shop-page__row shop-page__row--mail">
+					<dt class="shop-page__dt">Mail</dt>
+					<dd class="shop-page__dd">
+													<a class="shop-page__dd-link" href="mailto:nakano.example@mail.com">nakano.example@mail.com</a>
+											</dd>
+				</div>
+				<div class="shop-page__row shop-page__row--seats">
+					<dt class="shop-page__dt">座席</dt>
+					<dd class="shop-page__dd">テーブル4席 ／ カウンター10席</dd>
+				</div>
+			</dl>
+		</div>
+	</section>
+	<!--
+  [WordPress 専用] 固定ページ /shop/ の本文「店舗一覧ループ直後〜末尾」。
+  静的側の店舗テキストの正は data/stores.json。直前のループ出力は inc/shop-page-dynamic.php。
+-->
+    </div>
+  </main>
+</div>
+
+<div class="concept-access-spacer" aria-hidden="true"></div>
+<div class="footer-sp-wrap">
+  <div class="footer-sp">
+    <div class="access">
+      <div class="access__inner">
+        <div class="access__heading">
+          <p class="access__title-en">access</p>
+          <p class="access__title-ja">アクセス</p>
+        </div>
+        <div class="access__shop-info">
+          <div class="access__map-wrap">
+            <iframe width="100%" height="100%" style="border: 0" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="吉祥寺店の地図" class="lazyloaded" src="https://www.google.com/maps?q=35.70568808330961,139.57424321984846&amp;z=14&amp;output=embed"></iframe>
+          </div>
+          <!-- Figma 19716-1775 footer-sp: アクセス項目順は 住所 → TEL → Mail → 営業時間 → 定休日 → 座席 -->
+          <dl class="access__dl">
+            <div class="access__row">
+              <dt class="access__dt">住所</dt>
+              <dd class="access__dd">
+                <p>〒000-0000</p>
+                <p>東京都武蔵野市吉祥寺南町一丁目</p>
+              </dd>
+            </div>
+            <div class="access__row">
+              <dt class="access__dt">TEL</dt>
+              <dd class="access__dd">0123-456-789</dd>
+            </div>
+            <div class="access__row">
+              <dt class="access__dt">Mail</dt>
+              <dd class="access__dd">example@mail.com</dd>
+            </div>
+            <div class="access__row">
+              <dt class="access__dt">営業時間</dt>
+              <dd class="access__dd">
+                <p>7:00〜21:00</p>
+                <p>※ラストオーダー 20:30</p>
+              </dd>
+            </div>
+            <div class="access__row">
+              <dt class="access__dt">定休日</dt>
+              <dd class="access__dd">水曜日</dd>
+            </div>
+            <div class="access__row">
+              <dt class="access__dt">座席</dt>
+              <dd class="access__dd">テーブル20席 ／ カウンター席6席</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="footer__sns">        <a href="https://x.com/30Kuma22550" aria-label="Twitter" target="_blank" rel="noopener noreferrer"><img src="./assets/icon-twitter-dark.svg" alt="" decoding="async" class="lazyloaded"></a>
+        <a href="https://www.instagram.com/opencafe" aria-label="Instagram" target="_blank" rel="noopener noreferrer"><img src="./assets/icon-instagram-dark.svg" alt="" decoding="async" class="lazyloaded"></a>
+        <a href="https://www.youtube.com/" aria-label="YouTube" target="_blank" rel="noopener noreferrer"><img src="./assets/icon-youtube-dark.svg" alt="" decoding="async" class="lazyloaded"></a></div>
+      <p class="footer__copyright">©︎2000-2021 open cafe. All Rights Reserved.</p>
+    </div>
+  </div>
+  <div class="footer__deco-bread-outer" aria-hidden="true">
+    <div class="footer__deco-bread-wrap">
+      <div class="footer__deco footer__deco--bread">
+        <img src="./assets/bg-bread.png" alt="" decoding="async" class="lazyloaded">
+      </div>
+    </div>
+  </div>
+  <div class="footer__deco footer__deco--beans" aria-hidden="true">
+    <img src="./assets/bg-coffee-beans3.png" alt="" decoding="async" class="lazyloaded">
+  </div>
+  <div class="footer__deco footer__deco--balloon" aria-hidden="true">
+    <img src="./assets/balloon-access.svg" alt="" decoding="async" class="lazyloaded">
+  </div>
+</div>
+
+      </div>
+    </div>
+<div class="to-top-wrap">
+  <a href="./shop.html#top" class="footer__to-top is-at-top" id="to-top" aria-label="ページトップへ">
+    <img src="./assets/icon-chevron-up.svg" alt="" decoding="async" class="lazyloaded">
+  </a>
+</div>
+<script src="./assets/drawer.js" id="open-cafe-drawer-js"></script>
+<script src="./assets/to-top.js" id="open-cafe-to-top-js"></script>
+<!-- KumaTrekCode: WP 再書き出し時は head 内の kuma-demo-disclaimer-style、body 直後の .kuma-demo-disclaimer、およびページ末尾のこのブロックを残すか再貼り付けしてください -->
+<style id="kuma-portfolio-return-style">
+  .portfolio-return-kuma {
+    box-sizing: border-box;
+    width: 100vw;
+    max-width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    padding: 2rem 1rem 2.75rem;
+    text-align: center;
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+    font-size: 0.9rem;
+    font-family: system-ui, sans-serif;
+    background: #1e293b;
+    color: #e2e8f0;
+  }
+  .portfolio-return-kuma a {
+    color: #93c5fd;
+    text-decoration: underline;
+  }
+</style>
+<div class="portfolio-return-kuma">
+  <a href="../open-cafe/index.html">KumaTrekCode の Open cafe 紹介ページへ戻る</a>
+</div>
+
+</body></html>

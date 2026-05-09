@@ -12,8 +12,8 @@
   --font: "Segoe UI", system-ui, sans-serif;
   /* Layout widths (single source of truth) */
   --container: 880px; /* site-wide container (nav/main) */
-  --content: 720px; /* prose / About sections */
-  --container-wide: 960px; /* rare: dense layouts (About main) */
+  --content: 720px; /* narrow measure for prose (e.g. article.prose) */
+  --container-wide: 960px; /* optional wider rail; About main aligns with --container */
   --max: var(--content); /* backward-compat alias */
   /* Page padding (used by nav/main) */
   --page-pad-x: 1.25rem;

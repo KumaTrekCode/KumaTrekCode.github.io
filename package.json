@@ -11,9 +11,10 @@
     "validate": "html-validate index.html about.html 404.html projects/open-cafe/index.html projects/open-cafe/site/index.html",
     "lint:links": "node tools/lint-links.mjs",
     "lint:a11y": "node tools/lint-a11y.mjs",
+    "verify:og": "node tools/verify-og-images.mjs",
     "audit:ci": "npm audit --audit-level=high",
     "deps:report": "npm outdated || true",
-    "check": "npm run sync && npm run build:icons && npm run validate && npm run lint:links && npm run lint:a11y && npm run audit:ci",
+    "check": "npm run sync && npm run build:icons && npm run validate && npm run verify:og && npm run lint:links && npm run lint:a11y && npm run audit:ci",
     "prepare": "simple-git-hooks"
   },
   "simple-git-hooks": {

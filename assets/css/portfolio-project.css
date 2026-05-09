@@ -1,0 +1,131 @@
+/* Portfolio / single-project pages (e.g. projects/open-cafe/index.html) */
+
+/* projects/open-cafe/index.html — デモへの主ボタン */
+.open-cafe-project__demo-btn {
+  margin-top: 0.75rem;
+  text-align: center;
+}
+
+.open-cafe-project__demo-btn .btn {
+  margin-top: 0;
+}
+
+/* 制作物ページ（単体プロジェクト）— 戻りリンク */
+
+/* About の .about-back と同じ戻りリンク（Profile 以外のページ用） */
+.portfolio-project-back {
+  margin: 2.25rem 0 0;
+  text-align: center;
+}
+
+.portfolio-project-back a {
+  display: inline-block;
+  padding: 0.5rem 1.25rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--sky-bright);
+  border: 1px solid var(--sky);
+  border-radius: 8px;
+}
+
+.portfolio-project-back a:hover {
+  background: var(--sky-glow);
+  color: var(--sky-soft);
+  text-decoration: none;
+}
+
+/* 制作物ページ — デモスクショ（PC + スマホ） */
+.portfolio-demo-card {
+  padding: 1rem 1.25rem 1.25rem;
+}
+
+/* Open cafe などミニマルなポートフォリオ詳細 */
+body.portfolio-page .hero.portfolio-project-hero {
+  margin-bottom: 1.25rem;
+}
+
+body.portfolio-page .portfolio-project-meta {
+  margin: 0.4rem 0 0;
+  font-size: 0.95rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+body.portfolio-page .portfolio-demo-section {
+  margin-bottom: 1.75rem;
+}
+
+body.portfolio-page .portfolio-demo-card {
+  padding: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+body.portfolio-page .portfolio-demo-shot img {
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+}
+
+body.portfolio-page main > section {
+  margin-bottom: 0;
+}
+
+body.portfolio-page .portfolio-actions {
+  margin-bottom: 0;
+}
+
+body.portfolio-page .portfolio-project-foot {
+  margin: 0.75rem 0 0;
+  text-align: center;
+  font-size: 0.88rem;
+}
+
+body.portfolio-page .portfolio-project-foot a {
+  color: var(--muted);
+  font-weight: 500;
+}
+
+body.portfolio-page .portfolio-project-foot a:hover {
+  color: var(--sky-bright);
+}
+
+.portfolio-demo-shots {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.35rem;
+}
+
+@media (min-width: 768px) {
+  .portfolio-demo-shots {
+    grid-template-columns: minmax(0, 1.55fr) minmax(0, 0.85fr);
+    gap: 1.25rem;
+    align-items: start;
+  }
+}
+
+.portfolio-demo-shot {
+  margin: 0;
+}
+
+.portfolio-demo-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: calc(var(--radius) - 2px);
+  border: 1px solid var(--border);
+  box-shadow: 0 10px 36px rgba(0, 0, 0, 0.25);
+}
+
+.portfolio-demo-shot--mobile img {
+  max-width: 20rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 768px) {
+  .portfolio-demo-shot--mobile img {
+    margin-left: 0;
+    margin-right: 0;
+    max-width: 100%;
+  }
+}
