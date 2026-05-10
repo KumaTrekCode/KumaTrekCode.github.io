@@ -5,6 +5,7 @@
   "scripts": {
     "render:works": "node tools/render-works.mjs",
     "sync": "node tools/render-works.mjs && node tools/sync-site.mjs",
+    "minify:client": "node tools/minify-scroll-top.mjs",
     "fix:wp-export-a11y": "node tools/fix-wp-export-access-dl.mjs",
     "optimize-images": "node tools/optimize-images.mjs",
     "build:icons": "node tools/build-skill-icons.mjs",
@@ -12,16 +13,22 @@
     "lint:links": "node tools/lint-links.mjs",
     "lint:a11y": "node tools/lint-a11y.mjs",
     "verify:og": "node tools/verify-og-images.mjs",
+    "smoke:html": "node tools/smoke-html.mjs",
+    "lint:js": "eslint tools",
     "audit:ci": "npm audit --audit-level=high",
     "deps:report": "npm outdated || true",
-    "check": "npm run sync && npm run build:icons && npm run validate && npm run verify:og && npm run lint:links && npm run lint:a11y && npm run audit:ci",
+    "check": "npm run sync && npm run minify:client && npm run build:icons && npm run validate && npm run verify:og && npm run smoke:html && npm run lint:js && npm run lint:links && npm run lint:a11y && npm run audit:ci",
     "prepare": "simple-git-hooks"
   },
   "simple-git-hooks": {
     "pre-push": "npm run check"
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.1",
     "axe-core": "^4.10.3",
+    "esbuild": "^0.27.0",
+    "eslint": "^9.39.1",
+    "globals": "^16.5.0",
     "html-validate": "^9.0.0",
     "jsdom": "^25.0.1",
     "linkinator": "^6.1.2",

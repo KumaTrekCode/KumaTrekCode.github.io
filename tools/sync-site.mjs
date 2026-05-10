@@ -5,6 +5,7 @@ import { dirname, join, relative, resolve } from "node:path";
  * Repository root (GitHub Pages document root).
  * 処理する HTML は `tools/sync-html-allowlist.json` で限定（新規ページは JSON にパスを追加）。
  * 終了時、ルート / projects 配下で allowlist に無い .html があると警告（tools/ は除外）。
+ * `robots.txt` / `sitemap.xml` は `canonicalSite` と `sitemapUrls` から毎回書き出す。
  */
 const root = resolve(import.meta.dirname, "..");
 const cfg = JSON.parse(readFileSync(resolve(root, "tools", "site.config.json"), "utf8"));
@@ -66,9 +67,93 @@ function renderNav(relPrefix) {
   return partial;
 }
 
+function canonicalBase() {
+  return String(cfg.canonicalSite || "https://kumatrekcode.github.io").replace(/\/$/, "");
+}
+
+function escapeXmlText(s) {
+  return String(s)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+
+function escapeAttr(s) {
+  return String(s)
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/</g, "&lt;");
+}
+
+function escapeXmlLoc(s) {
+  return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+}
+
+function replaceNameDescriptionMeta(html, content) {
+  const q = escapeAttr(content);
+  if (/<meta\s*\n\s*name="description"/.test(html)) {
+    return html.replace(
+      /<meta\s*\n\s*name="description"\s*\n\s*content="[^"]*"\s*\n\s*\/>/,
+      `<meta\n      name="description"\n      content="${q}"\n    />`,
+    );
+  }
+  return html.replace(
+    /<meta name="description" content="[^"]*"\s*\/>/,
+    `<meta name="description" content="${q}" />`,
+  );
+}
+
+function replaceOgDescriptionMeta(html, content) {
+  if (!/property="og:description"/.test(html)) return html;
+  const q = escapeAttr(content);
+  if (/<meta\s*\n\s*property="og:description"/.test(html)) {
+    return html.replace(
+      /<meta\s*\n\s*property="og:description"\s*\n\s*content="[^"]*"\s*\n\s*\/>/,
+      `<meta\n      property="og:description"\n      content="${q}"\n    />`,
+    );
+  }
+  return html.replace(
+    /<meta property="og:description" content="[^"]*"\s*\/>/,
+    `<meta property="og:description" content="${q}" />`,
+  );
+}
+
+function replaceOgTitleMeta(html, content) {
+  if (!/property="og:title"/.test(html)) return html;
+  const q = escapeAttr(content);
+  if (/<meta\s*\n\s*property="og:title"/.test(html)) {
+    return html.replace(
+      /<meta\s*\n\s*property="og:title"\s*\n\s*content="[^"]*"\s*\n\s*\/>/,
+      `<meta\n      property="og:title"\n      content="${q}"\n    />`,
+    );
+  }
+  return html.replace(
+    /<meta property="og:title" content="[^"]*"\s*\/>/,
+    `<meta property="og:title" content="${q}" />`,
+  );
+}
+
+/** `tools/site.config.json` の `pageMeta` で `<title>` / description / OGP タイトル説明を上書き */
+function injectPageMeta(html, relPath) {
+  const pm = cfg.pageMeta && typeof cfg.pageMeta === "object" ? cfg.pageMeta[relPath] : null;
+  if (!pm) return html;
+  let out = html;
+  if (pm.title) {
+    out = out.replace(/<title>[^<]*<\/title>/, `<title>${escapeXmlText(pm.title)}</title>`);
+  }
+  if (pm.description) {
+    out = replaceNameDescriptionMeta(out, pm.description);
+  }
+  const ogTitle = pm.ogTitle ?? pm.title;
+  const ogDesc = pm.ogDescription ?? pm.description;
+  if (ogTitle) out = replaceOgTitleMeta(out, ogTitle);
+  if (ogDesc) out = replaceOgDescriptionMeta(out, ogDesc);
+  return out;
+}
+
 function injectOg(html, relPath) {
   if (!/property="og:url"/.test(html) || !/property="og:image"/.test(html)) return html;
-  const base = String(cfg.canonicalSite || "https://kumatrekcode.github.io").replace(/\/$/, "");
+  const base = canonicalBase();
   const byPage = cfg.ogImageByPage && typeof cfg.ogImageByPage === "object" ? cfg.ogImageByPage[relPath] : null;
   const ogImgPath = String(byPage || cfg.ogImage || "/img/hero-profile.jpg");
   const ogImageAbs = ogImgPath.startsWith("http")
@@ -104,13 +189,56 @@ function hasOgMeta(html) {
   return /property="og:url"/.test(html) && /property="og:image"/.test(html);
 }
 
-function shouldProcess(html) {
+function hasPageMeta(relPath) {
+  return !!(cfg.pageMeta && typeof cfg.pageMeta === "object" && cfg.pageMeta[relPath]);
+}
+
+function shouldProcess(html, relPath) {
   return (
     navBlock.test(html) ||
     footerBlock.test(html) ||
     aboutSectionsBlock.test(html) ||
-    hasOgMeta(html)
+    hasOgMeta(html) ||
+    hasPageMeta(relPath)
   );
+}
+
+function writeRobotsTxt() {
+  const base = canonicalBase();
+  const sitemapUrl = `${base}/sitemap.xml`;
+  const body = `User-agent: *\nAllow: /\n\nSitemap: ${sitemapUrl}\n`;
+  writeFileSync(join(root, "robots.txt"), body, "utf8");
+  console.log("sync-site: ok robots.txt");
+}
+
+function writeSitemapXml() {
+  const base = canonicalBase();
+  const urls = cfg.sitemapUrls;
+  if (!Array.isArray(urls) || urls.length === 0) {
+    console.warn("sync-site: warn  site.config.json に sitemapUrls が無いため sitemap.xml をスキップします");
+    return;
+  }
+  let xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
+  for (const entry of urls) {
+    const path = String(entry.path ?? "");
+    const loc = path === "" || path === "/" ? `${base}/` : `${base}/${path.replace(/^\//, "")}`;
+    const freq = escapeXmlLoc(entry.changefreq || "monthly");
+    const pri = escapeXmlLoc(entry.priority || "0.5");
+    xml += `  <url>\n    <loc>${escapeXmlLoc(loc)}</loc>\n    <changefreq>${freq}</changefreq>\n    <priority>${pri}</priority>\n  </url>\n`;
+  }
+  xml += `</urlset>\n`;
+  writeFileSync(join(root, "sitemap.xml"), xml, "utf8");
+  console.log("sync-site: ok sitemap.xml");
+}
+
+function isIgnoredAllowlistWarn(rel) {
+  const list = cfg.syncHtmlWarnIgnorePrefixes;
+  if (!Array.isArray(list)) return false;
+  return list.some((raw) => {
+    const p = String(raw).split("\\").join("/").replace(/\/?$/, "/");
+    const prefix = p.endsWith("/") ? p : `${p}/`;
+    return rel === prefix.slice(0, -1) || rel.startsWith(prefix);
+  });
 }
 
 /** allowlist に載っていない .html があれば警告（sync はしない） */
@@ -121,6 +249,7 @@ function warnHtmlOutsideAllowlist() {
     .filter((rel) => rel.endsWith(".html") && !rel.startsWith("tools/"));
   for (const rel of allRel) {
     if (!syncHtmlAllowSet.has(rel)) {
+      if (isIgnoredAllowlistWarn(rel)) continue;
       console.warn(`sync-site: warn  allowlist に無い HTML（sync 対象外）: ${rel}`);
     }
   }
@@ -132,7 +261,7 @@ for (const abs of htmlAbsList) {
   if (syncHtmlAllowSet && !syncHtmlAllowSet.has(rel)) continue;
 
   let html = readFileSync(abs, "utf8");
-  if (!shouldProcess(html)) continue;
+  if (!shouldProcess(html, rel)) continue;
 
   const relPrefix = relPrefixFor(rel);
 
@@ -157,10 +286,13 @@ for (const abs of htmlAbsList) {
     );
   }
 
+  html = injectPageMeta(html, rel);
   html = injectOg(html, rel);
   html = rootPathsToRelative(html, relPrefix);
   writeFileSync(abs, html, "utf8");
   console.log("sync-site: ok", rel);
 }
 
+writeRobotsTxt();
+writeSitemapXml();
 warnHtmlOutsideAllowlist();

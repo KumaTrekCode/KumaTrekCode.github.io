@@ -1,5 +1,5 @@
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
-import { resolve, dirname, join } from "node:path";
+import { resolve, join } from "node:path";
 
 const root = resolve(import.meta.dirname, "..");
 const projectsPath = resolve(root, "tools", "projects.json");

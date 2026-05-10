@@ -4,5 +4,41 @@
   "ogImage": "/img/hero-profile.jpg",
   "ogImageByPage": {
     "projects/open-cafe/index.html": "/projects/open-cafe/open-cafe-demo-desktop.png"
+  },
+  "sitemapUrls": [
+    { "path": "", "changefreq": "monthly", "priority": "1.0" },
+    { "path": "about.html", "changefreq": "monthly", "priority": "0.8" },
+    { "path": "projects/open-cafe/index.html", "changefreq": "monthly", "priority": "0.7" }
+  ],
+  "syncHtmlWarnIgnorePrefixes": ["projects/open-cafe-wp-export/"],
+  "pageMeta": {
+    "index.html": {
+      "title": "KumaTrekCode | ポートフォリオ",
+      "description": "KumaTrekCodeのポートフォリオ。会社員としてプログラミングを学び、制作物と Profile を掲載。GitHub Pagesで公開中。",
+      "ogTitle": "KumaTrekCode | ポートフォリオ",
+      "ogDescription": "KumaTrekCodeのポートフォリオ。会社員としてプログラミングを学び、制作物と Profile を掲載。"
+    },
+    "about.html": {
+      "title": "Profile | KumaTrekCode",
+      "description": "実機評価、評価対象の通信・ECU内部値の計測と良否判定に従事。資格と計測実務、Web学習とポートフォリオ（デイトラ卒業課題 Open cafe など）を掲載。",
+      "ogTitle": "Profile | KumaTrekCode",
+      "ogDescription": "実機評価、評価対象の通信・ECU内部値の計測と良否判定に従事。資格と計測実務、Web学習とポートフォリオ（デイトラ卒業課題 Open cafe など）を掲載。"
+    },
+    "404.html": {
+      "title": "ページが見つかりません | KumaTrekCode",
+      "description": "お探しのページは見つかりませんでした。KumaTrekCodeのポートフォリオのトップへどうぞ。"
+    },
+    "projects/open-cafe/index.html": {
+      "title": "Open cafe | デイトラ卒業課題（静的）| KumaTrekCode",
+      "description": "デイトラ卒業課題「Open cafe」。WordPress テーマから書き出したデモの入口と、教材用静的版の案内。",
+      "ogTitle": "Open cafe | デイトラ卒業課題（静的）| KumaTrekCode",
+      "ogDescription": "デイトラ卒業課題「Open cafe」。WordPress テーマから書き出したデモの入口と、教材用静的版の案内。"
+    },
+    "projects/open-cafe/site/index.html": {
+      "title": "Open cafe 静的サイト",
+      "description": "デイトラ卒業課題 Open cafe の静的ページ置き場。完成版の index.html / CSS / 画像をここに配置してください。",
+      "ogTitle": "Open cafe 静的サイト",
+      "ogDescription": "デイトラ卒業課題 Open cafe の静的ページ置き場。完成版の index.html / CSS / 画像をここに配置してください。"
+    }
   }
 }

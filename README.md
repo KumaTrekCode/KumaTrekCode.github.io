@@ -38,17 +38,20 @@ Static personal portfolio for **GitHub Pages** (`https://kumatrekcode.github.io/
 
 | Path | Purpose |
 |------|---------|
-| `tools/site.config.json` | **`canonicalSite`**（正規 URL）、**`ogImage`**（既定の OGP 画像）、**任意の `ogImageByPage`**（キーは `sync-html-allowlist` と同じ **相対パス**、値はサイト内パス `/…` または `https://…`）、**`socialX`**。`sync` が OG に利用。**任意で `linkinatorSkip`**（1 本の正規表現）を書くと `lint:links` の `--skip` にそのまま使う。未指定時は `canonicalSite` のオリジンと X/Twitter を自動スキップ。 |
+| `tools/site.config.json` | **`canonicalSite`**、**`ogImage`**、**`ogImageByPage`**、**`socialX`**、**`sitemapUrls`**（`sync` が **`sitemap.xml`** を生成）、**`pageMeta`**（キーは HTML の相対パス → **`title` / `description` / 任意 `ogTitle`・`ogDescription`** を `sync` が各ページの `<head>` に反映）、**`syncHtmlWarnIgnorePrefixes`**（allowlist 外警告を抑止するパス接頭辞の配列）。**任意 `linkinatorSkip`** は `lint:links` の `--skip` にそのまま使う。 |
 | `tools/partials/site-nav.html` | 共通ナビのひな形（`{{REL}}` を sync が階層用プレフィックスに置換） |
 | `tools/partials/site-nav-root.html` | **`404.html` 専用**ナビ（`/…` のまま） |
 | `tools/partials/site-footer.html` | 共通フッター（`<!-- site:footer:start -->` ブロックに注入） |
 | `tools/partials/about-sections.html` | **`about.html`** の Profile 直下〜 Future までの長いセクション（`<!-- site:about-sections:start/end -->` に注入） |
 | `tools/projects.json` | トップ **`#works`** の制作物一覧（タイトル・一言・リンク・CTA）。編集後は **`npm run sync`**（内部で `render-works` が先に走る）。 |
 | `tools/render-works.mjs` | `projects.json` → `index.html` の `<!-- site:works:start -->`〜`end` を書き換え（`npm run render:works` 単体でも可）。 |
-| `tools/sync-site.mjs` | **`sync-html-allowlist.json`** に列挙された HTML のみ処理。ナビ・フッター・**About 長文パーシャル**、**`site.config` に基づく OG**、ルート相対パスの**相対パス化**。終了時、allowlist 外のサイト用 `.html` があれば **警告**（`tools/` 配下は除外）。 |
+| `tools/sync-site.mjs` | **`sync-html-allowlist.json`** に列挙された HTML のみ処理。ナビ・フッター・**About 長文**、**`pageMeta`**、**OG**、**`robots.txt` / `sitemap.xml` の書き出し**、ルート相対パスの**相対パス化**。終了時、allowlist 外の `.html` は **`syncHtmlWarnIgnorePrefixes` 以外**で **警告**。 |
 | `tools/sync-html-allowlist.json` | **`npm run sync` が書き換える HTML のパス一覧**（新規ページはここに追加）。 |
 | `tools/IMAGES.md` | Gemini ファイル名と `icon-skill-*`・About カードの対応表。 |
 | `tools/verify-og-images.mjs` | **`ogImage`** と **`ogImageByPage`** のサイト内パスがリポジトリ上に存在するか検証（`npm run verify:og`。`npm run check` に含まれる）。 |
+| `tools/smoke-html.mjs` | 主要 HTML にナビ・フッター・**`scroll-top.min.js`** 等が含まれるかの軽い検査（`npm run smoke:html`）。`package.json` の **`validate` 対象パス**と揃えること。 |
+| `tools/minify-scroll-top.mjs` | **`assets/js/scroll-top.js`** を **`assets/js/scroll-top.min.js`** に minify（`npm run minify:client`。`npm run check` に含まれる）。 |
+| `eslint.config.js` | **`tools/**/*.mjs`** 向け ESLint（`npm run lint:js`）。 |
 | `tools/lint-links.mjs` | `site.config.json` を読み **linkinator** を実行（`npm run lint:links`）。 |
 | `tools/lint-a11y.mjs` / `lint-a11y-one.mjs` | **axe-core + jsdom** で主要ページの a11y チェック（`npm run lint:a11y`）。 |
 | `tools/optimize-images.mjs` | トップの **`hero-profile`** は優先して **`img/source/hero-firstview.png`**（なければ `img/source/hero-profile.png` / `img/hero-profile.png`）から **`img/hero-profile.{jpg,webp}`** を生成。`about-illustration` は従来どおり `img/about-illustration.png` マスター。 |
@@ -58,9 +61,9 @@ Static personal portfolio for **GitHub Pages** (`https://kumatrekcode.github.io/
 
 | Path | Purpose |
 |------|---------|
-| `package.json` / `package-lock.json` | npm スクリプトと依存（html-validate, sharp, linkinator, axe-core, jsdom, simple-git-hooks など） |
+| `package.json` / `package-lock.json` | npm スクリプトと依存（html-validate, eslint, esbuild, sharp, linkinator, axe-core, jsdom, simple-git-hooks など） |
 | `.htmlvalidate.json` | `html-validate` の設定（リポジトリルートで実行） |
-| `.github/workflows/ci.yml` | `npm ci` → **`npm run check`**（`sync`・`build:icons`・`validate`・`verify:og`・`lint:links`・`lint:a11y`・`audit`）。 |
+| `.github/workflows/ci.yml` | `npm ci` → **`npm run check`**（`sync`・`minify:client`・`build:icons`・`validate`・`verify:og`・`smoke:html`・`lint:js`・`lint:links`・`lint:a11y`・`audit`）。 |
 | `.github/workflows/a11y-monthly.yml` | 月次で **`npm run lint:a11y`** のみ実行（手動トリガー可）。 |
 | `.github/dependabot.yml` | **npm** 依存の週次バージョン更新 PR（マージ前に `npm run check` を確認）。 |
 | `.editorconfig` / `.gitignore` | エディタ・Git の共通設定 |
@@ -78,6 +81,8 @@ Static personal portfolio for **GitHub Pages** (`https://kumatrekcode.github.io/
 5. `index.html` の `<picture>` 内 **`width` / `height`** が実寸とずれたら、生成後のピクセルに合わせて更新。
 
 **数十 MB 級のデータ**を履歴に載せる場合は **[Git LFS](https://git-lfs.com/)**（`.gitattributes` でパス指定）を検討してください。
+
+**`projects/open-cafe-wp-export/` の大量アセット:** 教材用 WordPress 書き出しのため **リポジトリに含める方針**でよいが、履歴肥大や clone 時間が気になる場合は **別ブランチ／別成果物ストレージ**も検討する。`sync` の allowlist 外警告は **`syncHtmlWarnIgnorePrefixes`** で意図的に抑止している（新規の「自サイト用」HTML を増やしたときは allowlist へ追記する）。
 
 ### 2. ナビ・フッター・About の長文を変える
 
@@ -102,7 +107,16 @@ npm run fix:wp-export-a11y
 - **ページ別の共有プレビュー画像**が必要なときは、同ファイルの **`ogImageByPage`** に「HTML の相対パス → 画像パス」を追加します（例: `"projects/open-cafe/index.html": "/projects/open-cafe/screenshot.png"`）。未指定のページは **`ogImage`** が使われます。
 - **`npm run sync`** を実行すると、OG 用の **`og:url` / `og:image`** が各 HTML から一括で書き換わります。コミット前に **`npm run verify:og`**（または `npm run check`）で画像ファイルの実在を確認できます。
 - カスタムドメインに変えたあと、**`canonicalSite`** を更新すれば `lint:links` の本番オリジン用スキップは追従します。別パターンが必要なときだけ **`tools/site.config.json` の `linkinatorSkip`** を設定してください。
-- ルートの **`robots.txt`** / **`sitemap.xml`** のサイト URL は **`canonicalSite`** に合わせて手で更新してください（別ドメイン運用時）。
+- **`npm run sync`** のたびに **`robots.txt`** と **`sitemap.xml`** を **`canonicalSite`** と **`sitemapUrls`** から再生成**する。URL を増やすときは **`tools/site.config.json` の `sitemapUrls`** を編集する（手で `sitemap.xml` だけ直すと次回 sync で上書きされる）。
+
+### 3.1. ページの `<title>` と `description`（一元管理）
+
+- 主要ページの **`<title>`**、**`meta name="description"`**、**`og:title` / `og:description`**（タグがあるページのみ）は **`tools/site.config.json` の `pageMeta`** を編集し、**`npm run sync`** で HTML に反映する。該当キーは **`sync-html-allowlist.json` と同じ相対パス**（例: `"index.html"`、`"projects/open-cafe/index.html"`）。**`ogTitle` / `ogDescription` を省略**すると `title` / `description` と同じ文面になる。
+- Open cafe のように **OG タイトル行が無い HTML** では `pageMeta` の `ogTitle` は反映されない。OG まで揃えたいときは当該 HTML に **`meta property="og:title"`**（および必要なら **`og:description`**）を置いてから sync する。
+
+### 3.2. クライアント JS の minify
+
+- 先頭へ戻るボタン用の **`assets/js/scroll-top.js`** を編集したら **`npm run check`**（または **`npm run minify:client`**）で **`assets/js/scroll-top.min.js`** を再生成してコミットする。配信はフッターパーシャル経由で **`.min.js`** を参照している。
 
 ### 4. ローカル確認
 
@@ -116,7 +130,7 @@ npx serve .
 
 ### 5. CI と Git フック
 
-`main` への push / PR で **GitHub Actions** が **`npm run check`** を実行します（`sync`・`build:icons`・`validate`・`verify:og`・`lint:links`・`lint:a11y`・`npm audit --audit-level=high`）。**`npm run deps:report`**（`npm outdated`）で依存の棚卸し目安にできます。
+`main` への push / PR で **GitHub Actions** が **`npm run check`** を実行します（`sync`・`minify:client`・`build:icons`・`validate`・`verify:og`・`smoke:html`・`lint:js`・`lint:links`・`lint:a11y`・`npm audit --audit-level=high`）。**`npm run deps:report`**（`npm outdated`）で依存の棚卸し目安にできます。
 
 `npm install` 後は **`simple-git-hooks`** が有効になり、**`pre-push`** で同じ `npm run check` が走ります（初回のみ `.git` がある環境で `prepare` がフックを書き込みます）。
 
@@ -125,7 +139,7 @@ npx serve .
 ## English
 
 - **Language:** Japanese-only page copy (static HTML).
-- **SEO:** Per-page `meta name="description"`; key pages include Open Graph + `twitter:card`. `og:url` / `og:image` are filled from **`tools/site.config.json`** when you run **`npm run sync`**.
+- **SEO:** Per-page `meta name="description"` and `<title>` are driven by **`tools/site.config.json` → `pageMeta`** on sync; key pages include Open Graph + `twitter:card`. `og:url` / `og:image` are filled from the same config when you run **`npm run sync`**. **`robots.txt`** / **`sitemap.xml`** are regenerated from **`canonicalSite`** / **`sitemapUrls`** each sync.
 - **GitHub Pages:** Publish from branch **`main`**, folder **`/ (root)`** (or adjust to match your settings).
 - **Editor:** `.editorconfig` for UTF-8 / LF / 2-space indentation.
 
@@ -134,7 +148,7 @@ npx serve .
 ## 日本語
 
 - **言語:** サイト本文は日本語のみの静的 HTML です。
-- **SEO:** 各ページに `description`。主要ページは OGP と `twitter:card`。`og:url` / `og:image` は `tools/site.config.json` と `npm run sync` で揃えます。
+- **SEO:** `<title>` と `description` は **`tools/site.config.json` の `pageMeta`** と **`npm run sync`** で揃えます。主要ページは OGP と `twitter:card`。`og:url` / `og:image` も同設定です。**`robots.txt` / `sitemap.xml`** は **`canonicalSite` / `sitemapUrls`** から sync が再生成します。
 - **GitHub Pages:** ブランチ `main` のルートから公開する想定です。
 - **エディタ:** `.editorconfig` で整形の基準を揃えています。
 

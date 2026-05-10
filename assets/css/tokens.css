@@ -22,4 +22,7 @@
   --sky-bright: #7dd3fc;
   --sky-soft: #bae6fd;
   --sky-glow: rgba(56, 189, 248, 0.15);
+  /* Stacking (fixed header / scroll-to-top — keep in sync with style.css) */
+  --z-header: 100;
+  --z-scroll-top: 90;
 }

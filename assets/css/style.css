@@ -38,6 +38,9 @@ a:hover {
 }
 
 header {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-header);
   border-bottom: 1px solid var(--border);
   background: var(--surface);
 }
@@ -77,6 +80,75 @@ header {
 
 .nav-links a:hover {
   color: var(--text);
+}
+
+/* 先頭へ戻る（スクロール後に右下へ表示） */
+.scroll-top {
+  position: fixed;
+  right: max(1rem, env(safe-area-inset-right, 0px));
+  bottom: max(1rem, env(safe-area-inset-bottom, 0px));
+  z-index: var(--z-scroll-top);
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--sky-bright);
+  font-size: 1.15rem;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(0.35rem);
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s ease,
+    transform 0.2s ease,
+    background 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.scroll-top.scroll-top--visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.scroll-top:hover {
+  background: var(--sky-glow);
+  color: var(--sky-soft);
+  border-color: var(--sky);
+}
+
+.scroll-top:focus {
+  outline: none;
+}
+
+.scroll-top:focus-visible {
+  outline: 2px solid var(--sky-bright);
+  outline-offset: 3px;
+}
+
+.scroll-top__icon {
+  display: block;
+  margin-top: -0.1em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-top {
+    transition: none;
+  }
+
+  .scroll-top.scroll-top--visible {
+    transform: none;
+  }
 }
 
 main {

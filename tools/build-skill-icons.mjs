@@ -86,7 +86,6 @@ async function emitTieredFromMaster(key) {
     return null;
   }
 
-  const meta = await sharp(master).metadata();
   const baseName = `icon-skill-${key}`;
 
   for (const { suffix, maxW, webpQ } of TIERS) {

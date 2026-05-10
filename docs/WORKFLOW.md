@@ -11,7 +11,7 @@ GitHub Pages 用の静的 HTML リポジトリ向けの、変更から公開ま�
 | 共通ナビ | `tools/partials/site-nav.html`（`404` 用は `site-nav-root.html`） |
 | フッター | `tools/partials/site-footer.html` |
 | About の長文（Introduction 〜 Future） | `tools/partials/about-sections.html`（`about.html` の `<!-- site:about-sections:* -->` 間に注入） |
-| 正規 URL・OG 画像パス・SNS | `tools/site.config.json`（`canonicalSite` / `ogImage` / 任意 **`ogImageByPage`** / `socialX`） |
+| 正規 URL・OG・サイトマップ・ページタイトル | `tools/site.config.json`（`canonicalSite` / `ogImage` / **`ogImageByPage`** / **`sitemapUrls`** / **`pageMeta`** / 任意 **`syncHtmlWarnIgnorePrefixes`** / `socialX`） |
 | 共有色・フォントなど | `assets/css/tokens.css`（各 CSS は `@import "./tokens.css"`） |
 | Gemini アイコンと About カードの対応 | **[tools/IMAGES.md](../tools/IMAGES.md)** |
 | **sync が触る HTML の一覧** | **`tools/sync-html-allowlist.json`**（パスを増やしたらここに追記） |
@@ -28,7 +28,7 @@ GitHub Pages 用の静的 HTML リポジトリ向けの、変更から公開ま�
 5. そのページ用の **OG プレビュー画像**を変えたいときは、画像ファイルをリポジトリに追加し、**`tools/site.config.json` の `ogImageByPage`** に「HTML の相対パス → `/から始まる画像パス`」を追加する（未設定なら全体の **`ogImage`** が使われる）。
 6. **`npm run sync`**（内部で `render-works` → `sync-site`）を実行し、差分をコミット。
 
-`npm run sync` の終了時、allowlist に無い **ルート配下・`projects/` 配下の `.html`** があると **警告**が出ます（`tools/` 配下のパーシャルは対象外）。新規ページを追加したら allowlist へ追記してください。
+`npm run sync` の終了時、allowlist に無い **ルート配下・`projects/` 配下の `.html`** があると **警告**が出ます（`tools/` 配下は対象外）。**`syncHtmlWarnIgnorePrefixes`** に載ったパス接頭辞配下は警告を出さない（例: WP 書き出しのみ増えるディレクトリ）。**自サイト用の新規 HTML** は **`tools/sync-html-allowlist.json` に追記**する。あわせて **`pageMeta`** にキーを足すと `<title>` / `description` を一元管理できる。
 
 ## 別リポジトリ（動的サイトなど）との関係
 
@@ -39,7 +39,7 @@ GitHub Pages 用の静的 HTML リポジトリ向けの、変更から公開ま�
 ## 手順チェックリスト
 
 1. **パーシャルや `site.config.json` を編集したら**  
-   `npm run sync` — 先に **`tools/render-works.mjs`** が `index.html` の **`#works`** を `tools/projects.json` から再生成し、その後に各 HTML の `<!-- site:* -->` ブロック（ナビ・フッター・**About 長文**）と `og:url` / `og:image` を設定に合わせて書き換えます。  
+   `npm run sync` — 先に **`tools/render-works.mjs`** が `index.html` の **`#works`** を `tools/projects.json` から再生成し、その後に各 HTML の `<!-- site:* -->`（ナビ・フッター・**About 長文**）、**`pageMeta` に基づく `<title>` / description / OG タイトル説明**、`og:url` / `og:image`、**`robots.txt` / `sitemap.xml`** を設定に合わせて書き換えます。  
    **同期対象**は `tools/sync-html-allowlist.json` に列挙されたファイルのみです（新しい `.html` を sync させたいときはパスを追加）。
 
 2. **トップや About の写真を差し替えたら**  
@@ -50,7 +50,7 @@ GitHub Pages 用の静的 HTML リポジトリ向けの、変更から公開ま�
    **GitHub Actions（`CI=true`）**では、`GEMINI_TO_KEY` の各キーについて **`img/source/icon-skill-{key}.png` が必須**です。マスターが欠けるとビルドは失敗します。
 
 4. **プッシュ前**  
-   `npm run check` — `sync` → `build:icons` → `html-validate` → **`verify:og`**（`site.config.json` の **`ogImage` / `ogImageByPage`** が指すサイト内ファイルの実在チェック）→ **`lint:links`**（`tools/lint-links.mjs` が `site.config.json` の **`canonicalSite`** から OG 用ホストのスキップ正規表現を組み立てます）→ **`lint:a11y`**（axe-core + jsdom）→ `npm audit --audit-level=high`。
+   `npm run check` — `sync` → **`minify:client`**（`scroll-top.min.js`）→ `build:icons` → `html-validate` → **`verify:og`** → **`smoke:html`** → **`lint:js`**（`tools/**/*.mjs` の ESLint）→ **`lint:links`** → **`lint:a11y`** → `npm audit --audit-level=high`。
 
 5. **リンクスキップを手で上書きしたい場合**  
    `tools/site.config.json` に **`linkinatorSkip`**（文字列・1 本の正規表現）を書くと、`lint:links` はそれをそのまま `--skip` に使います（未設定時は `canonicalSite` と X/Twitter 向けパターンを自動生成）。
