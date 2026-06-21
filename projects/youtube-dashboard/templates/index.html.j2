@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>クレカ動画ランキング | 過去{{ period_days }}日間 TOP{{ top_n }}</title>
+    <meta
+      name="description"
+      content="過去{{ period_days }}日間のクレジットカード関連YouTube動画を閲覧数順にランキング。毎日自動更新。"
+    />
+    <meta property="og:title" content="クレカ動画ランキング | 過去{{ period_days }}日間 TOP{{ top_n }}" />
+    <meta
+      property="og:description"
+      content="過去{{ period_days }}日間のクレジットカード関連YouTube動画を閲覧数順にランキング。"
+    />
+    <meta property="og:type" content="website" />
+    {% if videos %}
+    <meta property="og:image" content="{{ videos[0].thumbnail_url }}" />
+    {% endif %}
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              ink: "#0f172a",
+              card: "#111827",
+              accent: "#38bdf8",
+              gold: "#f59e0b",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        background:
+          radial-gradient(circle at top left, rgba(56, 189, 248, 0.12), transparent 28%),
+          radial-gradient(circle at top right, rgba(245, 158, 11, 0.1), transparent 24%),
+          #020617;
+      }
+    </style>
+  </head>
+  <body class="min-h-screen text-slate-100 antialiased">
+    <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
+      <header class="mb-10 rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur">
+        <p class="mb-3">
+          <a
+            class="text-sm text-sky-300 transition hover:text-sky-200"
+            href="../../index.html#works"
+          >
+            ← ポートフォリオに戻る
+          </a>
+        </p>
+        <p class="mb-2 text-sm font-medium uppercase tracking-[0.2em] text-sky-300">
+          Credit Card Video Dashboard
+        </p>
+        <h1 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+          今週のクレカ動画ランキング
+        </h1>
+        <p class="mt-3 max-w-3xl text-sm leading-7 text-slate-300 sm:text-base">
+          過去 {{ period_days }} 日間に公開されたクレジットカード関連の日本語動画から、
+          ニュース性の高いコンテンツを閲覧数順に TOP {{ top_n }} 件を厳選しています。
+        </p>
+        <div class="mt-5 flex flex-wrap gap-3 text-xs text-slate-300 sm:text-sm">
+          <span class="rounded-full border border-white/10 bg-slate-900/70 px-3 py-1">
+            更新: {{ generated_at }}
+          </span>
+          <span class="rounded-full border border-white/10 bg-slate-900/70 px-3 py-1">
+            対象期間: 過去 {{ period_days }} 日間
+          </span>
+          <span class="rounded-full border border-white/10 bg-slate-900/70 px-3 py-1">
+            取得モード: {{ mode_label }}
+          </span>
+        </div>
+      </header>
+
+      {% if videos %}
+      <div class="grid gap-8">
+        {% for video in videos %}
+        <article
+          class="overflow-hidden rounded-3xl border border-white/10 bg-slate-900/70 shadow-2xl shadow-black/30"
+        >
+          <div class="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 px-6 py-4">
+            <div class="flex items-center gap-3">
+              <span
+                class="inline-flex h-10 w-10 items-center justify-center rounded-2xl text-lg font-bold
+                {% if video.rank == 1 %}bg-amber-400/20 text-amber-300
+                {% elif video.rank == 2 %}bg-slate-300/15 text-slate-200
+                {% elif video.rank == 3 %}bg-orange-400/15 text-orange-300
+                {% else %}bg-sky-400/15 text-sky-300{% endif %}"
+              >
+                #{{ video.rank }}
+              </span>
+              <div>
+                <p class="text-xs uppercase tracking-wider text-slate-400">Rank {{ video.rank }}</p>
+                <p class="text-sm font-medium text-slate-200">{{ video.view_count_display }} views</p>
+              </div>
+            </div>
+            <time class="text-sm text-slate-400" datetime="{{ video.published_at }}">
+              {{ video.published_at_display }}
+            </time>
+          </div>
+
+          <div class="aspect-video w-full bg-black relative">
+            <iframe
+              class="video-embed hidden h-full w-full"
+              data-video-id="{{ video.video_id }}"
+              title="{{ video.title }}"
+              loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+              referrerpolicy="strict-origin-when-cross-origin"
+            ></iframe>
+            <a
+              class="video-fallback absolute inset-0 flex items-center justify-center bg-black"
+              href="{{ video.url }}"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="{{ video.title }} を YouTube で開く"
+            >
+              <img
+                class="absolute inset-0 h-full w-full object-cover opacity-75"
+                src="{{ video.thumbnail_url }}"
+                alt=""
+                loading="lazy"
+              />
+              <span
+                class="relative z-10 rounded-full bg-red-600 px-5 py-2 text-sm font-semibold text-white shadow-lg"
+              >
+                YouTube で再生
+              </span>
+            </a>
+          </div>
+
+          <div class="space-y-4 px-6 py-5">
+            <h2 class="text-lg font-semibold leading-8 text-white sm:text-xl">
+              <a
+                class="transition hover:text-sky-300"
+                href="{{ video.url }}"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {{ video.title }}
+              </a>
+            </h2>
+
+            <div class="flex flex-wrap gap-3">
+              <a
+                class="inline-flex items-center rounded-full bg-sky-500 px-4 py-2 text-sm font-medium text-slate-950 transition hover:bg-sky-400"
+                href="{{ video.url }}"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                YouTube で開く
+              </a>
+              <img
+                class="h-14 w-24 rounded-lg border border-white/10 object-cover"
+                src="{{ video.thumbnail_url }}"
+                alt=""
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+      {% else %}
+      <section class="rounded-3xl border border-dashed border-white/15 bg-white/5 p-10 text-center">
+        <h2 class="text-xl font-semibold text-white">該当する動画が見つかりませんでした</h2>
+        <p class="mt-3 text-sm text-slate-400">
+          検索条件を見直すか、次回の自動更新をお待ちください。
+        </p>
+      </section>
+      {% endif %}
+
+      <div class="mt-10 flex justify-center">
+        <a
+          class="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-6 py-3 text-sm font-medium text-sky-300 transition hover:border-sky-400/40 hover:bg-white/10 hover:text-sky-200"
+          href="../../index.html#works"
+        >
+          ← ポートフォリオに戻る
+        </a>
+      </div>
+
+      <footer class="mt-10 border-t border-white/10 pt-6 text-center text-xs text-slate-500">
+        <p>Generated by youtube-dashboard / GitHub Pages static dashboard</p>
+      </footer>
+    </div>
+
+    <button
+      type="button"
+      id="scroll-top-btn"
+      class="fixed bottom-8 right-8 z-50 flex h-12 w-12 items-center justify-center rounded-full border border-white/15 bg-slate-900/85 text-lg font-semibold text-sky-300 opacity-0 shadow-xl shadow-black/40 backdrop-blur transition-all duration-300 pointer-events-none translate-y-2 hover:border-sky-400/50 hover:bg-slate-800/95 hover:text-sky-100 hover:-translate-y-1 hover:shadow-sky-500/20"
+      aria-label="ページ先頭へ戻る"
+      hidden
+    >
+      ↑
+    </button>
+
+    <script>
+      (function () {
+        const isFileProtocol = location.protocol === "file:";
+
+        if (isFileProtocol) {
+          const banner = document.createElement("div");
+          banner.className =
+            "mx-auto mb-8 max-w-6xl rounded-2xl border border-amber-400/30 bg-amber-400/10 px-4 py-3 text-sm leading-7 text-amber-100";
+          banner.innerHTML =
+            'ローカルファイル（<code class="rounded bg-black/30 px-1">file://</code>）では YouTube 埋め込みがエラー153になるため、サムネイル表示に切り替えています。iframe で確認する場合は <code class="rounded bg-black/30 px-1">python -m http.server 8765</code> を実行し、<code class="rounded bg-black/30 px-1">http://localhost:8765/index.html</code> を開いてください。';
+          document.querySelector("header").insertAdjacentElement("afterend", banner);
+        }
+
+        document.querySelectorAll(".video-embed[data-video-id]").forEach(function (iframe) {
+          const fallback = iframe.parentElement.querySelector(".video-fallback");
+          if (isFileProtocol) {
+            iframe.remove();
+            return;
+          }
+
+          const videoId = iframe.dataset.videoId;
+          const origin = encodeURIComponent(location.origin);
+          iframe.src =
+            "https://www.youtube.com/embed/" + videoId + "?rel=0&origin=" + origin;
+          iframe.classList.remove("hidden");
+          if (fallback) {
+            fallback.classList.add("hidden");
+          }
+        });
+      })();
+    </script>
+    <script>
+      (function () {
+        const btn = document.getElementById("scroll-top-btn");
+        if (!btn) return;
+
+        const showAt = 200;
+
+        function updateScrollTopButton() {
+          const y = window.scrollY || document.documentElement.scrollTop;
+          const show = y > showAt;
+
+          btn.hidden = !show;
+          btn.classList.toggle("opacity-100", show);
+          btn.classList.toggle("translate-y-0", show);
+          btn.classList.toggle("pointer-events-auto", show);
+          btn.classList.toggle("opacity-0", !show);
+          btn.classList.toggle("translate-y-2", !show);
+          btn.classList.toggle("pointer-events-none", !show);
+        }
+
+        btn.addEventListener("click", function () {
+          const instant = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+          window.scrollTo({ top: 0, behavior: instant ? "auto" : "smooth" });
+        });
+
+        window.addEventListener("scroll", updateScrollTopButton, { passive: true });
+        updateScrollTopButton();
+      })();
+    </script>
+  </body>
+</html>

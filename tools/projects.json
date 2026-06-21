@@ -10,6 +10,12 @@
       },
       "detailHref": "projects/open-cafe/index.html",
       "ctaLabel": "詳細とプレビュー"
+    },
+    {
+      "title": "クレカ動画ランキング",
+      "description": "YouTube Data API で過去1週間のクレジットカード関連動画を自動集計し、閲覧数トップ5を表示するダッシュボード（Python / GitHub Actions）。",
+      "detailHref": "projects/youtube-dashboard/index.html",
+      "ctaLabel": "ダッシュボードを見る"
     }
   ]
 }

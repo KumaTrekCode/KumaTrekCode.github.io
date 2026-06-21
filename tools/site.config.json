@@ -8,7 +8,8 @@
   "sitemapUrls": [
     { "path": "", "changefreq": "monthly", "priority": "1.0" },
     { "path": "about.html", "changefreq": "monthly", "priority": "0.8" },
-    { "path": "projects/open-cafe/index.html", "changefreq": "monthly", "priority": "0.7" }
+    { "path": "projects/open-cafe/index.html", "changefreq": "monthly", "priority": "0.7" },
+    { "path": "projects/youtube-dashboard/index.html", "changefreq": "daily", "priority": "0.7" }
   ],
   "syncHtmlWarnIgnorePrefixes": ["projects/open-cafe-wp-export/"],
   "pageMeta": {
@@ -39,6 +40,12 @@
       "description": "デイトラ卒業課題 Open cafe の静的ページ置き場。完成版の index.html / CSS / 画像をここに配置してください。",
       "ogTitle": "Open cafe 静的サイト",
       "ogDescription": "デイトラ卒業課題 Open cafe の静的ページ置き場。完成版の index.html / CSS / 画像をここに配置してください。"
+    },
+    "projects/youtube-dashboard/index.html": {
+      "title": "クレカ動画ランキング | KumaTrekCode",
+      "description": "過去1週間のクレジットカード関連YouTube動画を閲覧数順にランキング。毎日自動更新のダッシュボード。",
+      "ogTitle": "クレカ動画ランキング | KumaTrekCode",
+      "ogDescription": "過去1週間のクレジットカード関連YouTube動画を閲覧数順にランキング。毎日自動更新。"
     }
   }
 }
