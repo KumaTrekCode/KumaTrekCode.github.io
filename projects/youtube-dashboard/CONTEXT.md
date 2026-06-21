@@ -19,7 +19,7 @@
 
 ## 2. 現在の開発フェーズと目標
 
-**GitHub Actions による毎日の自動更新・GitHub Pages デプロイ（`.github/workflows/update_dashboard.yml`）が完成。次は LINE Flex Message 通知の段階です。**
+**GitHub Actions による毎日の自動更新・GitHub Pages デプロイが完成。LINE Flex Message 通知（`notify_line.py`）も実装済み。**
 
 ---
 
@@ -72,10 +72,11 @@ index.html  Flex Message
 - [x] `.env.example`
 - [x] Step 3: `generate_html.py` + `templates/index.html.j2` → `index.html`（Tailwind + iframe）
 - [x] Step 5: `.github/workflows/update_dashboard.yml`（毎日 07:00 JST / 手動実行）
+- [x] Step 4: `notify_line.py`（Flex Message カルーセル通知）
 
 ### 未着手
 
-- [ ] Step 4: LINE Flex Message 通知
+- なし（運用設定: LINE Secrets 登録・User ID 取得）
 
 ---
 

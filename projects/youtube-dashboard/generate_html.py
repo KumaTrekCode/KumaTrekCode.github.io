@@ -5,6 +5,7 @@
 
 from __future__ import annotations
 
+import json
 import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -22,6 +23,8 @@ from fetch_videos import (
 PROJECT_DIR = Path(__file__).resolve().parent
 TEMPLATE_DIR = PROJECT_DIR / "templates"
 DEFAULT_OUTPUT = PROJECT_DIR / "index.html"
+DEFAULT_RANKING_JSON = PROJECT_DIR / "ranking.json"
+DASHBOARD_URL = "https://kumatrekcode.github.io/projects/youtube-dashboard/index.html"
 JST = timezone(timedelta(hours=9))
 MODE_LABELS = {
     "news": "ニュース検索（複数キーワード）",
@@ -57,14 +60,16 @@ def _video_to_template_dict(video: Video, rank: int) -> dict[str, str | int]:
 def generate_dashboard_html(
     *,
     output_path: Path | None = None,
+    ranking_json_path: Path | None = None,
     top_n: int = TOP_N,
     period_days: int = DEFAULT_DAYS,
     mode: SearchMode = "news",
     keyword: str | None = None,
 ) -> Path:
-    """動画ランキングを取得し、静的 index.html を生成する。"""
+    """動画ランキングを取得し、静的 index.html と ranking.json を生成する。"""
     videos = fetch_top_videos(keyword=keyword, top_n=top_n, mode=mode)
     template_videos = [_video_to_template_dict(video, rank) for rank, video in enumerate(videos, start=1)]
+    generated_at = datetime.now(JST).strftime("%Y年%m月%d日 %H:%M")
 
     env = Environment(
         loader=FileSystemLoader(TEMPLATE_DIR),
@@ -75,13 +80,28 @@ def generate_dashboard_html(
         videos=template_videos,
         top_n=top_n,
         period_days=period_days,
-        generated_at=datetime.now(JST).strftime("%Y年%m月%d日 %H:%M"),
+        generated_at=generated_at,
         mode_label=MODE_LABELS.get(mode, mode),
     )
 
     destination = output_path or DEFAULT_OUTPUT
     destination.parent.mkdir(parents=True, exist_ok=True)
     destination.write_text(html, encoding="utf-8")
+
+    ranking_payload = {
+        "generated_at": generated_at,
+        "period_days": period_days,
+        "top_n": top_n,
+        "mode_label": MODE_LABELS.get(mode, mode),
+        "dashboard_url": DASHBOARD_URL,
+        "videos": template_videos,
+    }
+    ranking_destination = ranking_json_path or DEFAULT_RANKING_JSON
+    ranking_destination.write_text(
+        json.dumps(ranking_payload, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+
     return destination
 
 
@@ -102,7 +122,7 @@ def main() -> int:
         return 1
 
     print(f"Generated: {output}")
-    print(f"Open locally: file://{output.resolve()}")
+    print(f"Ranking JSON: {DEFAULT_RANKING_JSON.resolve()}")
     return 0
 
 

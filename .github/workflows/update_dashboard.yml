@@ -2,8 +2,9 @@
 #
 # 流れ:
 #   1. YouTube API でトップ5を取得（fetch_videos.py）
-#   2. Jinja2 テンプレートから index.html を生成（generate_html.py）
-#   3. 変更があれば main ブランチへコミット＆プッシュ
+#   2. Jinja2 テンプレートから index.html / ranking.json を生成（generate_html.py）
+#   3. LINE Flex Message を送信（notify_line.py）
+#   4. 変更があれば main ブランチへコミット＆プッシュ
 #
 # GitHub Pages は main ブランチの静的ファイルをそのまま公開する構成を想定。
 
@@ -51,6 +52,13 @@ jobs:
         env:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
         run: python generate_html.py
+
+      # ranking.json を読み込み、LINE Flex Message を送信
+      - name: Send LINE notification
+        env:
+          LINE_CHANNEL_ACCESS_TOKEN: ${{ secrets.LINE_CHANNEL_ACCESS_TOKEN }}
+          LINE_USER_ID: ${{ secrets.LINE_USER_ID }}
+        run: python notify_line.py
 
       # 生成された index.html のみをコミット（変更がない場合はスキップ）
       - name: Commit and push updated dashboard
