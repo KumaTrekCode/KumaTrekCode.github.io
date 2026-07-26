@@ -32,9 +32,15 @@ const aboutSectionsBlock =
 
 function walkHtmlFiles(dir, out = []) {
   for (const name of readdirSync(dir)) {
-    if (name === "node_modules" || name === ".git") continue;
+    if (name === "node_modules" || name === ".git" || name === ".venv") continue;
     const abs = join(dir, name);
-    const st = statSync(abs);
+    let st;
+    try {
+      st = statSync(abs);
+    } catch (e) {
+      if (e && (e.code === "ENOENT" || e.code === "ELOOP")) continue;
+      throw e;
+    }
     if (st.isDirectory()) walkHtmlFiles(abs, out);
     else if (st.isFile() && name.endsWith(".html")) out.push(abs);
   }
