@@ -185,30 +185,14 @@
   padding: 0;
 }
 
-/* PC: 2列で縦に流す（保有: 3+2 / 今後: 2+1 の配置が自然に決まる） */
+/* PC: 保有スキルは 2列で縦に流す（3+2 の配置が自然に決まる） */
 @media (min-width: 901px) {
   .about-page .skills-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-
-  .about-page .skills-grid--three {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
 }
 
-@media (max-width: 900px) {
-  .about-page .skills-grid {
-    grid-template-columns: repeat(auto-fit, minmax(10.5rem, 1fr));
-  }
-}
-
-@media (max-width: 520px) {
-  .about-page .skills-grid {
-    grid-template-columns: repeat(auto-fit, minmax(10.5rem, 1fr));
-  }
-}
-
-/* 「今後取得・強化」3カード */
+/* 「今後取得・強化」3カード（後勝ちで PC も 3列。上の 2列ルールは保有グリッド向け） */
 .about-page .skills-grid--three {
   grid-template-columns: repeat(3, 1fr);
 }

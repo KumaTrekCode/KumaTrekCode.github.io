@@ -501,25 +501,6 @@ footer .footer-copy {
   text-decoration: underline;
 }
 
-.about-figure {
-  margin: 0 0 1.25rem;
-}
-
-.about-figure picture {
-  display: block;
-}
-
-.about-figure img {
-  display: block;
-  width: 100%;
-  height: auto;
-  max-height: 280px;
-  object-fit: cover;
-  object-position: center;
-  border-radius: 8px;
-  border: 1px solid var(--border);
-}
-
 .hero-intro__body .lead {
   line-height: 1.65;
 }

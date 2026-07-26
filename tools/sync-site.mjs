@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync, readdirSync, statSync, existsSync } from "node:fs";
+import { readFileSync, writeFileSync, readdirSync, statSync, lstatSync, existsSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 
 /**
@@ -30,26 +30,73 @@ const footerBlock = /<!-- site:footer:start -->[\s\S]*?<!-- site:footer:end -->/
 const aboutSectionsBlock =
   /[ \t]*<!-- site:about-sections:start -->[\s\S]*?\n[ \t]*<!-- site:about-sections:end -->/;
 
-function walkHtmlFiles(dir, out = []) {
-  for (const name of readdirSync(dir)) {
-    if (name === "node_modules" || name === ".git" || name === ".venv") continue;
-    const abs = join(dir, name);
-    let st;
-    try {
-      st = statSync(abs);
-    } catch (e) {
-      if (e && (e.code === "ENOENT" || e.code === "ELOOP")) continue;
-      throw e;
-    }
-    if (st.isDirectory()) walkHtmlFiles(abs, out);
-    else if (st.isFile() && name.endsWith(".html")) out.push(abs);
-  }
-  return out;
-}
+/** 走査しないディレクトリ名（依存・キャッシュ・仮想環境など）。 */
+const SKIP_DIR_NAMES = new Set([
+  "node_modules",
+  ".git",
+  ".venv",
+  "venv",
+  "__pycache__",
+  ".tox",
+  ".mypy_cache",
+  ".pytest_cache",
+  ".ruff_cache",
+  ".cache",
+  "coverage",
+  "dist",
+  "build",
+  ".next",
+  ".turbo",
+  ".idea",
+  ".vscode",
+  "vendor",
+  "site-packages",
+]);
 
 /** Path relative to repo root, forward slashes. */
 function relPosix(absFile) {
   return relative(root, absFile).split("\\").join("/");
+}
+
+function walkHtmlFiles(dir, out = []) {
+  let names;
+  try {
+    names = readdirSync(dir);
+  } catch (e) {
+    console.warn(`sync-site: warn  cannot read dir ${relPosix(dir)}: ${e.code || e.message}`);
+    return out;
+  }
+
+  for (const name of names) {
+    if (SKIP_DIR_NAMES.has(name)) continue;
+    const abs = join(dir, name);
+    let st;
+    try {
+      st = lstatSync(abs);
+    } catch (e) {
+      console.warn(`sync-site: warn  cannot lstat ${relPosix(abs)}: ${e.code || e.message}`);
+      continue;
+    }
+
+    if (st.isSymbolicLink()) {
+      try {
+        st = statSync(abs);
+      } catch (e) {
+        console.warn(
+          `sync-site: warn  broken symlink skipped: ${relPosix(abs)} (${e.code || e.message})`,
+        );
+        continue;
+      }
+    }
+
+    try {
+      if (st.isDirectory()) walkHtmlFiles(abs, out);
+      else if (st.isFile() && name.endsWith(".html")) out.push(abs);
+    } catch (e) {
+      console.warn(`sync-site: warn  skip ${relPosix(abs)}: ${e.code || e.message}`);
+    }
+  }
+  return out;
 }
 
 /**
@@ -266,37 +313,47 @@ for (const abs of htmlAbsList) {
   const rel = relPosix(abs);
   if (syncHtmlAllowSet && !syncHtmlAllowSet.has(rel)) continue;
 
-  let html = readFileSync(abs, "utf8");
+  let html;
+  try {
+    html = readFileSync(abs, "utf8");
+  } catch (e) {
+    console.warn(`sync-site: warn  cannot read ${rel}: ${e.code || e.message}`);
+    continue;
+  }
   if (!shouldProcess(html, rel)) continue;
 
   const relPrefix = relPrefixFor(rel);
 
-  if (navBlock.test(html)) {
-    const navHtml = renderNav(relPrefix);
-    html = html.replace(navBlock, `<!-- site:nav:start -->\n${navHtml}\n<!-- site:nav:end -->`);
-  }
+  try {
+    if (navBlock.test(html)) {
+      const navHtml = renderNav(relPrefix);
+      html = html.replace(navBlock, `<!-- site:nav:start -->\n${navHtml}\n<!-- site:nav:end -->`);
+    }
 
-  if (footerBlock.test(html)) {
-    const footer = readFileSync(resolve(root, "tools", "partials", "site-footer.html"), "utf8");
-    html = html.replace(footerBlock, `<!-- site:footer:start -->\n${footer}\n<!-- site:footer:end -->`);
-  }
+    if (footerBlock.test(html)) {
+      const footer = readFileSync(resolve(root, "tools", "partials", "site-footer.html"), "utf8");
+      html = html.replace(footerBlock, `<!-- site:footer:start -->\n${footer}\n<!-- site:footer:end -->`);
+    }
 
-  if (aboutSectionsBlock.test(html)) {
-    const aboutSections = readFileSync(
-      resolve(root, "tools", "partials", "about-sections.html"),
-      "utf8",
-    );
-    html = html.replace(
-      aboutSectionsBlock,
-      `      <!-- site:about-sections:start -->\n${aboutSections}\n      <!-- site:about-sections:end -->`,
-    );
-  }
+    if (aboutSectionsBlock.test(html)) {
+      const aboutSections = readFileSync(
+        resolve(root, "tools", "partials", "about-sections.html"),
+        "utf8",
+      );
+      html = html.replace(
+        aboutSectionsBlock,
+        `      <!-- site:about-sections:start -->\n${aboutSections}\n      <!-- site:about-sections:end -->`,
+      );
+    }
 
-  html = injectPageMeta(html, rel);
-  html = injectOg(html, rel);
-  html = rootPathsToRelative(html, relPrefix);
-  writeFileSync(abs, html, "utf8");
-  console.log("sync-site: ok", rel);
+    html = injectPageMeta(html, rel);
+    html = injectOg(html, rel);
+    html = rootPathsToRelative(html, relPrefix);
+    writeFileSync(abs, html, "utf8");
+    console.log("sync-site: ok", rel);
+  } catch (e) {
+    console.warn(`sync-site: warn  failed processing ${rel}: ${e.code || e.message}`);
+  }
 }
 
 writeRobotsTxt();
