@@ -11,7 +11,10 @@
     { "path": "projects/open-cafe/index.html", "changefreq": "monthly", "priority": "0.7" },
     { "path": "projects/youtube-dashboard/index.html", "changefreq": "daily", "priority": "0.7" }
   ],
-  "syncHtmlWarnIgnorePrefixes": ["projects/open-cafe-wp-export/"],
+  "syncHtmlWarnIgnorePrefixes": [
+    "projects/open-cafe-wp-export/",
+    "projects/youtube-dashboard/"
+  ],
   "pageMeta": {
     "index.html": {
       "title": "KumaTrekCode | ポートフォリオ",
