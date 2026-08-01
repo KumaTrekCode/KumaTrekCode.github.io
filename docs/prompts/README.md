@@ -3,7 +3,11 @@
 チャットが長くなったときのため、**そのままコピペできるプロンプト**を別ファイルに分けてあります。  
 内容は実運用に合わせて **ここを直接編集して改善**してください。
 
-## まずはこの順（運用ステップ）
+## リポジトリ全体のエージェントループ
+
+実装キューを1件だけ自走させるときは **[agent-loop.md](./agent-loop.md)**（`npm run task:next` → 実装 → `npm run check` → PR）。契約は [AGENTS.md](../../AGENTS.md)。
+
+## まずはこの順（Open Cafe WP 書き出しの運用ステップ）
 
 1. **チェック**: [page-check.md](./page-check.md)
 2. **ページ整形/生成**: [gh-pages-static-html-page.md](./gh-pages-static-html-page.md)
@@ -15,6 +19,7 @@
 
 | ファイル | 用途 |
 |----------|------|
+| [agent-loop.md](./agent-loop.md) | ROADMAP の次タスク1件を `npm run check` まで自走して PR するエージェント用プロンプト |
 | [page-check.md](./page-check.md) | 1ページ分の静的書き出し品質チェック（パス/参照/リンク/OG） |
 | [gh-pages-static-html-page.md](./gh-pages-static-html-page.md) | 書き出し HTML（別名保存の参考含む）を、GitHub Pages 向けに整える・2ページ目以降を作る |
 | [page-register.md](./page-register.md) | 新規ページを `sync` / `lint:a11y` の対象に登録（allowlist 追記など） |

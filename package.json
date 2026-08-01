@@ -18,6 +18,7 @@
     "lint:js": "eslint tools",
     "audit:ci": "npm audit --audit-level=high",
     "deps:report": "npm outdated || true",
+    "task:next": "node tools/next-task.mjs",
     "sync:check": "npm run validate && npm run sync && npm run validate && npm run verify:partials && npm run smoke:html",
     "check": "npm run sync && npm run minify:client && npm run build:icons && npm run validate && npm run verify:partials && npm run verify:og && npm run smoke:html && npm run lint:js && npm run lint:links && npm run lint:a11y && npm run audit:ci",
     "prepare": "simple-git-hooks"
