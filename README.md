@@ -4,6 +4,8 @@ Static personal portfolio for **GitHub Pages** (`https://kumatrekcode.github.io/
 
 **運用の流れ:** 変更から push までの手順は **[docs/WORKFLOW.md](docs/WORKFLOW.md)** にまとめています。
 
+**Agent harness / loop:** AI エージェント向けの契約は **[AGENTS.md](AGENTS.md)**、実装キューは **[ROADMAP.md](ROADMAP.md)**（`npm run task:next` で次の1件）。品質の合格条件は既存の **`npm run check`**。仕組みの説明は **[docs/harness-and-loop.md](docs/harness-and-loop.md)**。学習メモ（knowledge）と実装キューは分けて運用する。
+
 **レイヤー分け:** ルート直下は **GitHub Pages の公開ドキュメントルート**（HTML / CSS / 画像 / 制作物）。**`tools/`** はナビの注入・画像最適化・サイト用 JSON など **npm からだけ触る保守用**です（URL では配信されません）。
 
 **別リポジトリの制作物:** 動的サイトや別プロジェクトのリポジトリはそのままにし、**静的ビルドの出力だけ**をこの repo の `projects/<名前>/` に置く運用が分かりやすいです（成果物のコピー or Actions で PR／デプロイ）。方針を決めたら README か [docs/WORKFLOW.md](docs/WORKFLOW.md) に一言残しておくと、後から見たときに迷いません。
