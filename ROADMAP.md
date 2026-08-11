@@ -25,3 +25,7 @@
 
 - [x] `harness-scaffold`: ハーネスとループの足場（AGENTS.md / ROADMAP / docs/harness-and-loop.md / `npm run task:next` / README 導線）を追加する
 - [x] `agent-loop-prompt`: docs/prompts/agent-loop.md と prompts README への導線を追加する
+- [x] `cleanup-branches`: 古いクローズ済みPRのブランチを削除（#30-34の5ブランチ）
+- [x] `fix-vulnerabilities`: セキュリティ脆弱性を解消（eslint 10.8.1へアップグレード等、PR #38）
+- [x] `cleanup-technical-debt`: canonical URL修正と生成ファイルのGit追跡解消（PR #39）
+- [x] `dependabot-cleanup`: 古いDependabot PRの整理（#1,#3,#18,#19,#28,#29は自動クローズ済み、対応不要）
