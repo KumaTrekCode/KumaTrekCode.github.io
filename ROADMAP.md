@@ -21,6 +21,7 @@
 
 ## Done
 
+- [x] `dependabot-cleanup`: Dependabot 整理（superseded クローズ: #3,#5,#19,#28／相当マージ: #18 axe-core 4.12.1・#29 globals 17.8.0・`npm run check` 通過／#1 jsdom major は未着手で open のまま）
 - [x] `open-cafe-a11y-register`: Open Cafe WP 書き出しの未登録ページを allowlist / lint:a11y に登録し、drawer の aria-label / aria-controls を揃える
 - [x] `youtube-dashboard-ops-memo`: youtube-dashboard の運用ランブック更新とナビ Portfolio → `#works` 導線整理
 - [x] `learning-extract-ops`: `docs/learning/` は移動せず、サイト／tools 成果だけを人間が完了条件つきで ROADMAP へ昇格する運用を文書化してクローズ
@@ -29,4 +30,3 @@
 - [x] `cleanup-branches`: 古いクローズ済みPRのブランチを削除（#30-34の5ブランチ）
 - [x] `fix-vulnerabilities`: セキュリティ脆弱性を解消（eslint 10.8.1へアップグレード等、PR #38）
 - [x] `cleanup-technical-debt`: canonical URL修正と生成ファイルのGit追跡解消（PR #39）
-- [x] `dependabot-cleanup`: 古いDependabot PRの整理（#1,#3,#18,#19,#28,#29は自動クローズ済み、対応不要）
