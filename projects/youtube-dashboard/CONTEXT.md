@@ -1,7 +1,8 @@
 # YouTube クレジットカード動画ランキング — 開発コンテキスト
 
-> このファイルは Cursor へのプロンプト貼り付け用・プロジェクト共有用のコンテキストです。  
-> 状況が変わったら **「2. 現在の開発フェーズ」** と **「4. 実装済み / 未着手」** を更新してください。
+> このファイルは Cursor へのプロンプト貼り付け用・**開発／設計コンテキスト**です。  
+> **現行の運用状態・起動手順・失敗時プレイブックの正本は [README.md](./README.md)**（運用ランブック）。  
+> 本ファイルの古いステータス記述と食い違う場合は README を優先してください。
 
 ---
 
@@ -19,7 +20,7 @@
 
 ## 2. 現在の開発フェーズと目標
 
-**実装は完了。GitHub Actions による自動更新・LINE 通知（Step 4）の設定済み。本番運用確認（クォータリセット後の再テスト）待ち。**
+**実装・本番運用は完了。** GitHub Actions（毎日 07:00 JST 相当）と LINE 通知が稼働中。運用の最新ステータスは [README.md](./README.md) を参照。
 
 ---
 
@@ -76,14 +77,13 @@ index.html  Flex Message
 
 ### 未着手（コード）
 
-- なし
+- なし（channels モードの `TRUSTED_CHANNEL_IDS` はプレースホルダのまま。本番は news モード）
 
-### 運用確認（進行中）
+### 運用確認
 
-- [ ] GitHub Secrets に LINE 2件を登録済みか最終確認
-- [ ] クォータリセット後（16:00 JST 以降）の Actions 手動実行（Run workflow）
-- [ ] Actions 経由の LINE Flex Message 到着確認
-- [ ] 定時実行（毎朝 07:00 JST）の初回成功確認
+- [x] GitHub Secrets（YouTube / LINE）登録と Actions 経由の通知
+- [x] 定時実行（毎朝 07:00 JST 相当）による日次更新
+- 日常の確認手順・失敗時対応は [README.md](./README.md) の運用ランブックへ集約
 
 ---
 
@@ -128,11 +128,15 @@ projects/youtube-dashboard/
 
 ## 8. YouTube 取得ロジック（実装メモ）
 
-- **検索:** `search.list`（`q`, `publishedAfter`, `regionCode=JP`, `relevanceLanguage=ja`）
-- **詳細:** `videos.list`（`snippet`, `statistics`）で閲覧数取得
-- **日本語フィルタ時:** 検索プール最大50件 → フィルタ後 閲覧数降順 → 最大25件（ランキング用は上位5件に絞る予定）
-- **デフォルトキーワード:** `クレジットカード`
-- **デフォルト期間:** 過去7日
+本番デフォルトは **news モード**（`config.py` の値に従う）。
+
+- **検索:** `search.list`（複数クエリ、`publishedAfter`、`regionCode=JP`、`relevanceLanguage=ja`、`videoDuration=medium`）
+- **詳細:** `videos.list`（`snippet`, `statistics`, `contentDetails`）で閲覧数等を取得
+- **クエリ:** `SEARCH_QUERY_TEMPLATES`（複数本。単一の「クレジットカード」ではない）
+- **プール:** クエリあたり `SEARCH_POOL_PER_QUERY`（現状 8）、全体上限 `SEARCH_POOL_MAX`（現状 50）
+- **絞り込み:** 日本語・ノイズタイトル除外 → 閲覧数降順 → **`TOP_N`（現状 5）**
+- **デフォルト期間:** 過去 `DEFAULT_DAYS` 日（現状 7）
+- **channels モード:** `TRUSTED_CHANNEL_IDS` はプレースホルダ。本番 Actions では使わない
 
 ### ローカル実行
 
@@ -189,13 +193,13 @@ python -m http.server 8765
 - 自動化: GitHub Actionsを用いて毎日1回定期実行し、HTMLの自動生成・更新を行う（DBは不使用、静的ファイル運用）。
 
 ## 2. 現在の開発フェーズと目標
-- 実装完了（Step 1〜5）。運用確認フェーズ。クォータリセット後（16:00 JST 以降）に Actions 手動実行で LINE 本番テスト予定。詳細は CONTEXT.md セクション13。
+- 実装完了（Step 1〜5）。GitHub Actions による日次更新と LINE 通知は本番稼働中。運用手順の正本は `projects/youtube-dashboard/README.md`。設計・モジュール詳細は本 CONTEXT.md。
 
 ## 3. Cursorへの指示ルール
 - 回答やコードを生成する際は、常に「GitHub Actionsの自動実行環境（サーバーレス環境）」で動くことを意識したPythonコードにしてください。
 - 外部API（YouTube / LINE）の認証情報やシークレットキーは、直書きせず環境変数（os.environ）から読み込む設計にしてください。
 - 処理の変更や新しいライブラリ（pandas、Jinja2など）を導入する際は、必ずメリットと合わせて確認を取ってから進めてください。
-- プロジェクト詳細は `projects/youtube-dashboard/CONTEXT.md` を参照してください。
+- 運用状態・手順は README.md、設計詳細は CONTEXT.md を参照してください。
 
 ---
 上記の前提を踏まえた上で、次のタスク/質問に進みます。
@@ -203,48 +207,39 @@ python -m http.server 8765
 
 ---
 
-## 12. 運用メモ（動作確認ステータス・注意点）
+## 12. 運用メモ（歴史・注意点）
 
-> 備忘録。詳細手順は [README.md](./README.md) も参照。
+> **日常運用の正本は [README.md](./README.md)。** 以下は開発初期の記録と、クォータ周りの注意の抜粋。
 
-### 12.1 動作確認ステータス
+### 12.1 動作確認ステータス（現行）
 
 | 項目 | 状態 |
 |---|---|
-| GitHub Actions 自動更新（Step 5） | 実装・設定 **完了** |
-| LINE Flex Message 通知（Step 4） | 実装・設定 **完了** |
-| ローカル LINE 送信テスト | **成功**（`notify_line.py`） |
-| GitHub Actions 初回実行 | **クォータ超過で失敗**（後述） |
+| GitHub Actions 自動更新（Step 5） | **稼働中**（schedule + 手動） |
+| LINE Flex Message 通知（Step 4） | **稼働中**（Actions 内で HTML 生成後に送信） |
+| ローカル LINE 送信テスト | 成功実績あり（`notify_line.py`） |
+| 日次ランキング HTML | main へ定期コミット（生成物） |
 
-**初回 Actions 実行時のエラー（確認済み）**
+### 12.1.1 開発初期の記録（2026-06 頃・歴史）
+
+初回 Actions 実行時に次のエラーが出た（開発中の API 消費が原因。設定不具合ではなかった）:
 
 ```
 Quota exceeded for quota metric 'Search Queries' per day
 Process completed with exit code 1
 ```
 
-- **原因:** YouTube Data API v3 の1日無料枠（10,000 ユニット）を、開発・ローカルテストで使い切ったため。
-- **プログラム・LINE トークン設定に問題はない** と判断。クォータ復旧後に再テストする。
+その後クォータ復旧・再実行を経て本番運用に入っている。現行手順は README を参照。
 
-### 12.2 YouTube API クォータと再テスト
+### 12.2 YouTube API クォータ（注意の抜粋）
 
 | 項目 | 内容 |
 |---|---|
 | 無料枠 | 1日 10,000 ユニット（`search.list` は1回100ユニット等） |
 | リセット時刻 | **日本時間 毎日 16:00 頃**（太平洋標準時 深夜 0:00） |
-| 本番テストの推奨タイミング | **16:00 JST 以降** |
+| 手動再実行の目安 | クォータ超過後は **16:00 JST 以降**が安全 |
 
-**再テスト手順**
-
-1. [Actions](https://github.com/KumaTrekCode/KumaTrekCode.github.io/actions) → **Update YouTube Dashboard**
-2. **Run workflow** → **Run workflow**（手動実行）
-3. 全ステップ Success を確認:
-   - Generate dashboard HTML
-   - Send LINE notification
-   - Commit and push updated dashboard
-4. LINE アプリと [ダッシュボード URL](https://kumatrekcode.github.io/projects/youtube-dashboard/index.html) を確認
-
-**ローカル開発時の注意:** `generate_html.py` / `fetch_videos.py` を1日に何度も実行すると、Actions 実行前にクォータを消費しやすい。**本番は Actions 1日1回のみ**が基本。
+**ローカル開発時の注意:** `generate_html.py` / `fetch_videos.py` を1日に何度も実行すると、Actions 実行前にクォータを消費しやすい。**本番は Actions 1日1回のみ**が基本。詳細は README。
 
 ### 12.3 定時自動実行（毎朝 07:00 JST）
 
@@ -275,6 +270,7 @@ on:
 
 | 日付 | 内容 |
 |---|---|
+| 2026-08-11 | 運用の正を README に寄せ、ステータス／検索ロジック記述を現行（news モード・複数クエリ）に同期 |
 | 2026-06-22 | 保守性リファクタリング。config.py 分離・モジュール分割・logging 導入 |
 | 2026-06-22 | 運用メモ追加。クォータ超過・再テスト手順・定時実行の注意点を記録 |
 | 2026-06-21 | Step 4 完了。LINE Flex Message 通知を追加 |
