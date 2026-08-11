@@ -25,6 +25,23 @@
   function normalizeDrawerNav() {
     const nav = document.querySelector(".drawer__nav");
     if (!nav) return;
+
+    // Guard: only replace when existing links match the expected set
+    // (order-insensitive). Divergent drawers are left untouched.
+    const expected = new Set(LINKS.map((l) => l.href.replace(/^\.\//, "")));
+    const existing = Array.from(nav.querySelectorAll("a.drawer__link")).map((a) => {
+      const href = a.getAttribute("href") || "";
+      return href.split("/").pop() || href;
+    });
+    const existingSet = new Set(existing);
+    if (
+      existing.length === 0 ||
+      existingSet.size !== expected.size ||
+      [...expected].some((h) => !existingSet.has(h))
+    ) {
+      return;
+    }
+
     const p = currentPath();
     nav.innerHTML = LINKS.map((l) => {
       const aria = l.href.endsWith(p) ? ' aria-current="page"' : "";
@@ -92,6 +109,10 @@
 
   function initMenuFilterIfPresent() {
     if (!document.body.classList.contains("page-menu")) return;
+
+    // Prefer dedicated menu-category-filter.js when present (data-menu-filter buttons).
+    // Legacy path below only applies to older anchor-based nav markup.
+    if (document.querySelector("[data-menu-filter]")) return;
 
     markCardCategories(document.querySelector(".menu-page-sp__cards"));
     markCardCategories(document.querySelector(".menu-page-pc__cards"));

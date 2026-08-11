@@ -23,10 +23,11 @@ WP → 静的書き出しを続けると「崩れの修正が点在」「差し�
 
 ## やってほしいこと（チェックリスト）
 
-### A. 共通 “パッチ置き場” を用意
-- `projects/open-cafe-wp-export/assets/kuma-patch.css` を新規作成し、静的側で必要な “上書きCSS” はここへ集約する
-- 既存の `assets/style(1).css` に直接上書きしている差分があれば、`kuma-patch.css` へ移す（見た目同等）
-- すべての `projects/open-cafe-wp-export/*.html` で `kuma-patch.css` を読み込む（`style(1).css` の後）
+### A. 共通 “パッチ置き場” を用意（配線済み）
+- `projects/open-cafe-wp-export/assets/kuma-patch.css` / `kuma-patch.js` を共通パッチとして維持する
+- **本番相当の各 `*.html`（`ci-smoke.html` 除く）** で、`style(1).css` の後に `kuma-patch.css`、`drawer.js` の後に `kuma-patch.js` を読み込む（**配線済み**）
+- 新規ページ追加時も同じ順で link/script を入れる（再書き出しで消えたら再挿入）
+- `kuma-patch.js` の `normalizeDrawerNav()` は、既存ドロワーリンク集合が想定セットと一致する場合のみ差し替える（不一致ページは触らない）
 
 ### B. “共通ブロック” を 1か所に寄せる
 - `kuma-demo-disclaimer-style` / `kuma-demo-disclaimer` / `kuma-portfolio-return-style` など、各ページに散っている “Kuma ブロック” を
@@ -37,9 +38,10 @@ WP → 静的書き出しを続けると「崩れの修正が点在」「差し�
 - `../img/common/*.png` のような「存在しない前提パス」を CSS で参照している箇所があれば、`kuma-patch.css` で代替（CSS/SVG）する
   （例: `drawer__close` の close.png を CSS の × に置換）
 
-### D. ナビ・ドロワーの一貫性
-- `index.html` を正として、`concept.html` / `menu.html` などでも同じ項目になるよう統一する
-- もし HTML 差し替えで戻るなら、統一の仕組み（例: `kuma-patch.js` で置換）を検討し、最小の案を提案する
+### D. ナビ・ドロワーの一貫性（`kuma-patch.js` で対応済み）
+- `kuma-patch.js` がドロワー項目を正規化する（想定リンク集合一致時のみ）
+- メニューカテゴリフィルタは `menu-category-filter.js`（`data-menu-filter`）が担当。`kuma-patch.js` 側のレガシフィルタは `data-menu-filter` がある場合はスキップする
+- WP 再書き出し後は HTML への `kuma-patch.js` / `menu-category-filter.js` 参照が消えていないか確認する
 
 ### E. 登録・検査フローの整備
 - 新しい `*.html` を追加したときにやること（allowlist / a11y / sync）を `docs/prompts/page-register.md` に追記して、迷わないようにする
