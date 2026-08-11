@@ -1,86 +1,139 @@
-# クレカ動画ランキング ダッシュボード
+# クレカ動画ランキング ダッシュボード（運用ランブック）
 
 YouTube Data API で過去1週間のクレジットカード関連動画を集計し、閲覧数 TOP5 を GitHub Pages に公開。同時に LINE Flex Message で毎日通知する。
 
-**詳細仕様・開発コンテキスト:** [CONTEXT.md](./CONTEXT.md)
+**開発・モジュール構成の詳細:** [CONTEXT.md](./CONTEXT.md)  
+**公開 URL:** https://kumatrekcode.github.io/projects/youtube-dashboard/index.html  
+**サイト上の導線:** トップの [Portfolio（#works）](../../index.html#works) カード「クレカ動画ランキング」
 
 ---
 
-## 公開 URL
-
-https://kumatrekcode.github.io/projects/youtube-dashboard/index.html
-
----
-
-## 運用ステータス（2026-06-22）
+## 運用ステータス（現行）
 
 | 項目 | 状態 |
 |---|---|
-| コード実装（Step 1〜5） | 完了 |
-| GitHub Actions 設定 | 完了 |
-| LINE 通知（ローカル） | 成功 |
-| Actions 本番テスト | クォータ超過で一度失敗 → **16:00 JST 以降に再実行予定** |
+| コード実装 | 完了（news モードが本番） |
+| GitHub Actions（`Update YouTube Dashboard`） | 稼働中（schedule + 手動） |
+| LINE 通知 | Actions 内で HTML 生成後に送信 |
+| 生成物 | `index.html` のみ main へコミット（`ranking.json` はジョブ内一時・gitignore） |
 
-初回 Actions 実行時は `Quota exceeded for quota metric 'Search Queries'` が出たが、**プログラム・LINE 設定の不具合ではない**（開発中の API 消費が原因）。
+日次更新が止まっている／HTML の日付が古いときは、下の「失敗時プレイブック」へ。
 
 ---
 
-## 本番テスト（手動実行）
+## 毎日の流れ（定時）
 
-**実施タイミング:** 日本時間 **16:00 以降**（YouTube API クォータリセット後）
+1. **cron:** `0 22 * * *` UTC ＝ 翌朝 **07:00 JST**（GitHub 都合で 10分〜数十分遅延しうる）
+2. `python generate_html.py`（デフォルト news モード）→ `index.html` + `ranking.json`
+3. `python notify_line.py`（`ranking.json` を読んで LINE Push）
+4. 変更があれば `projects/youtube-dashboard/index.html` のみ commit & push
+
+ワークフロー定義: `.github/workflows/update_dashboard.yml`
+
+**注意:** 前日にローカル等でクォータを使い切っていると、朝 07:00 JST はまだリセット前（目安 **16:00 JST**）のため失敗しうる。普段はローカルで `generate_html.py` を連続実行しない。
+
+---
+
+## 手動実行（Actions）
 
 1. GitHub → **Actions** → **Update YouTube Dashboard**
 2. **Run workflow**
-3. Success を確認し、LINE とダッシュボード URL をチェック
+3. Success を確認し、LINE と [公開 URL](https://kumatrekcode.github.io/projects/youtube-dashboard/index.html) をチェック
+
+クォータ超過後の再実行は **16:00 JST 以降**が安全。
 
 ---
 
-## 定時自動実行
+## Secrets / API キー
 
-- **毎朝 07:00 JST**（cron: `0 22 * * *` UTC）
-- **注意①:** 前日クォータ使い切り時は朝7時はまだリセット前のため失敗しうる
-- **注意②:** GitHub の schedule は **10分〜数十分遅延** することがある
+| 名前 | 用途 | 置き場 |
+|---|---|---|
+| `YOUTUBE_API_KEY` | YouTube Data API v3 | GitHub Actions Secrets / ローカル `.env` |
+| `LINE_CHANNEL_ACCESS_TOKEN` | LINE Messaging Push | 同上 |
+| `LINE_USER_ID` | 通知先（`U...`） | 同上 |
+
+- ローカル: `cp .env.example .env` して記入（`.env` は gitignore。コミット禁止）
+- Actions: Settings → Secrets and variables → Actions
+- プレースホルダ文字列は `env_utils` が拒否する
 
 ---
 
-## ローカル開発
+## ローカル起動
 
 ```bash
 cd projects/youtube-dashboard
-source .venv/bin/activate
+python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
-cp .env.example .env   # キー・トークンを記入
+cp .env.example .env   # キーを記入
 
-python generate_html.py          # HTML + ranking.json 生成（API 消費あり）
-python notify_line.py --dry-run  # LINE JSON 確認（API 消費なし）
-python notify_line.py            # LINE 送信
+python fetch_videos.py           # 取得だけ確認（任意・API 消費あり）
+python generate_html.py          # HTML + ranking.json（API 消費あり）
+python notify_line.py --dry-run  # LINE JSON 確認（送信なし）
+python notify_line.py            # 実送信
 
 python -m http.server 8765       # http://localhost:8765/index.html
 ```
 
-**クォータ節約:** ローカルで `generate_html.py` を連続実行しない。1日1回の Actions 運用を基本とする。
+`file://` では YouTube iframe が失敗しうるため、必ず HTTP サーバ経由で確認する。
+
+依存: `requirements.txt`（`requests`, `Jinja2`）。Python は Actions で 3.11。
 
 ---
 
-## GitHub Secrets（Actions 用）
+## クォータ目安
 
-| Secret | 用途 |
+- 無料枠の目安: 1日あたり約 **10,000 units**（Google Cloud コンソールで確認）
+- 本番 news モード: 検索クエリが複数本（`SEARCH_QUERY_TEMPLATES`）あり、`search.list` は **100 units/回** 前後。加えて `videos.list`
+- **日次 Actions 1回**を基本とし、ローカル再実行は必要なときだけ
+
+---
+
+## 設定ノブ（よく触る場所）
+
+| 変更したいこと | 編集先 |
 |---|---|
-| `YOUTUBE_API_KEY` | YouTube Data API v3 |
-| `LINE_CHANNEL_ACCESS_TOKEN` | LINE Push API |
-| `LINE_USER_ID` | 通知先（`U...`） |
-
-Settings → Secrets and variables → Actions
+| 検索キーワード・除外語 | `config.py` の `SEARCH_QUERY_TEMPLATES` / `EXCLUDE_TERMS` |
+| TOP 件数・検索日数 | `TOP_N` / `DEFAULT_DAYS` |
+| チャンネル限定モード | `TRUSTED_CHANNEL_IDS`（現状プレースホルダ。本番は news） |
+| 公開 URL 表示 | `DASHBOARD_URL` |
+| HTML 見た目 | `templates/index.html.j2`（生成後の `index.html` を手編集しない） |
 
 ---
 
-## ファイル構成
+## 失敗時プレイブック
+
+| 症状 | 確認ポイント |
+|---|---|
+| Actions が赤 / `Quota exceeded` | YouTube クォータ。16:00 JST 以降に手動再実行。ローカル連続実行を止める |
+| LINE が来ないが HTML は更新 | Secrets の LINE 2件。ジョブログの `Send LINE notification`。401 ならトークン再発行 |
+| HTML も LINE も更新なし | `Generate dashboard HTML` 失敗（キー未設定・空結果）。ログ全文を見る |
+| コミットがスキップ | ランキング内容が前日と同じ → 正常（`No changes to commit`） |
+| ページが空っぽい | フィルタ後 0 件の可能性。クエリ／除外語を見直し |
+| サイトのナビから辿れない | トップ `#works` 経由。本ダッシュボードは共通ナビ非搭載のスタンドアロン HTML |
+
+ジョブ順の注意: LINE 通知は **commit より前**。LINE ステップ失敗時はそのランの HTML が push されない。
+
+---
+
+## サイト導線・同期方針
+
+- ポートフォリオ一覧: ルート `index.html` の `#works`（`tools/projects.json`）
+- グローバルナビ「Portfolio」は `#works` を指す（Open cafe 専用リンクではない）
+- 生成 `index.html` は sync allowlist **外**（日次 bot コミットと衝突させない）。meta はテンプレート側が正
+
+---
+
+## ファイル構成（運用で見るもの）
 
 ```
-config.py           # 設定変更はここ
-fetch_videos.py     # YouTube 取得 CLI
-generate_html.py    # HTML 生成 CLI
-notify_line.py      # LINE 通知 CLI
+README.md              # 本ランブック（運用の正）
+CONTEXT.md             # 開発コンテキスト・詳細設計
+config.py              # キーワード・件数など
+.env.example           # Secrets の型
+generate_html.py       # 取得 → HTML / ranking.json
+notify_line.py         # LINE 送信
+templates/index.html.j2
+index.html             # GitHub Pages 公開物（生成）
 ```
 
-詳細: [CONTEXT.md](./CONTEXT.md)
+モジュール全体図は [CONTEXT.md](./CONTEXT.md) を参照。
