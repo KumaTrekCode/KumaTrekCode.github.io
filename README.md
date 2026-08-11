@@ -34,7 +34,7 @@ Static personal portfolio for **GitHub Pages** (`https://kumatrekcode.github.io/
 | `404.html` | GitHub Pages 404 |
 | `assets/` | 共有 CSS（`style.css` / `about.css` は `@import` で **`tokens.css`** を参照）・ファビコンなど |
 | `img/` | **配信用の**最適化済み JPG/WebP。大きいマスターは **`img/source/`** に置き、`npm run optimize-images` / `build:icons` でルートの `img/` に生成する運用（リポジトリにマスターを含めない選択も可） |
-| `projects/` | 制作物ページ（例: `open-cafe/` とその `site/`） |
+| `projects/` | 制作物ページ（例: `open-cafe/` とその `site/`、`youtube-dashboard/` のクレカ動画ランキング） |
 
 ### 保守用 `tools/`（同期・設定・パーシャル）
 
