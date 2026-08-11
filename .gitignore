@@ -27,3 +27,11 @@ build/
 .idea/
 
 projects/youtube-dashboard/ranking.json
+
+# Generated skill icons (from npm run build:icons)
+img/icon-skill-*-sm.png
+img/icon-skill-*-sm.webp
+img/icon-skill-*-md.png
+img/icon-skill-*-md.webp
+img/icon-skill-*-lg.png
+img/icon-skill-*-lg.webp
