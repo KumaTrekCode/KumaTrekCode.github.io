@@ -17,12 +17,12 @@
 
 ## Backlog（人間がトリアージ）
 
-- [ ] Open Cafe WP 書き出しページの a11y／パス整備の残り（prompts 経由）
 - [ ] youtube-dashboard の運用メモとサイト導線の整理
 - [ ] `docs/learning/` の knowledge から「サイト／tools に落とす成果」だけを Agent queue へ切り出す運用を試す
 
 ## Done
 
+- [x] `open-cafe-a11y-register`: Open Cafe WP 書き出しの未登録ページを allowlist / lint:a11y に登録し、drawer の aria-label / aria-controls を揃える
 - [x] `harness-scaffold`: ハーネスとループの足場（AGENTS.md / ROADMAP / docs/harness-and-loop.md / `npm run task:next` / README 導線）を追加する
 - [x] `agent-loop-prompt`: docs/prompts/agent-loop.md と prompts README への導線を追加する
 - [x] `cleanup-branches`: 古いクローズ済みPRのブランチを削除（#30-34の5ブランチ）

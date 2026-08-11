@@ -31,6 +31,7 @@ const entryPoints = [
   "404.html",
   "projects/open-cafe/index.html",
   "projects/open-cafe/site/index.html",
+  "projects/open-cafe-wp-export/index.html",
 ];
 
 const linkinatorBin = resolve(root, "node_modules", ".bin", "linkinator");
