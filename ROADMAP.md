@@ -17,12 +17,13 @@
 
 ## Backlog（人間がトリアージ）
 
-- [ ] `docs/learning/` の knowledge から「サイト／tools に落とす成果」だけを Agent queue へ切り出す運用を試す
+（いま空き）
 
 ## Done
 
 - [x] `open-cafe-a11y-register`: Open Cafe WP 書き出しの未登録ページを allowlist / lint:a11y に登録し、drawer の aria-label / aria-controls を揃える
 - [x] `youtube-dashboard-ops-memo`: youtube-dashboard の運用ランブック更新とナビ Portfolio → `#works` 導線整理
+- [x] `learning-extract-ops`: `docs/learning/` は移動せず、サイト／tools 成果だけを人間が完了条件つきで ROADMAP へ昇格する運用を文書化してクローズ
 - [x] `harness-scaffold`: ハーネスとループの足場（AGENTS.md / ROADMAP / docs/harness-and-loop.md / `npm run task:next` / README 導線）を追加する
 - [x] `agent-loop-prompt`: docs/prompts/agent-loop.md と prompts README への導線を追加する
 - [x] `cleanup-branches`: 古いクローズ済みPRのブランチを削除（#30-34の5ブランチ）
