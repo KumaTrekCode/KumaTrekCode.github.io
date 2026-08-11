@@ -9,11 +9,17 @@ const runner = resolve(root, "tools", "lint-a11y-one.mjs");
 
 const pages = [
   "projects/open-cafe-wp-export/concept.html",
+  "projects/open-cafe-wp-export/contact.html",
+  "projects/open-cafe-wp-export/gift.html",
   "projects/open-cafe-wp-export/index.html",
   "projects/open-cafe-wp-export/menu-bread-sweets.html",
   "projects/open-cafe-wp-export/menu-drink.html",
   "projects/open-cafe-wp-export/menu-salad.html",
   "projects/open-cafe-wp-export/menu.html",
+  "projects/open-cafe-wp-export/news-category-campaign.html",
+  "projects/open-cafe-wp-export/news-category-event.html",
+  "projects/open-cafe-wp-export/news-category-hours.html",
+  "projects/open-cafe-wp-export/news-category-limited.html",
   "projects/open-cafe-wp-export/news-page-2.html",
   "projects/open-cafe-wp-export/news-single-01.html",
   "projects/open-cafe-wp-export/news-single-02.html",
@@ -27,7 +33,12 @@ const pages = [
   "projects/open-cafe-wp-export/news-single-10.html",
   "projects/open-cafe-wp-export/news-single-11.html",
   "projects/open-cafe-wp-export/news-single-12.html",
+  "projects/open-cafe-wp-export/news-single-13.html",
+  "projects/open-cafe-wp-export/news-single-14.html",
+  "projects/open-cafe-wp-export/news-single-15.html",
   "projects/open-cafe-wp-export/news.html",
+  "projects/open-cafe-wp-export/shop.html",
+  "projects/open-cafe-wp-export/thanks.html",
 ];
 
 for (const rel of pages) {

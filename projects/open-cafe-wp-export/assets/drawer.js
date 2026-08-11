@@ -50,6 +50,7 @@
     hamburger.classList.add("active");
     body.classList.add("drawer-open");
     hamburger.setAttribute("aria-expanded", "true");
+    hamburger.setAttribute("aria-label", "メニューを閉じる");
     if (hamburgerIcon) {
       hamburgerIcon.src = iconCloseSrc;
     }
@@ -62,6 +63,7 @@
     hamburger.classList.remove("active");
     body.classList.remove("drawer-open");
     hamburger.setAttribute("aria-expanded", "false");
+    hamburger.setAttribute("aria-label", "メニューを開く");
     if (hamburgerIcon) {
       hamburgerIcon.src = iconMenuSrc;
     }
