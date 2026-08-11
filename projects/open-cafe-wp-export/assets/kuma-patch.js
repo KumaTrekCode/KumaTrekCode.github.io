@@ -110,6 +110,10 @@
   function initMenuFilterIfPresent() {
     if (!document.body.classList.contains("page-menu")) return;
 
+    // Prefer dedicated menu-category-filter.js when present (data-menu-filter buttons).
+    // Legacy path below only applies to older anchor-based nav markup.
+    if (document.querySelector("[data-menu-filter]")) return;
+
     markCardCategories(document.querySelector(".menu-page-sp__cards"));
     markCardCategories(document.querySelector(".menu-page-pc__cards"));
 

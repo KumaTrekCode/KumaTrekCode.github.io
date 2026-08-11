@@ -39,8 +39,9 @@ WP → 静的書き出しを続けると「崩れの修正が点在」「差し�
   （例: `drawer__close` の close.png を CSS の × に置換）
 
 ### D. ナビ・ドロワーの一貫性（`kuma-patch.js` で対応済み）
-- `kuma-patch.js` がドロワー項目を正規化し、`page-menu` ではカテゴリフィルタを提供する
-- WP 再書き出し後は HTML への `kuma-patch.js` 参照が消えていないか確認する
+- `kuma-patch.js` がドロワー項目を正規化する（想定リンク集合一致時のみ）
+- メニューカテゴリフィルタは `menu-category-filter.js`（`data-menu-filter`）が担当。`kuma-patch.js` 側のレガシフィルタは `data-menu-filter` がある場合はスキップする
+- WP 再書き出し後は HTML への `kuma-patch.js` / `menu-category-filter.js` 参照が消えていないか確認する
 
 ### E. 登録・検査フローの整備
 - 新しい `*.html` を追加したときにやること（allowlist / a11y / sync）を `docs/prompts/page-register.md` に追記して、迷わないようにする
