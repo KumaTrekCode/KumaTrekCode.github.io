@@ -91,8 +91,8 @@ index.html  Flex Message
 
 ```
 projects/youtube-dashboard/
-├── README.md           # 運用クイックリファレンス
-├── CONTEXT.md          # 開発コンテキスト・運用メモ（詳細）
+├── README.md           # 運用ランブック（運用の正）
+├── CONTEXT.md          # 開発コンテキスト・設計メモ（本ファイル）
 ├── config.py           # 設定値の一元管理（キーワード・件数・URL 等）
 ├── models.py           # Video データクラス・型定義
 ├── env_utils.py        # .env 読み込み・認証情報検証
