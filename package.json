@@ -27,10 +27,10 @@
     "pre-push": "npm run check"
   },
   "devDependencies": {
-    "@eslint/js": "^9.39.1",
+    "@eslint/js": "^10.0.1",
     "axe-core": "^4.10.3",
     "esbuild": "^0.28.1",
-    "eslint": "^9.39.1",
+    "eslint": "^10.8.1",
     "globals": "^16.5.0",
     "html-validate": "^11.5.6",
     "jsdom": "^25.0.1",
@@ -39,6 +39,6 @@
     "simple-git-hooks": "^2.11.1"
   },
   "overrides": {
-    "brace-expansion": "5.0.8"
+    "brace-expansion": "5.0.9"
   }
 }
