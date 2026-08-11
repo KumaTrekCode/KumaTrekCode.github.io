@@ -10,8 +10,8 @@ Local WordPress（テーマ KUMA_DYA36_Open-Cafe）から、ブラウザの「�
 tools/sync-html-allowlist.json にパスを追加してください（本リポジトリでは追加済み）。
 
 index から他ページへリンクがある場合は、gh-pages-static 内の該当 *.html もまとめてコピーしないと
-ローカル・GitHub Pages でリンクが切れます。全 HTML を揃えたら tools/lint-links.mjs の entryPoints に
-projects/open-cafe-wp-export/index.html を足すと linkinator で一括検査できます。
+ローカル・GitHub Pages でリンクが切れます。`tools/lint-links.mjs` の entryPoints には
+`projects/open-cafe-wp-export/index.html` を **追加済み**（`npm run lint:links` / `npm run check` で検査）。
 
 WP 書き出しは html-validate の厳格ルールと相性が悪いことがあるため、package.json の validate 対象外にしています。
 
