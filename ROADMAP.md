@@ -8,6 +8,7 @@
 - エージェント: `npm run task:next` → 1 件実装 → `npm run check` → PR（[AGENTS.md](AGENTS.md)）
 - 人間: アイデアは Backlog へ。Agent queue に上げるとき、完了条件を1行で書く
 - 形式: `- [ ] \`task-id\`: 説明（完了条件: …）`
+- Done 追記: `- [x] \`task-id\`: 短い完了事実（詳細はPR#Nを参照）`（PR番号羅列・ブランチ内訳は書かない）
 
 ## Agent queue
 
@@ -25,23 +26,23 @@
 
 実装判断はまだしない。入口メモのみ。
 
-- ROADMAP.md 自体の肥大化対策（Done 項目が増え続けている現状への対応）
+- ROADMAP肥大化対策: Doneセクションが100行を超えたら `ROADMAP_ARCHIVE.md` への分離を検討する
 - Cursor 向け skills 運用の検討（繰り返し使っているやり切り活動系プロンプトの再利用可能な形への整理）
 
 ## Done
 
-- [x] `dependabot-dependencies-label`: GitHub に `dependencies` ラベルを作成（`dependabot.yml` 指定と整合）
-- [x] `lint-links-instagram-429`: Instagram 429 フレーク対策済み（`lint:links` 対象外の wp-export 側リンク／必要時は `linkinatorSkip`）
-- [x] `cleanup-local-experiment-branches`: ローカル実験ブランチ2件（`cursor/experiment-jsdom29-e0b2`, `cursor/experiment-kuma-patch-e0b2`）削除済み
-- [x] `kuma-patch-wire`: Open Cafe wp-export 本番相当ページへ kuma-patch.css/js を配線（`ci-smoke.html` 除外、normalizeDrawerNav ガード付き）
-- [x] `jsdom29-upgrade`: a11y ハーネス用 jsdom を 25 → 29.1.1 に更新（`npm run check` 通過。Dependabot #1 は本PRで相当対応のためクローズ可）
-- [x] `dependabot-cleanup`: Dependabot 整理（superseded クローズ: #3,#5,#19,#28／相当マージ: #18 axe-core 4.12.1・#29 globals 17.8.0／#1 jsdom major は `jsdom29-upgrade` で対応）
-- [x] `cleanup-stale-branches`: マージ済みPR由来の残存 remote ブランチを削除（`cursor/*-504b` 系・`chore/ci-node-22`・クローズ済み Dependabot ブランチ。open の #1 / #44 の head は除外）
-- [x] `open-cafe-a11y-register`: Open Cafe WP 書き出しの未登録ページを allowlist / lint:a11y に登録し、drawer の aria-label / aria-controls を揃える
-- [x] `youtube-dashboard-ops-memo`: youtube-dashboard の運用ランブック更新とナビ Portfolio → `#works` 導線整理
-- [x] `learning-extract-ops`: `docs/learning/` は移動せず、サイト／tools 成果だけを人間が完了条件つきで ROADMAP へ昇格する運用を文書化してクローズ
-- [x] `harness-scaffold`: ハーネスとループの足場（AGENTS.md / ROADMAP / docs/harness-and-loop.md / `npm run task:next` / README 導線）を追加する
-- [x] `agent-loop-prompt`: docs/prompts/agent-loop.md と prompts README への導線を追加する
-- [x] `cleanup-branches`: 古いクローズ済みPRのブランチを削除（#30-34の5ブランチ）
-- [x] `fix-vulnerabilities`: セキュリティ脆弱性を解消（eslint 10.8.1へアップグレード等、PR #38）
-- [x] `cleanup-technical-debt`: canonical URL修正と生成ファイルのGit追跡解消（PR #39）
+- [x] `dependabot-dependencies-label`: `dependencies` ラベルを作成済み
+- [x] `lint-links-instagram-429`: Instagram 429 フレーク対策済み
+- [x] `cleanup-local-experiment-branches`: ローカル実験ブランチ削除済み
+- [x] `kuma-patch-wire`: wp-export へ kuma-patch を配線（詳細はPR#49を参照）
+- [x] `jsdom29-upgrade`: jsdom を 29.1.1 へ更新（詳細はPR#48を参照）
+- [x] `dependabot-cleanup`: Dependabot PR を整理（詳細はPR#44を参照）
+- [x] `cleanup-stale-branches`: マージ済み由来の残存 remote ブランチを削除（詳細はPR#45を参照）
+- [x] `open-cafe-a11y-register`: wp-export 未登録ページの a11y 登録（詳細はPR#41を参照）
+- [x] `youtube-dashboard-ops-memo`: 運用メモとナビ導線を整理（詳細はPR#42を参照）
+- [x] `learning-extract-ops`: knowledge→ROADMAP 昇格運用を文書化（詳細はPR#43を参照）
+- [x] `harness-scaffold`: エージェント用ハーネス／タスクループ足場を追加（詳細はPR#36を参照）
+- [x] `agent-loop-prompt`: agent-loop プロンプトと導線を追加（詳細はPR#36を参照）
+- [x] `cleanup-branches`: クローズ済みPRの古いブランチを削除（詳細はPR#40を参照）
+- [x] `fix-vulnerabilities`: 依存のセキュリティ脆弱性を解消（詳細はPR#38を参照）
+- [x] `cleanup-technical-debt`: canonical URL 等の技術的負債を整理（詳細はPR#39を参照）
