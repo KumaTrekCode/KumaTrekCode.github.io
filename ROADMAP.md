@@ -21,6 +21,7 @@
 
 ## Done
 
+- [x] `cleanup-stale-branches`: マージ済みPR由来の残存 remote ブランチを削除（`cursor/*-504b` 系・`chore/ci-node-22`・クローズ済み Dependabot ブランチ。open の #1 / #44 の head は除外）
 - [x] `open-cafe-a11y-register`: Open Cafe WP 書き出しの未登録ページを allowlist / lint:a11y に登録し、drawer の aria-label / aria-controls を揃える
 - [x] `youtube-dashboard-ops-memo`: youtube-dashboard の運用ランブック更新とナビ Portfolio → `#works` 導線整理
 - [x] `learning-extract-ops`: `docs/learning/` は移動せず、サイト／tools 成果だけを人間が完了条件つきで ROADMAP へ昇格する運用を文書化してクローズ
