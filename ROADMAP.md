@@ -17,7 +17,18 @@
 
 ## Backlog（人間がトリアージ）
 
-（いま空き）
+任意タスク（優先度低〜中・未着手）。Agent queue へ上げるときは完了条件を1行で足す。
+
+- [ ] `dependabot-dependencies-label`: GitHub に `dependencies` ラベルを作成する（`dependabot.yml` は指定済みだがラベル未作成で警告あり）
+- [ ] `lint-links-instagram-429`: `lint:links` の Instagram 429 フレーク対策（リトライ／除外の検討）
+- [ ] `cleanup-local-experiment-branches`: ローカルに残る実験ブランチ2件（`cursor/experiment-jsdom29-e0b2`, `cursor/experiment-kuma-patch-e0b2`）を削除する（リモートには無し）
+
+## Notes（次回以降の検討・未結論）
+
+実装判断はまだしない。入口メモのみ。
+
+- ROADMAP.md 自体の肥大化対策（Done 項目が増え続けている現状への対応）
+- Cursor 向け skills 運用の検討（繰り返し使っているやり切り活動系プロンプトの再利用可能な形への整理）
 
 ## Done
 
