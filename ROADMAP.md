@@ -19,9 +19,7 @@
 
 任意タスク（優先度低〜中・未着手）。Agent queue へ上げるときは完了条件を1行で足す。
 
-- [ ] `dependabot-dependencies-label`: GitHub に `dependencies` ラベルを作成する（`dependabot.yml` は指定済みだがラベル未作成で警告あり）
-- [ ] `lint-links-instagram-429`: `lint:links` の Instagram 429 フレーク対策（リトライ／除外の検討）
-- [ ] `cleanup-local-experiment-branches`: ローカルに残る実験ブランチ2件（`cursor/experiment-jsdom29-e0b2`, `cursor/experiment-kuma-patch-e0b2`）を削除する（リモートには無し）
+（いま空き）
 
 ## Notes（次回以降の検討・未結論）
 
@@ -32,6 +30,9 @@
 
 ## Done
 
+- [x] `dependabot-dependencies-label`: GitHub に `dependencies` ラベルを作成（`dependabot.yml` 指定と整合）
+- [x] `lint-links-instagram-429`: Instagram 429 フレーク対策済み（`lint:links` 対象外の wp-export 側リンク／必要時は `linkinatorSkip`）
+- [x] `cleanup-local-experiment-branches`: ローカル実験ブランチ2件（`cursor/experiment-jsdom29-e0b2`, `cursor/experiment-kuma-patch-e0b2`）削除済み
 - [x] `kuma-patch-wire`: Open Cafe wp-export 本番相当ページへ kuma-patch.css/js を配線（`ci-smoke.html` 除外、normalizeDrawerNav ガード付き）
 - [x] `jsdom29-upgrade`: a11y ハーネス用 jsdom を 25 → 29.1.1 に更新（`npm run check` 通過。Dependabot #1 は本PRで相当対応のためクローズ可）
 - [x] `dependabot-cleanup`: Dependabot 整理（superseded クローズ: #3,#5,#19,#28／相当マージ: #18 axe-core 4.12.1・#29 globals 17.8.0／#1 jsdom major は `jsdom29-upgrade` で対応）
