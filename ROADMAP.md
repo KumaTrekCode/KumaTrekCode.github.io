@@ -21,6 +21,7 @@
 
 ## Done
 
+- [x] `kuma-patch-wire`: Open Cafe wp-export 本番相当ページへ kuma-patch.css/js を配線（`ci-smoke.html` 除外、normalizeDrawerNav ガード付き）
 - [x] `dependabot-cleanup`: Dependabot 整理（superseded クローズ: #3,#5,#19,#28／相当マージ: #18 axe-core 4.12.1・#29 globals 17.8.0・`npm run check` 通過／#1 jsdom major は未着手で open のまま）
 - [x] `cleanup-stale-branches`: マージ済みPR由来の残存 remote ブランチを削除（`cursor/*-504b` 系・`chore/ci-node-22`・クローズ済み Dependabot ブランチ。open の #1 / #44 の head は除外）
 - [x] `open-cafe-a11y-register`: Open Cafe WP 書き出しの未登録ページを allowlist / lint:a11y に登録し、drawer の aria-label / aria-controls を揃える

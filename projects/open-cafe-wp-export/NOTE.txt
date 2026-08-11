@@ -15,6 +15,9 @@ index から他ページへリンクがある場合は、gh-pages-static 内の�
 
 WP 書き出しは html-validate の厳格ルールと相性が悪いことがあるため、package.json の validate 対象外にしています。
 
+共通パッチ: `assets/kuma-patch.css` / `assets/kuma-patch.js` を本番相当ページへ配線済み
+（`style(1).css` / `drawer.js` の直後。`ci-smoke.html` はスモーク用のため除外）。
+
 index.html には、ポートフォリオ用に次を手で入れています。WP から index を差し替えたら、HTML コメント
 「KumaTrekCode:」付近を目印にコピーして再貼り付けしてください。
 

@@ -25,6 +25,23 @@
   function normalizeDrawerNav() {
     const nav = document.querySelector(".drawer__nav");
     if (!nav) return;
+
+    // Guard: only replace when existing links match the expected set
+    // (order-insensitive). Divergent drawers are left untouched.
+    const expected = new Set(LINKS.map((l) => l.href.replace(/^\.\//, "")));
+    const existing = Array.from(nav.querySelectorAll("a.drawer__link")).map((a) => {
+      const href = a.getAttribute("href") || "";
+      return href.split("/").pop() || href;
+    });
+    const existingSet = new Set(existing);
+    if (
+      existing.length === 0 ||
+      existingSet.size !== expected.size ||
+      [...expected].some((h) => !existingSet.has(h))
+    ) {
+      return;
+    }
+
     const p = currentPath();
     nav.innerHTML = LINKS.map((l) => {
       const aria = l.href.endsWith(p) ? ' aria-current="page"' : "";
