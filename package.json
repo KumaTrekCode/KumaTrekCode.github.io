@@ -34,7 +34,7 @@
     "globals": "^17.8.0",
     "html-validate": "^11.5.6",
     "jsdom": "^29.1.1",
-    "linkinator": "^8.0.2",
+    "linkinator": "^8.0.3",
     "sharp": "^0.35.3",
     "simple-git-hooks": "^2.11.1"
   },
