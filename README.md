@@ -108,7 +108,7 @@ npm run fix:wp-export-a11y
 - **`tools/site.config.json`** の **`canonicalSite`** と **`ogImage`**（サイト内パスなら先頭 `/` の相対、別 CDN なら `https://…`）を更新します。
 - **ページ別の共有プレビュー画像**が必要なときは、同ファイルの **`ogImageByPage`** に「HTML の相対パス → 画像パス」を追加します（例: `"projects/open-cafe/index.html": "/projects/open-cafe/screenshot.png"`）。未指定のページは **`ogImage`** が使われます。
 - **`npm run sync`** を実行すると、OG 用の **`og:url` / `og:image`** が各 HTML から一括で書き換わります。コミット前に **`npm run verify:og`**（または `npm run check`）で画像ファイルの実在を確認できます。
-- カスタムドメインに変えたあと、**`canonicalSite`** を更新すれば `lint:links` の本番オリジン用スキップは追従します。別パターンが必要なときだけ **`tools/site.config.json` の `linkinatorSkip`** を設定してください。
+- カスタムドメインに変えたあと、**`canonicalSite`** を更新すれば `lint:links` の本番オリジン用スキップは追従します。既定では X/Twitter と Instagram もスキップします。別パターンが必要なときだけ **`tools/site.config.json` の `linkinatorSkip`** を設定してください。
 - **`npm run sync`** のたびに **`robots.txt`** と **`sitemap.xml`** を **`canonicalSite`** と **`sitemapUrls`** から再生成**する。URL を増やすときは **`tools/site.config.json` の `sitemapUrls`** を編集する（手で `sitemap.xml` だけ直すと次回 sync で上書きされる）。
 
 ### 3.1. ページの `<title>` と `description`（一元管理）

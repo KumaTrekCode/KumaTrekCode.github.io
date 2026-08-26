@@ -53,7 +53,7 @@ GitHub Pages 用の静的 HTML リポジトリ向けの、変更から公開ま�
    `npm run check` — `sync` → **`minify:client`**（`scroll-top.min.js`）→ `build:icons` → `html-validate` → **`verify:og`** → **`smoke:html`** → **`lint:js`**（`tools/**/*.mjs` の ESLint）→ **`lint:links`** → **`lint:a11y`** → `npm audit --audit-level=high`。
 
 5. **リンクスキップを手で上書きしたい場合**  
-   `tools/site.config.json` に **`linkinatorSkip`**（文字列・1 本の正規表現）を書くと、`lint:links` はそれをそのまま `--skip` に使います（未設定時は `canonicalSite` と X/Twitter 向けパターンを自動生成）。
+   `tools/site.config.json` に **`linkinatorSkip`**（文字列・1 本の正規表現）を書くと、`lint:links` はそれをそのまま `--skip` に使います（未設定時は `canonicalSite` と X/Twitter/Instagram 向けパターンを自動生成。Instagram は wp-export 経由の 429 フレークを避けるため）。
 
 6. **コミット**  
    `sync` 済みの HTML をコミットしてください（ナビ・フッター・X ブロック・OG は sync が再生成するため、手でだけ直した変更は次回の sync で消えます）。
