@@ -1,6 +1,7 @@
 /**
  * linkinator を `tools/site.config.json` の正規 URL から導いたスキップ正規表現で実行する。
  * カスタムドメイン時は `canonicalSite` を更新すれば OG 用ホストのスキップも追従する（必要なら `linkinatorSkip` で上書き）。
+ * 既定 skip には X/Twitter に加え Instagram を含む（wp-export の SNS リンクが CI で 429 になるため）。
  */
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
@@ -21,7 +22,7 @@ function buildSkipPattern() {
   const raw = String(cfg.canonicalSite || "https://kumatrekcode.github.io").trim();
   const u = new URL(raw.endsWith("/") ? raw.slice(0, -1) : raw);
   const origin = `${u.protocol}//${u.host}`;
-  return `^${escapeRe(origin)}/|^https://(twitter\\.com/|x\\.com/)`;
+  return `^${escapeRe(origin)}/|^https://(www\\.)?(twitter\\.com|x\\.com|instagram\\.com)/`;
 }
 
 const skip = buildSkipPattern();
