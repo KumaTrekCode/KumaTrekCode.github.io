@@ -31,7 +31,7 @@
     "axe-core": "^4.12.1",
     "esbuild": "^0.28.1",
     "eslint": "^10.8.1",
-    "globals": "^17.8.0",
+    "globals": "^17.11.0",
     "html-validate": "^11.9.0",
     "jsdom": "^29.1.1",
     "linkinator": "^8.0.4",
