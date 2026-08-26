@@ -28,6 +28,9 @@
 
 - ROADMAP肥大化対策: Doneセクションが100行を超えたら `ROADMAP_ARCHIVE.md` への分離を検討する
 - Cursor 向け skills 運用の検討（繰り返し使っているやり切り活動系プロンプトの再利用可能な形への整理）
+- CHANGELOG.md が v1.0.0（2026-05-09）以降更新されておらず、PR#38〜#61相当の変更が未反映。更新運用（PRごと／リリース単位）を検討する
+- `projects/open-cafe-wp-export/assets/` の大容量PNG（単体10MB超が複数）が `optimize-images.mjs` の対象外で、`.git` 肥大化の主因になっている。README側では既知のトレードオフとしてGit LFS等が候補に挙がっているが未着手。対応方針（最適化パイプライン拡張／LFS移行／現状維持）を検討する
+- `STOCKTAKE_REPORT_*.md` がリポジトリルート直下に散在している。`docs/` 配下への集約など置き場所ルールを検討する
 
 ## Done
 
