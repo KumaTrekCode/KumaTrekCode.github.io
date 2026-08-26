@@ -33,7 +33,7 @@ jobs:
     steps:
       # リポジトリをチェックアウト（後続ステップでコミット＆プッシュする）
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       # Python 3.11（ubuntu-latest 向けの安定版）
       - name: Set up Python
