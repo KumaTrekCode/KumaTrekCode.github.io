@@ -1,3 +1,14 @@
+---
+repo_id: KumaTrekCode.github.io
+tier: public
+quality_gate: npm run check
+ci_workflow: ci.yml
+hooks: pre-push
+last_commit: 2026-08-29
+stocktake_date: 2026-08-29
+known_risks: [dependabot-pr-backlog]
+---
+
 # REPO_SUMMARY — KumaTrekCode.github.io
 
 > 棚卸し日: 2026-08-02  
