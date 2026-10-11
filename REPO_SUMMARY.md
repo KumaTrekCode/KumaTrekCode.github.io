@@ -4,8 +4,8 @@ tier: public
 quality_gate: npm run check
 ci_workflow: ci.yml
 hooks: pre-push
-last_commit: 2026-08-29
-stocktake_date: 2026-08-29
+last_commit: 2026-10-11
+stocktake_date: 2026-10-11
 known_risks: [dependabot-pr-backlog]
 ---
 
