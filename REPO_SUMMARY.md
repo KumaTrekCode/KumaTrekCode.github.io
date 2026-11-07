@@ -4,7 +4,7 @@ tier: public
 quality_gate: npm run check
 ci_workflow: ci.yml
 hooks: pre-push
-last_commit: 2026-10-11
+last_commit: 2026-11-07
 stocktake_date: 2026-10-11
 known_risks: [dependabot-pr-backlog]
 ---
@@ -66,7 +66,7 @@ KumaTrekCode.github.io/
 
 | 指標 | 実態（2026-08-02） |
 |------|-------------------|
-| 最新コミット | 2026-08-01（CI Node 22、エージェント用ハーネス足場、学習メモ） |
+| 最新コミット | 2026-11-07（undici 8.12.4 で high の audit を解消。YouTube dashboard の日次更新は継続） |
 | 6月以降コミット | 約 **52** → リポ全体は **活発** |
 | 内訳の偏り | `projects/youtube-dashboard` が多数（日次ランキング更新）。`tools/`・サイト本体は少なめ。`open-cafe` 本体はほぼ静止 |
 | Agent queue | ROADMAP 上は空き。Backlog に WP a11y・youtube 導線・learning→queue 切り出し |
